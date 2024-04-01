@@ -14,4 +14,9 @@ module.exports = {
     },
   },
   plugins: [],
+  variants:{
+    extend:{
+      display:["focus-group"]
+    }
+  }
 }

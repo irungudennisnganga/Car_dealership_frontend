@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTachometerAlt, faUserPlus, faUsers, faBoxOpen, faFileInvoice, faReceipt, faChartBar } from '@fortawesome/free-solid-svg-icons';
 
 
-const Sidebar = () => {
+const Sidebar = ({sidebarToggle}) => {
   return (
-    <div className='w-64 bg-Cyan50 fixed h-full '>
+    <div className={`${sidebarToggle ? " hidden " :" block "} w-64 bg-Cyan50 fixed h-full `}>
         <div >
             <img src={logo}alt = "logo"/>
         </div>

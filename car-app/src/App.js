@@ -1,11 +1,13 @@
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
+import { useState } from "react";
 function App() {
+  const [sidebarToggle,setbarToggle]=useState(false)
   return (
-    <div className="App">
+    <div className="flex">
      
-      <Sidebar/>
-      <Dashboard/>
+      <Sidebar sidebarToggle={sidebarToggle} />
+      <Dashboard sidebarToggle={sidebarToggle} setbarToggle={setbarToggle}/>
     
     </div>
   );
