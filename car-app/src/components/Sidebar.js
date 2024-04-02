@@ -1,12 +1,12 @@
 import React from 'react'
 import logo from '../images/autocar.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTachometerAlt, faUserPlus, faUsers, faBoxOpen, faFileInvoice, faReceipt, faChartBar } from '@fortawesome/free-solid-svg-icons';
+import { faTachometerAlt, faUserPlus, faUsers, faBoxOpen, faFileInvoice, faReceipt, faChartBar, faComment } from '@fortawesome/free-solid-svg-icons';
 
 
 const Sidebar = ({sidebarToggle}) => {
   return (
-    <div className={`${sidebarToggle ? " hidden " :" block "} w-64 bg-Cyan50 fixed h-full `}>
+    <div className={`${sidebarToggle ? " hidden " :" block "} w-64 bg-Cyan50 fixed h-full overscroll-auto `}>
         <div >
             <img src={logo}alt = "logo"/>
         </div>
@@ -14,7 +14,7 @@ const Sidebar = ({sidebarToggle}) => {
         <ul className='mt-3 text-white font-bold px-4 py-2'>
             <li className='bg-cyan300 py-2 p-4 rounded-md hover:shadow  hover:bg-cyan400 my-2.5'>
                 
-      <FontAwesomeIcon icon={faTachometerAlt} className='inline-block w-6 h-6 mr-2 -mt-2'/>
+            <FontAwesomeIcon icon={faTachometerAlt} className='inline-block w-6 h-6 mr-2 -mt-2'/>
                 <a href="" className='p-2'>
                   Dashboard  
                 </a>
@@ -33,7 +33,7 @@ const Sidebar = ({sidebarToggle}) => {
             </li>
             <li className='bg-cyan300 py-2 p-4 rounded-md hover:shadow  hover:bg-cyan400 my-2.5'>
             <FontAwesomeIcon icon={faUserPlus} className='inline-block w-6 h-6 mr-2 -mt-2'/>
-                <a href="" className='p-2'>
+                <a href="/AddUser" className='p-2'>
                   Add Seller
                 </a>
             </li>
@@ -53,6 +53,12 @@ const Sidebar = ({sidebarToggle}) => {
             <FontAwesomeIcon icon={faReceipt} className='inline-block w-6 h-6 mr-2 -mt-2'/>
                 <a href="" className='p-2'>
                   Receipt
+                </a>
+            </li>
+            <li className='bg-cyan300 py-2 p-4 rounded-md hover:shadow  hover:bg-cyan400 my-2.5'>
+            <FontAwesomeIcon icon={faComment}className='inline-block w-6 h-6 mr-2 -mt-2'/>
+                <a href="" className='p-2'>
+                 Notification
                 </a>
             </li>
         </ul> 
