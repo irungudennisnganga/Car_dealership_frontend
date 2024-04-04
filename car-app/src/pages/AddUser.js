@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import imageplaceholder from '../images/imageplaceholder.jpg';
 import PhoneInput from 'react-phone-number-input'; // Importing PhoneInput from the right module
 import 'react-phone-number-input/style.css';
-import { ToastContainer, toast } from 'react-toastify'; // Importing ToastContainer and toast from react-toastify
 import 'react-toastify/dist/ReactToastify.css';
 
 const AddUser = () => {
@@ -69,7 +68,7 @@ const AddUser = () => {
     }
 
     return (
-        <div className="m-80 bg-cardbackground rounded-lg overflow-hidden m-auto mt-10 relative w-[700px] h-[300px]">
+        <div className="m-80 bg-slate200 rounded-lg overflow-hidden m-auto mt-10 relative w-[700px] h-[300px]">
             <div className="p-4">
                 <div className="flex items-center mb-4">
                     <label className="text-gray-700 flex-shrink-0" htmlFor="first-name">First Name</label>
