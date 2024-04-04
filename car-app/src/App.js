@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Profile from "./pages/Profile";
 import Navbar from "./components/Navbar";
+import Workers from "./pages/Workers";
 function App() {
   const [sidebarToggle,setbarToggle]=useState(false)
   return (
@@ -22,6 +23,7 @@ function App() {
       <Routes  >
         <Route path="/AddUser" element={<AddUser/>}/>
         <Route path="/profile" element={<Profile/>}/>
+        <Route path="/workers" element={<Workers/>}/>
       </Routes>
     
     

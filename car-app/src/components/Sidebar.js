@@ -21,7 +21,7 @@ const Sidebar = ({sidebarToggle}) => {
             </li>
             <li className='bg-cyan300 py-2 p-4 rounded-md hover:shadow  hover:bg-cyan400 my-2.5'>
             <FontAwesomeIcon icon={faUsers} className='inline-block w-6 h-6 mr-2 -mt-2'/>
-                <a href="" className='p-2'>
+                <a href="/workers" className='p-2'>
                   Seller 
                 </a>
             </li>

@@ -2,7 +2,8 @@
   "name": "car-app",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
+  "proxy":"http://127.0.0.1:5555" ,
+    "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@testing-library/jest-dom": "^5.17.0",
