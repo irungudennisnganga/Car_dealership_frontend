@@ -39,7 +39,7 @@ const Sidebar = ({sidebarToggle}) => {
             </li>
             <li className='bg-cyan300 py-2 p-4 rounded-md hover:shadow  hover:bg-cyan400 my-2.5'>
             <FontAwesomeIcon icon={faFileInvoice} className='inline-block w-6 h-6 mr-2 -mt-2'/>
-                <a href="" className='p-2'>
+                <a href="/profile" className='p-2'>
                   Invoice 
                 </a>
             </li>

@@ -6,6 +6,8 @@ import { useState } from "react";
 import {Routes,Route} from 'react-router-dom'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Profile from "./pages/Profile";
+import Navbar from "./components/Navbar";
 function App() {
   const [sidebarToggle,setbarToggle]=useState(false)
   return (
@@ -13,11 +15,14 @@ function App() {
      <div className="flex">
      <ToastContainer />
       <Sidebar sidebarToggle={sidebarToggle} />
-      <Dashboard sidebarToggle={sidebarToggle} setbarToggle={setbarToggle}/>
+      <div className={`${sidebarToggle ? "" :" ml-64 "}w-full`}>
+      <Navbar sidebarToggle={sidebarToggle} setbarToggle={setbarToggle}/>
+      </div>
       </div>
      
       <Routes  >
         <Route path="/AddUser" element={<AddUser/>}/>
+        <Route path="/profile" element={<Profile/>}/>
         <Route path="/Inventory" element={<Inventory/>}/>
       </Routes>
     
