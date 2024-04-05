@@ -42,11 +42,12 @@ const Inventory = () => {
     const { getRootProps, getInputProps } = useDropzone({ handleOnDrop });
 
 
+
     const handleGalary = (acceptedFiles) => {
         setGalleryimages([...gallery_image, ...acceptedFiles]);
     };
 
-    const { getRootsProps, getInputsProps } = useDropzone({ handleGalary });
+    const { getRootProps: getGalleryRootProps, getInputProps: getGalleryInputProps } = useDropzone({ handleGalary });
 
 
     
@@ -338,7 +339,7 @@ const Inventory = () => {
                                 Image
                             </label>
                             <div {...getRootProps({ className: 'border rounded-md w-full py-2 px-3 dropzone' })}>
-                                <input {...getInputProps()} />
+                                 <input {...getInputProps()} />
                                 <p>click to add Image</p>
                             </div>
                             <div>
@@ -476,8 +477,8 @@ const Inventory = () => {
                             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="gallery_image">
                                 Gallery
                             </label>
-                            <div {...getRootsProps({ className: 'border rounded-md w-full py-2 px-3 dropzone' })}>
-                                <input {...getInputsProps()} />
+                            <div {...getGalleryRootProps({ className: 'border rounded-md w-full py-2 px-3 dropzone' })}>
+                                <input {...getGalleryInputProps()} />
                                 <p>click to select files</p>
                             </div>
                             <div>
