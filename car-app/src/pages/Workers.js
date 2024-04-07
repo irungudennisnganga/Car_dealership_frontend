@@ -15,7 +15,7 @@ const Workers = () => {
       headers: {
         'Content-Type': 'application/json',
         // Include your JWT token for authentication if required
-        'Authorization': `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjMzMjk1NSwianRpIjoiOTNmMWNjMzktY2Q4Yi00ZThkLWFhYzQtZGU1NGRmYTMxYjFmIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzEyMzMyOTU1LCJjc3JmIjoiOGU4OTkzZTMtMTY0Ni00YWJlLWI4OWEtODJlMmE1MzE0ZjllIiwiZXhwIjoxNzEyMzYxNzU1fQ.3obO6ZLegGlPbmV1zEqbNg6ft3auRwM5fobbAbGJjzw"}`
+        'Authorization': `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjQ3OTQ1MiwianRpIjoiMTMwYWNjMjItYjNhNi00MDEzLTk2MzAtMDJhZDI4NTk3NWZkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzEyNDc5NDUyLCJjc3JmIjoiZTc4OGQ1ZWUtYTM0NC00YTlhLThhNTQtNzY4ZjNjYmMwMGI4IiwiZXhwIjoxNzEyNTA4MjUyfQ.IN-xplzG6Be9Tfwf7c52_OxEaeSOgGpGUYK-QJ8Mm4c"}`
       }
     })
     .then(response => response.json())
