@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Dashboard = ({sidebarToggle,setbarToggle}) => {
+const Dashboard = () => {
   return (
     <div >
       

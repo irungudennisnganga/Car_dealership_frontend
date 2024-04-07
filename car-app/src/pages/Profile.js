@@ -18,19 +18,7 @@ export default function Profile() {
             </div>
           </div>
         </div>
-        <div className="flex-1 m-3">
-          <div>
-            <div>SALES</div>
-          </div>
-          <div className="grid gap-2">
-            <p className="text-base "><span className='font-semibold'>Total sales made:</span>  20</p>
-            <p className="text-base "><span className='font-semibold'>Commission earned: </span> 200,000</p>
-          </div>
         </div>
-      </div>
-      <div className=' absolute right-6'>
-        <button className='bg-red-600 rounded p-1 m-1'>Log Out</button>
-      </div>
     </div>
   )
 }

@@ -11,6 +11,7 @@ const Inventory = lazy(() => import('./pages/Inventory'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Profile = lazy(() => import('./pages/Profile'));
 const Workers = lazy(() => import('./pages/Workers'));
+const WorkerByDetail = lazy(() => import('./pages/WorkerByDetail'));
 
 function App() {
   const [sidebarToggle, setbarToggle] = useState(false);
@@ -32,6 +33,8 @@ function App() {
           <Route path="/Inventory" element={<Inventory />} />
           <Route path="/workers" element={<Workers />} />
           <Route path="/dashboard" element={<Dashboard/>} />
+          <Route path="/workers/:username/:userid" element={<WorkerByDetail/>} />
+
           {/* Add other routes here */}
         </Routes>
       </Suspense>

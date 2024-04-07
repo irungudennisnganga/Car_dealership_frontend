@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Workers = () => {
   const [workers, setWorkers] = useState([]);
+  const navigate = useNavigate()
+
+  function navigatetouser(username, userid) {
+    navigate(`/workers/${username}/${userid}`);
+  }
 
   useEffect(() => {
     fetch('users', {
@@ -9,7 +15,7 @@ const Workers = () => {
       headers: {
         'Content-Type': 'application/json',
         // Include your JWT token for authentication if required
-        'Authorization': `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjMwMzgzOSwianRpIjoiOTEzODdhN2EtYWU4ZS00NjdkLWEzMWQtMGY2MDlhYWJlZDA0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzEyMzAzODM5LCJjc3JmIjoiOWZjODI4OGItMjlkOS00YmU5LTk2NjctMTczYWEwZmY5YTZjIiwiZXhwIjoxNzEyMzMyNjM5fQ.Fo7iR36bFQ5KM5VPRdBG5vW_Vt1r6XOUj8pluZC6_uY"}`
+        'Authorization': `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjMzMjk1NSwianRpIjoiOTNmMWNjMzktY2Q4Yi00ZThkLWFhYzQtZGU1NGRmYTMxYjFmIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzEyMzMyOTU1LCJjc3JmIjoiOGU4OTkzZTMtMTY0Ni00YWJlLWI4OWEtODJlMmE1MzE0ZjllIiwiZXhwIjoxNzEyMzYxNzU1fQ.3obO6ZLegGlPbmV1zEqbNg6ft3auRwM5fobbAbGJjzw"}`
       }
     })
     .then(response => response.json())
@@ -34,8 +40,8 @@ const Workers = () => {
           </tr>
         </thead>
         <tbody  style={{ marginTop: '1rem' }}>
-          {workers.map(worker => (
-            <tr key={worker.id}  >
+          {workers?.map(worker => (
+            <tr key={worker.id}  onClick={()=>navigatetouser(worker.first_name,worker.id)} >
               <td className="w-1/4 border-transparent text-left py-2">{worker.first_name} {worker.last_name}</td>
               <td className="w-1/4 border-transparent text-left py-2">{worker.email}</td>
               <td className="w-1/4 border-transparent text-left py-2">{worker.contact}</td>
