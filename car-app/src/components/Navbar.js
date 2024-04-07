@@ -1,11 +1,13 @@
 import React from 'react';
-import { FaBars, FaSearch, FaBell, FaUserCircle } from 'react-icons/fa';
-import { Link, useLocation } from 'react-router-dom';
+import { FaBars, FaSearch, FaBell, FaUserCircle ,FaArrowLeft} from 'react-icons/fa';
+import { Link, useLocation ,useNavigate} from 'react-router-dom';
 
-const Navbar = ({ sidebarToggle, setbarToggle }) => {
-  const location = useLocation();
-  const pathnames = location.pathname.split('/').filter((path) => path);
+const Navbar = ({ sidebarToggle, setbarToggle ,user}) => {
 
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1); 
+  };
   return (
     <>
       <nav className="bg-Cyan50 px-4 py-3 flex justify-between">
@@ -32,26 +34,17 @@ const Navbar = ({ sidebarToggle, setbarToggle }) => {
           </div>
           <div>
             <ul>
-              <l1><h4>Stanley</h4></l1>
-              <l1><h5>Admin</h5></l1>
+              <l1><h4>{user.first_name}</h4></l1>
+              <l1><h5>{user.role}</h5></l1>
             </ul>
           </div>
         </div>
       </nav>
-      {pathnames.length > 0 && (
-        <ul className="flex gap-x-2 p-2">
-          {pathnames.map((path, index) => (
-            <React.Fragment key={index}>
-              <li>
-                <Link to={`/${path}`}>{path}</Link>
-              </li>
-              {index < pathnames.length - 1 && (
-                <li>&gt;</li> 
-              )}
-            </React.Fragment>
-          ))}
-        </ul>
-      )}
+      
+
+    
+    <FaArrowLeft className='w-7 h-7 mt-2 pt-1' onClick={goBack} />
+            
     </>
   )
 }

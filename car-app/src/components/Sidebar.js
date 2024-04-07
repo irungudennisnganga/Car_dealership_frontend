@@ -14,7 +14,7 @@ const Sidebar = ({ sidebarToggle }) => {
       <ul className='mt-3 text-white font-bold px-4 py-2'>
         <li className='bg-cyan300 py-2 p-4 rounded-md hover:shadow hover:bg-cyan400 my-2.5'>
           <FontAwesomeIcon icon={faTachometerAlt} className='inline-block w-6 h-6 mr-2 -mt-2' />
-          <Link to="/dashboard" className='p-2'>
+          <Link to="/" className='p-2'>
             Dashboard
           </Link>
         </li>

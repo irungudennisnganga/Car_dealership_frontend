@@ -15,7 +15,7 @@ const Workers = () => {
       headers: {
         'Content-Type': 'application/json',
         // Include your JWT token for authentication if required
-        'Authorization': `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjQ3OTQ1MiwianRpIjoiMTMwYWNjMjItYjNhNi00MDEzLTk2MzAtMDJhZDI4NTk3NWZkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzEyNDc5NDUyLCJjc3JmIjoiZTc4OGQ1ZWUtYTM0NC00YTlhLThhNTQtNzY4ZjNjYmMwMGI4IiwiZXhwIjoxNzEyNTA4MjUyfQ.IN-xplzG6Be9Tfwf7c52_OxEaeSOgGpGUYK-QJ8Mm4c"}`
+        'Authorization': `Bearer ${localStorage.getItem("jwt")}`
       }
     })
     .then(response => response.json())
