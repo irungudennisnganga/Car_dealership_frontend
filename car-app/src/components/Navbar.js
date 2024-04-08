@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaBars, FaSearch, FaBell, FaUserCircle ,FaArrowLeft} from 'react-icons/fa';
-import { Link, useLocation ,useNavigate} from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 
 const Navbar = ({ sidebarToggle, setbarToggle ,user}) => {
 
@@ -8,6 +8,10 @@ const Navbar = ({ sidebarToggle, setbarToggle ,user}) => {
   const goBack = () => {
     navigate(-1); 
   };
+
+  const userName = user ? user.first_name : "Guest";
+  const userRole = user ? user.role : "";
+  
   return (
     <>
       <nav className="bg-Cyan50 px-4 py-3 flex justify-between">
@@ -34,8 +38,8 @@ const Navbar = ({ sidebarToggle, setbarToggle ,user}) => {
           </div>
           <div>
             <ul>
-              <l1><h4>{user.first_name}</h4></l1>
-              <l1><h5>{user.role}</h5></l1>
+              <li><h4>{userName}</h4></li>
+              <li><h5>{userRole}</h5></li>
             </ul>
           </div>
         </div>
