@@ -1,5 +1,8 @@
-import React, { useState} from 'react';
+import React, { useState, useRef } from 'react';
+import imageplaceholder from '../images/imageplaceholder.jpg';
 import { useDropzone } from 'react-dropzone'; 
+import { useForm } from 'react-hook-form';
+
 
 
 
@@ -21,7 +24,8 @@ const Inventory = () => {
     const [fuel_type, setFueltype] = useState('');
     const [trim_level, setTrimlevel] = useState('');
     const [cylinder, setCylinder] = useState('');
-    const [images, setImages] = useState([]);
+    const [image, setImage] = useState(null); 
+    const inputRef = useRef(null);
     const [purchase_cost, setPurchasecost] = useState('');
     const [import_date, setImportdate] = useState('');
     const [year, setYear] = useState('');
@@ -30,35 +34,46 @@ const Inventory = () => {
     const [engine_size, setEnginesize] = useState('');
     const [condition, setCondition] = useState('');
     const [doors, setDoors] = useState('');
-    const [gallery_image, setGalleryimages] = useState([]);
+    const [gallery_images, setGalleryImages] = useState([]);
+    const {  handleSubmit } = useForm();
+    
 
+
+    
+    const handleImageClick = () => {
+        inputRef.current.click();
+    };
+
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        setImage(file);
+    };
 
    
-
-    const handleOnDrop = (acceptedFiles) => {
-        setImages([...images, ...acceptedFiles]);
+    const handleGallery = (acceptedFiles) => {
+        setGalleryImages([...gallery_images, ...acceptedFiles]);
     };
 
-    const { getRootProps, getInputProps } = useDropzone({ handleOnDrop });
+    const { getRootProps: getGalleryRootProps, getInputProps: getGalleryInputProps } = useDropzone({ onDrop: handleGallery });
 
 
-
-    const handleGalary = (acceptedFiles) => {
-        setGalleryimages([...gallery_image, ...acceptedFiles]);
+    const onSubmit = (data) => {
+        
+        console.log(data);
     };
 
-    const { getRootProps: getGalleryRootProps, getInputProps: getGalleryInputProps } = useDropzone({ handleGalary });
+
+
 
 
     
 
     return(
         
-        // <div className="flex flex-wrap justify-center w-full mt-8 ">
+       
              <div className="flex flex-wrap bg-slate200 rounded-lg border shadow-md justify-center mt-8 m-auto relative w-[850px] h-[1010px]">
            
-
-                <form className="flex flex-wrap w-full"> 
+                <form className="flex flex-wrap w-full" onSubmit={handleSubmit(onSubmit)}> 
                     <div className="w-full md:w-1/3 px-2 mb-2 p-8 bg-white rounded-lg shadow-md grid-cols-10 gap-4">
                         
                         <div className="mb-4 mt-8">
@@ -335,20 +350,19 @@ const Inventory = () => {
                             />
                         </div>
                         <div className="mb-4 mt-8">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="images">
-                                Image
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="year">
+                                Car Image
                             </label>
-                            <div {...getRootProps({ className: 'border rounded-md w-full py-2 px-3 dropzone' })}>
-                                 <input {...getInputProps()} />
-                                <p>click to add Image</p>
-                            </div>
-                            <div>
-                                {images.map(file => (
-                                    <div key={file.name}>
-                                        <img src={file.preview} alt={file.name} style={{ width: '100px' }} />
-                                        <p>{file.name} - {file.size} bytes</p>
-                                    </div>
-                                ))}
+                            
+                            <div onClick={handleImageClick} className='h-[40px] w-[60px] rounded-[2px] cursor-pointer relative'>
+                                <div>
+                                    {image ? (
+                                        <img className='w-full h-full object-cover' src={URL.createObjectURL(image)} alt="/"/>
+                                    ) : (
+                                        <img className='w-full h-full object-cover' src={imageplaceholder} alt="/" />
+                                    )}
+                                </div>
+                                <input type="file" ref={inputRef} onChange={handleImageChange} className='hidden'/>
                             </div>
                         </div>
 
@@ -482,14 +496,18 @@ const Inventory = () => {
                                 <p>click to select files</p>
                             </div>
                             <div>
-                                {gallery_image.map(file => (
+                                {gallery_images.map(file => (
                                     <div key={file.name}>
-                                        <img src={file.preview} alt={file.name} style={{ width: '100px' }} />
+                                        <img style={{ width: '100px' }} />
                                         <p>{file.name} - {file.size} bytes</p>
                                     </div>
                                 ))}
                             </div>
                         </div>
+
+                        <button type="submit" className="bg-cyan300 hover:shadow hover:bg-cyan40 text-white font-bold py-2 px-4 mt-4 border rounded-md w-full ">
+                            Submit
+                        </button>
 
 
                     </div>
@@ -500,7 +518,7 @@ const Inventory = () => {
             </div>
                 
                  
-        // </div>
+        
     )
 
 }

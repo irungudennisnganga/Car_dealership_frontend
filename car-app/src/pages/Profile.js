@@ -1,4 +1,4 @@
-import imageplaceholder from '../images/imageplaceholder.jpg';
+import React from "react"
 
 
 export default function Profile({user}) {
