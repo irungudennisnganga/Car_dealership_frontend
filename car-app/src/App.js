@@ -1,15 +1,51 @@
-import Sidebar from "./components/Sidebar";
-import AddUser from "./pages/AddUser";
-import Dashboard from "./pages/Dashboard";
-import { useState } from "react";
-import { Routes, Route, Navigate } from 'react-router-dom';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Login from "./components/Login";
+import Sidebar from './components/Sidebar';
+import Navbar from './components/Navbar';
+import Login from './components/Login';
+
+// Lazy loading components
+const AddUser = lazy(() => import('./pages/AddUser'));
+const Inventory = lazy(() => import('./pages/Inventory'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Profile = lazy(() => import('./pages/Profile'));
+const Workers = lazy(() => import('./pages/Workers'));
+const WorkerByDetail = lazy(() => import('./pages/WorkerByDetail'));
 
 function App() {
   const [sidebarToggle, setSidebarToggle] = useState(false);
+  const [user, setUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(localStorage.getItem('token') ? true : false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkSession = () => {
+      fetch(`/checksession`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem("jwt")}`
+        },
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Failed to check session');
+        }
+      })
+      .then(userData => {
+        setUser(userData);
+        navigate(window.location.pathname);
+      })
+      .catch(error => {
+        console.error('Error checking session:', error);
+      });
+    };
+
+    checkSession();
+  }, [navigate]);
 
   const handleLogin = () => {
     setLoggedIn(true);
@@ -24,9 +60,22 @@ function App() {
     <>
       <div className="flex">
         <ToastContainer />
-        {loggedIn && <Sidebar sidebarToggle={sidebarToggle} />}
-        {loggedIn && <Dashboard sidebarToggle={sidebarToggle} setSidebarToggle={setSidebarToggle} />}
+        {loggedIn && <Sidebar />}
+        <div className={`${loggedIn ? 'ml-64' : ''} w-full`}>
+          {loggedIn && <Navbar />}
+        </div>
       </div>
+
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/AddUser" element={<AddUser />} />
+          <Route path="/profile" element={<Profile user={user} />} />
+          <Route path="/Inventory" element={<Inventory />} />
+          <Route path="/workers" element={<Workers />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
+        </Routes>
+      </Suspense>
 
       <Routes>
         <Route path="/AddUser" element={<AddUser />} />

@@ -1,10 +1,12 @@
 import React, { useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import imageplaceholder from '../images/imageplaceholder.jpg';
 import PhoneInput from 'react-phone-number-input'; // Importing PhoneInput from the right module
 import 'react-phone-number-input/style.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-const AddUser = () => {
+const Updateworkerdetails = () => {
+    const { userid } = useParams();
     const inputRef = useRef(null);
     const [formData, setFormData] = useState({
         lastname: '',
@@ -47,10 +49,36 @@ const AddUser = () => {
         });
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         
         
-        
+
+        const url = `/user/${userid}`;
+        const formDataToSend = new FormData();
+        formDataToSend.append('first_name', formData.firstname);
+        formDataToSend.append('last_name', formData.lastname);
+        formDataToSend.append('email', formData.email);
+        formDataToSend.append('contact', formData.contact);
+        formDataToSend.append('image', formData.image);
+
+        try {
+            const response = await fetch(url, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("jwt")}`
+                },
+                body: formDataToSend
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to update user');
+            }
+
+            // Handle success, show notification, etc.
+        } catch (error) {
+            console.error('Error updating user:', error);
+            // Handle error, show error message, etc.
+        }
     }
 
     const handleContactChange = (phoneNumber) => {
@@ -66,9 +94,9 @@ const AddUser = () => {
             contact: cleanedPhoneNumber
         });
     }
-
+  
     return (
-        <div className="m-80 bg-slate200 rounded-lg overflow-hidden  mt-10 relative w-[700px] h-[300px]">
+        <div className="m-80 bg-slate200 rounded-lg overflow-hidden m-auto mt-10 relative w-[700px] h-[300px]">
             <div className="p-4">
                 <div className="flex items-center mb-4">
                     <label className="text-gray-700 flex-shrink-0" htmlFor="first-name">First Name</label>
@@ -132,11 +160,10 @@ const AddUser = () => {
                 </div>
             </div>
 
-            <button className="bg-cyan300 rounded-md hover:shadow  hover:bg-cyan400 text-white font-bold py-2 px-4  block mx-auto mt-4 my-2.5" onClick={handleSubmit}>Submit</button>
+            <button className="bg-cyan300 rounded-md hover:shadow  hover:bg-cyan400 my-2.5 text-white font-bold py-2 px-4  block mx-auto mt-4 my-2.5" onClick={handleSubmit}>Submit</button>
 
-            
         </div>
-    )
-}
+    );
+};
 
-export default AddUser;
+export default Updateworkerdetails;

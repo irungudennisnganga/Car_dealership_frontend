@@ -8,10 +8,12 @@ module.exports = {
     colors:{
       transparent: 'transparent',
       current: 'currentColor',
-      'Cyan50': '#ecfeff',
+      'cyan-50': '#ecfeff',
       'cyan300':'#a5f3fc',
       'cyan400':'#22d3ee',
-      "cardbackground":'#D9D9D9'
+      "cardbackground":'#D9D9D9',
+      'red-600':'#b91c1c',
+      "slate200":'#e2e8f0'
     },
   },
   plugins: [],
