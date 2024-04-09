@@ -19,7 +19,7 @@ function App() {
   const navigate = useNavigate()
 
   useEffect(()=>{
-    localStorage.setItem("jwt","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjUxNTYzMiwianRpIjoiODBhN2ZkNDctOWNhYS00ZWFiLWI0MDktNjRjNmE5ZGVkMzljIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzEyNTE1NjMyLCJjc3JmIjoiNmEwMDRiYTMtMTExZi00MTE1LWFjMjktZjUwMzY0NDg5M2M4IiwiZXhwIjoxNzEyNTQ0NDMyfQ.anYx0OzxZtJau2KKiC7i3UOUKNVLdZ32g8YujmhzouU")
+    localStorage.setItem("jwt","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjYwMTA0OSwianRpIjoiODcyZDUwODUtYTdiNy00Nzg4LTkxYzItOGNmMjZhMzkyNGNiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzEyNjAxMDQ5LCJjc3JmIjoiZWNjOTFmYTgtNWI1My00ZWNmLWIzN2YtNzNlNzRkZjZmMjE3IiwiZXhwIjoxNzEyNjI5ODQ5fQ.tHI6q-JZdC4OKbK2dkjOvB_UcI3Tmdc6sqzGdtT9Nvo")
   })
 
   useEffect(() => {
