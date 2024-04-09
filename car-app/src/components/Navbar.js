@@ -2,7 +2,7 @@ import React from 'react';
 import { FaBars, FaSearch, FaBell, FaUserCircle, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Navbar = ({ sidebarToggle, setbarToggle, user }) => {
+const Navbar = ({ sidebarToggle, setbarToggle, user ,handleLogout}) => {
   const navigate = useNavigate();
 
   // Simplified navigation functions
@@ -12,6 +12,8 @@ const Navbar = ({ sidebarToggle, setbarToggle, user }) => {
   // User information
   const userName = user ? user.first_name : "Guest";
   const userRole = user ? user.role : "";
+
+  
 
   return (
     <>
@@ -45,6 +47,7 @@ const Navbar = ({ sidebarToggle, setbarToggle, user }) => {
               <li><h5>{userRole}</h5></li>
             </ul>
           </div>
+      <button onClick={handleLogout}>log out</button>
         </div>
       </nav>
 

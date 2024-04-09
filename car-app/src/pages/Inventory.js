@@ -498,7 +498,7 @@ const Inventory = () => {
                             <div>
                                 {gallery_images.map(file => (
                                     <div key={file.name}>
-                                        <img style={{ width: '100px' }} />
+                                        <img style={{ width: '100px' }} alt='/' />
                                         <p>{file.name} - {file.size} bytes</p>
                                     </div>
                                 ))}

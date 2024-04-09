@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link} from 'react-router-dom';
 import logo from '../images/autocar.jpg';
 
 const Login = () => {
@@ -11,7 +11,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:5000/login', {
+            const response = await fetch('/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ const Login = () => {
                 throw new Error('Login failed');
             }
             const data = await response.json();
-            localStorage.setItem('token', data.access_token);
+            localStorage.setItem('jwt', data.access_token);
             console.log('Login successful');
             navigate('/dashboard'); // Redirect to dashboard on successful login
         } catch (error) {
@@ -58,12 +58,9 @@ const Login = () => {
                         required
                     />
                     <div className="mt-4 flex justify-between font-semibold text-sm">
-                        <a
-                            className="text-blue-600 hover:text-blue-700 hover:underline hover:underline-offset-4"
-                            href="#"
-                        >
-                            Forgot Password?
-                        </a>
+                        <Link to="/" className="text-blue-600 hover:text-blue-700 hover:underline hover:underline-offset-4">
+                        Forgot Password?
+                            </Link>
                     </div>
                     {error && (
                         <div className="text-red-500">{error}</div>

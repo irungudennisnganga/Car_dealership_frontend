@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../images/autocar.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTachometerAlt, faUserPlus, faUsers, faBoxOpen, faFileInvoice, faReceipt, faChartBar, faComment } from '@fortawesome/free-solid-svg-icons';
+import { faTachometerAlt, faUserPlus, faUsers, faBoxOpen, faFileInvoice, faReceipt, faChartBar } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 
 const Sidebar = ({ sidebarToggle }) => {
   return (
@@ -38,8 +39,14 @@ const Sidebar = ({ sidebarToggle }) => {
         </li>
         <li className='bg-cyan300 py-2 p-4 rounded-md hover:shadow hover:bg-cyan400 my-2.5'>
           <FontAwesomeIcon icon={faFileInvoice} className='inline-block w-6 h-6 mr-2 -mt-2' />
-          <Link to="/profile" className='p-2'>
+          <Link to="/invoice" className='p-2'>
             Invoice
+          </Link>
+        </li>
+        <li className='bg-cyan300 py-2 p-4 rounded-md hover:shadow hover:bg-cyan400 my-2.5'>
+          <FontAwesomeIcon icon={faChartLine} className='inline-block w-6 h-6 mr-2 -mt-2' />
+          <Link to="/sales" className='p-2'>
+            Sales
           </Link>
         </li>
         <li className='bg-cyan300 py-2 p-4 rounded-md hover:shadow hover:bg-cyan400 my-2.5'>
@@ -52,12 +59,6 @@ const Sidebar = ({ sidebarToggle }) => {
           <FontAwesomeIcon icon={faReceipt} className='inline-block w-6 h-6 mr-2 -mt-2' />
           <Link to="/receipt" className='p-2'>
             Receipt
-          </Link>
-        </li>
-        <li className='bg-cyan300 py-2 p-4 rounded-md hover:shadow hover:bg-cyan400 my-2.5'>
-          <FontAwesomeIcon icon={faComment} className='inline-block w-6 h-6 mr-2 -mt-2' />
-          <Link to="/notification" className='p-2'>
-            Notification
           </Link>
         </li>
       </ul>

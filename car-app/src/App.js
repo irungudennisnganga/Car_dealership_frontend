@@ -15,6 +15,7 @@ const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Profile = lazy(() => import('./pages/Profile'));
 const Workers = lazy(() => import('./pages/Workers'));
 const WorkerByDetail = lazy(() => import('./pages/WorkerByDetail'));
+const Sales = lazy(() => import('./pages/Sales'));
 
 
 
@@ -23,9 +24,9 @@ function App() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate()
 
-  useEffect(()=>{
-    localStorage.setItem("jwt","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjYwMTA0OSwianRpIjoiODcyZDUwODUtYTdiNy00Nzg4LTkxYzItOGNmMjZhMzkyNGNiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzEyNjAxMDQ5LCJjc3JmIjoiZWNjOTFmYTgtNWI1My00ZWNmLWIzN2YtNzNlNzRkZjZmMjE3IiwiZXhwIjoxNzEyNjI5ODQ5fQ.tHI6q-JZdC4OKbK2dkjOvB_UcI3Tmdc6sqzGdtT9Nvo")
-  })
+  // useEffect(()=>{
+  //   localStorage.setItem("jwt","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjYwMTA0OSwianRpIjoiODcyZDUwODUtYTdiNy00Nzg4LTkxYzItOGNmMjZhMzkyNGNiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzEyNjAxMDQ5LCJjc3JmIjoiZWNjOTFmYTgtNWI1My00ZWNmLWIzN2YtNzNlNzRkZjZmMjE3IiwiZXhwIjoxNzEyNjI5ODQ5fQ.tHI6q-JZdC4OKbK2dkjOvB_UcI3Tmdc6sqzGdtT9Nvo")
+  // })
 
   useEffect(() => {
     const checkSession = () => {
@@ -54,56 +55,54 @@ function App() {
       });
     };
 
-    // if (accessToken) {
+  
       checkSession();
-    // }
+    
   }, [navigate]);
   
 
-  const [loggedIn, setLoggedIn] = useState(localStorage.getItem('token') ? true : false);
+  const loggedIn = localStorage.getItem('jwt') ? true : false;
 
-  const handleLogin = () => {
-    setLoggedIn(true);
-  };
+  
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    setLoggedIn(false);
+    localStorage.removeItem('jwt');
+    navigate('/login'); // Ensure we redirect to login after logging out
   };
 
   return (
     
-      <div className="flex">
-        <ToastContainer />
-        {loggedIn && <Sidebar />}
-        <div className={`${loggedIn ? 'ml-64' : ''} w-full`}>
-          {loggedIn && <Navbar />}
+    <div className="flex">
+    <ToastContainer />
+    {loggedIn && (
+      <>
+        <Sidebar sidebarToggle={sidebarToggle} />
+          <div className={`${sidebarToggle ? '' : 'ml-64'} w-full `}>
+          <Navbar sidebarToggle={sidebarToggle} setbarToggle={setSidebarToggle} user={user} handleLogout={handleLogout}/>
+        
+          <Suspense fallback={<div>Loading...</div>}>
+            <Routes>
+              <Route path="/AddUser" element={<AddUser />} />
+              <Route path="/profile" element={<Profile user={user} />} />
+              <Route path="/Inventory" element={<Inventory />} />
+              <Route path="/workers" element={<Workers />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
+              <Route path="/sales" element={<Sales />} />
+              
+            </Routes>
+          </Suspense>
         </div>
-      <div className="flex">
-        <ToastContainer />
-        {loggedIn && <Sidebar sidebarToggle={sidebarToggle} />}
-        {loggedIn && <Dashboard sidebarToggle={sidebarToggle} setSidebarToggle={setSidebarToggle} />}
-      </div>
+      </>
+    )}
 
-      <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
-          <Route path="/AddUser" element={<AddUser />} />
-          <Route path="/profile" element={<Profile  user={user}/>} />
-          <Route path="/Inventory" element={<Inventory />} />
-          <Route path="/workers" element={<Workers />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
-        </Routes>
-      </Suspense>
-
+    {!loggedIn && (
       <Routes>
-        <Route path="/AddUser" element={<AddUser />} />
-        <Route path="/login" element={<Login onLogin={handleLogin} />} />
-        <Route path="/logout" element={<Navigate to="/login" replace />} />
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<Login  />} />
       </Routes>
-` `      </div>
-  );
+    )}
+  </div>
+);
 }
 
 export default App;
