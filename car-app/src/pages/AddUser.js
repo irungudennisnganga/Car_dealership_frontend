@@ -69,7 +69,7 @@ const AddUser = () => {
     }
 
     return (
-        <div className="m-80 bg-cardbackground rounded-lg overflow-hidden m-auto mt-10 relative w-[700px] h-[300px]">
+        <div className="m-80 bg-cardbackground rounded-lg overflow-hidden  mt-10 relative w-[700px] h-[300px]">
             <div className="p-4">
                 <div className="flex items-center mb-4">
                     <label className="text-gray-700 flex-shrink-0" htmlFor="first-name">First Name</label>
@@ -133,7 +133,7 @@ const AddUser = () => {
                 </div>
             </div>
 
-            <button className="bg-cyan300 rounded-md hover:shadow  hover:bg-cyan400 my-2.5 text-white font-bold py-2 px-4  block mx-auto mt-4 my-2.5" onClick={handleSubmit}>Submit</button>
+            <button className="bg-cyan300 rounded-md hover:shadow  hover:bg-cyan400 text-white font-bold py-2 px-4  block mx-auto mt-4 my-2.5" onClick={handleSubmit}>Submit</button>
 
             
         </div>
