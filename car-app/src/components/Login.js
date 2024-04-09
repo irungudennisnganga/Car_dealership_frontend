@@ -32,7 +32,7 @@ const Login = () => {
     };
 
     return (
-        <section className="h-screen flex flex-col md:flex-row justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0 bg-blue-900">
+        <section className="h-screen flex flex-col px-2 py-2 m-auto w-full md:flex-row justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0 bg-blue-900">
             <div className="md:w-1/3 max-w-lg ">
                 <img src={logo} alt="logo" />
             </div>
