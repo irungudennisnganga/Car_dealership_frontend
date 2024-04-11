@@ -83,7 +83,7 @@ function App() {
         
           <Suspense fallback={<div>Loading...</div>}>
             <Routes>
-              <Route path="/AddUser" element={<AddUser />} />
+              <Route path="/AddUser" element={<AddUser user={user}/>} />
               <Route path="/profile" element={<Profile user={user} />} />
               <Route path="/Inventory" element={<Inventory />} />
               <Route path="/workers" element={<Workers />} />
