@@ -7,11 +7,13 @@ import Navbar from './components/Navbar';
 
 // Lazy loading components
 const AddUser = lazy(() => import('./pages/AddUser'));
-const Inventory = lazy(() => import('./pages/Inventory'));
+const AddInventory = lazy(() => import('./pages/AddInventory'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Profile = lazy(() => import('./pages/Profile'));
 const Workers = lazy(() => import('./pages/Workers'));
 const WorkerByDetail = lazy(() => import('./pages/WorkerByDetail'));
+const Inventory = lazy(() => import('./pages/Inventory'));
+
 
 function App() {
   const [sidebarToggle, setbarToggle] = useState(false);
@@ -72,6 +74,7 @@ function App() {
           <Route path="/Inventory" element={<Inventory />} />
           <Route path="/workers" element={<Workers />} />
           <Route path="/dashboard" element={<Dashboard/>} />
+          <Route path="/display" element={<Display/>} />
           <Route path="/workers/:username/:userid" element={<WorkerByDetail/>} />
 
           {/* Add other routes here */}
