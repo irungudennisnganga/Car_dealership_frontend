@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import AddSales from './AddSales';
+import { useNavigate } from 'react-router-dom';
 
 const Sales = () => {
   const [sales, setSales] = useState([]);
+  const navigate = useNavigate()
+  function navigatetosale(saleid) {
+    navigate(`/sale/${saleid}`);
+  }
 
   useEffect(() => {
     fetch('/sellers', {
@@ -38,7 +43,7 @@ const Sales = () => {
         </thead>
         <tbody style={{ marginTop: '1rem' }}>
           {sales.map(sale => (
-            <tr key={sale.id}>
+            <tr key={sale.id} onClick={()=>navigatetosale(sale.id)}>
               <td className="border-transparent text-left py-2">{sale.customer.Names}</td>
               <td className="border-transparent text-left py-2">{sale.seller.Names}</td> 
               <td className="border-transparent text-left py-2">{sale.commision}</td>

@@ -38,7 +38,7 @@ const SellerSaleDashboard = () => {
         <div>
             
             <AddSales AddSales={handleAddSale} />
-            <table className="table-auto w-full table-fixed border-collapse ml-4">
+            <table className="table-auto w-full  border-collapse ml-4">
                 <thead>
                     <tr>
                         <th className="w-1/4 text-left py-2">Total Amount</th>

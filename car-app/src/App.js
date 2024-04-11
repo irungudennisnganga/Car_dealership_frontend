@@ -18,6 +18,7 @@ const Workers = lazy(() => import('./pages/Workers'));
 const WorkerByDetail = lazy(() => import('./pages/WorkerByDetail'));
 const Sales = lazy(() => import('./pages/Sales'));
 const SellerSaleDashboard = lazy(() => import('./pages/SellerSaleDashboard'));
+const SaleDetails = lazy(() => import('./pages/SaleDetails'));
 
 
 
@@ -85,7 +86,7 @@ function App() {
         
           <Suspense fallback={<div>Loading...</div>}>
             <Routes>
-              <Route path="/AddUser" element={<AddUser />} />
+              <Route path="/AddUser" element={<AddUser user={user}/>} />
               <Route path="/profile" element={<Profile user={user} />} />
               <Route path="/Inventory" element={<Inventory />} />
               <Route path="/workers" element={<Workers />} />
@@ -93,6 +94,7 @@ function App() {
               <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
               <Route path="/sales" element={<Sales />} />
               <Route path='/sellersaledashboard' element={<SellerSaleDashboard />} />
+              <Route path="/sale/:saleid" element={<SaleDetails />} />
               
             </Routes>
           </Suspense>
