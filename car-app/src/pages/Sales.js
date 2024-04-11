@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import AddSales from './AddSales';
 
 const Sales = () => {
   const [sales, setSales] = useState([]);
@@ -16,8 +17,13 @@ const Sales = () => {
     .catch(error => console.error("Failed to fetch sales data:", error));
   }, []);
 
+  const handleAddSale = (newSale) => {
+    setSales([...sales, newSale])
+  }
+
   return (
     <div className="bg-cardbackground m-auto mt-10 relative w-[1000px] h-auto mr-[50px] overflow-y-auto">
+      <AddSales onAddSale={handleAddSale} />
       <table className="table-auto w-full table-fixed border-collapse ml-4">
         <thead>
           <tr>

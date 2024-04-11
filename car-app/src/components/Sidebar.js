@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTachometerAlt, faUserPlus, faUsers, faBoxOpen, faFileInvoice, faReceipt, faChartBar } from '@fortawesome/free-solid-svg-icons';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 
-const Sidebar = ({ sidebarToggle }) => {
+const Sidebar = ({ sidebarToggle , user}) => {
   return (
     <div className={`${sidebarToggle ? "hidden" : "block"} w-64 bg-Cyan50 fixed h-full overscroll-auto`}>
       <div>

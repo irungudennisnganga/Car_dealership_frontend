@@ -8,6 +8,7 @@ import {  Navigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './components/Navbar';
 import Login from "./components/Login";
+// import SellerSaleDashboard from './pages/SellerSaleDashboard';
 // Lazy loading components
 const AddUser = lazy(() => import('./pages/AddUser'));
 const Inventory = lazy(() => import('./pages/Inventory'));
@@ -16,6 +17,8 @@ const Profile = lazy(() => import('./pages/Profile'));
 const Workers = lazy(() => import('./pages/Workers'));
 const WorkerByDetail = lazy(() => import('./pages/WorkerByDetail'));
 const Sales = lazy(() => import('./pages/Sales'));
+const SellerSaleDashboard = lazy(() => import('./pages/SellerSaleDashboard'));
+
 
 
 
@@ -76,7 +79,7 @@ function App() {
     <ToastContainer />
     {loggedIn && (
       <>
-        <Sidebar sidebarToggle={sidebarToggle} />
+        <Sidebar sidebarToggle={sidebarToggle} user={user} />
           <div className={`${sidebarToggle ? '' : 'ml-64'} w-full `}>
           <Navbar sidebarToggle={sidebarToggle} setbarToggle={setSidebarToggle} user={user} handleLogout={handleLogout}/>
         
@@ -89,6 +92,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
               <Route path="/sales" element={<Sales />} />
+              <Route path='/sellersaledashboard' element={<SellerSaleDashboard />} />
               
             </Routes>
           </Suspense>
