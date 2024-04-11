@@ -16,6 +16,7 @@ const Profile = lazy(() => import('./pages/Profile'));
 const Workers = lazy(() => import('./pages/Workers'));
 const WorkerByDetail = lazy(() => import('./pages/WorkerByDetail'));
 const Sales = lazy(() => import('./pages/Sales'));
+const SaleDetails = lazy(() => import('./pages/SaleDetails'));
 
 
 
@@ -89,6 +90,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
               <Route path="/sales" element={<Sales />} />
+              <Route path="/sale/:saleid" element={<SaleDetails />} />
               
             </Routes>
           </Suspense>
