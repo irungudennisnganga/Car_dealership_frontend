@@ -32,8 +32,8 @@ const Sales = () => {
       <table className="table-auto w-full table-fixed border-collapse ml-4">
         <thead>
           <tr>
-            <th className="w-1/4 text-left py-2">Customer Name</th>
             <th className="w-1/4 text-left py-2">Seller Name</th>
+            <th className="w-1/4 text-left py-2">Customer Name</th>
             <th className="w-1/4 text-left py-2">Commission</th>
             <th className="w-1/4 text-left py-2">Status</th>
             <th className="w-1/4 text-left py-2">Sale Date</th>
@@ -44,8 +44,8 @@ const Sales = () => {
         <tbody style={{ marginTop: '1rem' }}>
           {sales.map(sale => (
             <tr key={sale.id} onClick={()=>navigatetosale(sale.id)}>
-              <td className="border-transparent text-left py-2">{sale.customer.Names}</td>
               <td className="border-transparent text-left py-2">{sale.seller.Names}</td> 
+              <td className="border-transparent text-left py-2">{sale.customer.Names}</td>
               <td className="border-transparent text-left py-2">{sale.commision}</td>
               <td className="border-transparent text-left py-2">{sale.status}</td>
               <td className="border-transparent text-left py-2">{new Date(sale.sale_date).toLocaleDateString()}</td>

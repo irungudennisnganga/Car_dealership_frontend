@@ -22,7 +22,11 @@ const Login = () => {
                 throw new Error('Login failed');
             }
             const data = await response.json();
+            const expiresIn = data.expires_in; 
+            const expirationTime = Date.now() + expiresIn * 1000; // Convert expiresIn to milliseconds
             localStorage.setItem('jwt', data.access_token);
+            localStorage.setItem('tokenExpiration', expirationTime);
+           
             console.log('Login successful');
             navigate('/dashboard'); // Redirect to dashboard on successful login
         } catch (error) {

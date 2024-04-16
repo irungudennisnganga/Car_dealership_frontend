@@ -1,14 +1,11 @@
-import React, { lazy, Suspense, useState,useEffect } from 'react';
-import { Route, Routes,useNavigate  } from 'react-router-dom';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
+import { Route, Routes, useNavigate, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Sidebar from "./components/Sidebar";
-// import AddUser from "./pages/AddUser";
-// import Dashboard from "./pages/Dashboard";
-import {  Navigate } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './components/Navbar';
 import Login from "./components/Login";
-// import SellerSaleDashboard from './pages/SellerSaleDashboard';
+import 'react-toastify/dist/ReactToastify.css';
+
 // Lazy loading components
 const AddUser = lazy(() => import('./pages/AddUser'));
 const Inventory = lazy(() => import('./pages/Inventory'));
@@ -20,95 +17,76 @@ const Sales = lazy(() => import('./pages/Sales'));
 const SellerSaleDashboard = lazy(() => import('./pages/SellerSaleDashboard'));
 const SaleDetails = lazy(() => import('./pages/SaleDetails'));
 
-
-
-
 function App() {
   const [sidebarToggle, setSidebarToggle] = useState(false);
-  const [user, setUser] = useState(null);
-  const navigate = useNavigate()
-
-  // useEffect(()=>{
-  //   localStorage.setItem("jwt","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjYwMTA0OSwianRpIjoiODcyZDUwODUtYTdiNy00Nzg4LTkxYzItOGNmMjZhMzkyNGNiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzEyNjAxMDQ5LCJjc3JmIjoiZWNjOTFmYTgtNWI1My00ZWNmLWIzN2YtNzNlNzRkZjZmMjE3IiwiZXhwIjoxNzEyNjI5ODQ5fQ.tHI6q-JZdC4OKbK2dkjOvB_UcI3Tmdc6sqzGdtT9Nvo")
-  // })
+  const [user, setUser] = useState(() => JSON.parse(localStorage.getItem('user')));
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const checkSession = () => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
       fetch(`/checksession`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem("jwt")}`
+          'Authorization': `Bearer ${jwt}`
         },
-        // credentials: 'include'
       })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Failed to check session');
-        }
-      })
+      .then(response => response.ok ? response.json() : Promise.reject('Failed to check session'))
       .then(userData => {
         setUser(userData);
-        navigate(window.location.pathname); 
       })
       .catch(error => {
         console.error('Error checking session:', error);
-        
+        localStorage.removeItem('jwt');  // Clear JWT as the session is no longer valid
+        setUser(null);  // Clear user state
+        navigate('/login');
       });
-    };
-
-  
-      checkSession();
-    
+    }
   }, [navigate]);
-  
-
-  const loggedIn = localStorage.getItem('jwt') ? true : false;
-
-  
 
   const handleLogout = () => {
     localStorage.removeItem('jwt');
-    navigate('/login'); // Ensure we redirect to login after logging out
+    localStorage.removeItem('user');
+    setUser(null);
+    navigate('/login');
   };
 
   return (
-    
     <div className="flex">
-    <ToastContainer />
-    {loggedIn && (
-      <>
-        <Sidebar sidebarToggle={sidebarToggle} user={user} />
+      <ToastContainer />
+      {user ? (
+        <>
+          <Sidebar sidebarToggle={sidebarToggle} user={user} />
           <div className={`${sidebarToggle ? '' : 'ml-64'} w-full `}>
-          <Navbar sidebarToggle={sidebarToggle} setbarToggle={setSidebarToggle} user={user} handleLogout={handleLogout}/>
-        
-          <Suspense fallback={<div>Loading...</div>}>
-            <Routes>
-              <Route path="/AddUser" element={<AddUser user={user}/>} />
-              <Route path="/profile" element={<Profile user={user} />} />
-              <Route path="/Inventory" element={<Inventory />} />
-              <Route path="/workers" element={<Workers />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
-              <Route path="/sales" element={<Sales />} />
-              <Route path='/sellersaledashboard' element={<SellerSaleDashboard />} />
-              <Route path="/sale/:saleid" element={<SaleDetails />} />
-              
-            </Routes>
-          </Suspense>
-        </div>
-      </>
-    )}
-
-    {!loggedIn && (
-      <Routes>
-        <Route path="/login" element={<Login  />} />
-      </Routes>
-    )}
-  </div>
-);
+            <Navbar sidebarToggle={sidebarToggle} setSidebarToggle={setSidebarToggle} user={user} handleLogout={handleLogout} />
+            <Suspense fallback={<div>Loading...</div>}>
+              <Routes>
+                <Route path="/AddUser" element={<AddUser user={user} />} />
+                <Route path="/profile" element={<Profile user={user} />} />
+                <Route path="/Inventory" element={<Inventory />} />
+                <Route path="/workers" element={<Workers user={user} />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
+                <Route path="/sales" element={<Sales />} />
+                <Route path='/sellersaledashboard' element={<SellerSaleDashboard />} />
+                <Route path="/sale/:saleid" element={<SaleDetails Details />} />
+              </Routes>
+            </Suspense>
+          </div>
+        </>
+      ) : (
+        <Routes>
+          <Route path="*" element={<Navigate to="/login" replace />} />
+          <Route path="/login" element={<Login onLoginSuccess={(userData, jwtToken) => {
+            setUser(userData);
+            localStorage.setItem('jwt', jwtToken);
+            localStorage.setItem('user', JSON.stringify(userData));
+          }} />} />
+        </Routes>
+      )}
+    </div>
+  );
 }
 
 export default App;

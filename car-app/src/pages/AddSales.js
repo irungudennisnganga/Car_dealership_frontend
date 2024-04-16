@@ -18,7 +18,7 @@ const AddSales = ({ }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onAddSale(saleData);
+        // onAddSale(saleData);
         setSaleData({
             carId: '',
             buyerName: '',
