@@ -28,9 +28,7 @@ const Workers = ({user}) => {
   }, []);
 
   return (
-    <div className={
-      // `${user.role === 'super admin'? '':''} 
-      `bg-cardbackground m-auto mt-10 relative w-[900px] h-[500px] mr-[150px] overflow-y-auto`}>
+    <div className="bg-cardbackground m-auto mt-10 relative w-[900px] h-[500px] mr-[150px] overflow-y-auto">
       <table className="table-auto w-full table-fixed border-collapse ml-4">
         <thead>
           <tr>

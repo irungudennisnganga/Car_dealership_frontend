@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 const Sales = () => {
   const [sales, setSales] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
   function navigatetosale(saleid) {
     navigate(`/sale/${saleid}`);
   }
@@ -17,13 +18,18 @@ const Sales = () => {
     })
     .then(response => response.json())
     .then(data => {
-      setSales(data); 
+      // Sort the sales by date from latest to oldest
+      const sortedSales = data.sort((a, b) => new Date(b.sale_date) - new Date(a.sale_date));
+      setSales(sortedSales); 
     })
     .catch(error => console.error("Failed to fetch sales data:", error));
   }, []);
 
   const handleAddSale = (newSale) => {
-    setSales([...sales, newSale])
+    // When adding a new sale, also ensure it's added in the right order
+    const updatedSales = [...sales, newSale];
+    updatedSales.sort((a, b) => new Date(b.sale_date) - new Date(a.sale_date));
+    setSales(updatedSales);
   }
 
   return (
@@ -38,19 +44,17 @@ const Sales = () => {
             <th className="w-1/4 text-left py-2">Status</th>
             <th className="w-1/4 text-left py-2">Sale Date</th>
             <th className="w-1/4 text-left py-2">Vehicle Name</th>
-            
           </tr>
         </thead>
-        <tbody style={{ marginTop: '1rem' }}>
+        <tbody>
           {sales.map(sale => (
-            <tr key={sale.id} onClick={()=>navigatetosale(sale.id)}>
-              <td className="border-transparent text-left py-2">{sale.seller.Names}</td> 
+            <tr key={sale.id} onClick={() => navigatetosale(sale.id)}>
+              <td className="border-transparent text-left py-2">{sale.seller.Names}</td>
               <td className="border-transparent text-left py-2">{sale.customer.Names}</td>
               <td className="border-transparent text-left py-2">{sale.commision}</td>
               <td className="border-transparent text-left py-2">{sale.status}</td>
               <td className="border-transparent text-left py-2">{new Date(sale.sale_date).toLocaleDateString()}</td>
               <td className="border-transparent text-left py-2">{sale.inventory_id.name}</td>
-             
             </tr>
           ))}
         </tbody>

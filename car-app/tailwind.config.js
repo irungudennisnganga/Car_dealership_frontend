@@ -13,7 +13,8 @@ module.exports = {
       'cyan400':'#22d3ee',
       "cardbackground":'#D9D9D9',
       'red-600':'#b91c1c',
-      "slate200":'#e2e8f0'
+      "slate200":'#e2e8f0',
+      "blue-800":'#1e40af'
     },
   },
   plugins: [],
