@@ -16,6 +16,7 @@ const WorkerByDetail = lazy(() => import('./pages/WorkerByDetail'));
 const Sales = lazy(() => import('./pages/Sales'));
 const SellerSaleDashboard = lazy(() => import('./pages/SellerSaleDashboard'));
 const SaleDetails = lazy(() => import('./pages/SaleDetails'));
+const Invoice = lazy(()=>import('./pages/invoice'))
 
 function App() {
   const [sidebarToggle, setSidebarToggle] = useState(false);
@@ -69,6 +70,7 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
                 <Route path="/sales" element={<Sales />} />
+                <Route path="/invoice" element={<Invoice />} />
                 <Route path='/sellersaledashboard' element={<SellerSaleDashboard />} />
                 <Route path="/sale/:saleid" element={<SaleDetails Details />} />
               </Routes>
