@@ -51,7 +51,7 @@ const Updateworkerdetails = () => {
 
     const handleSubmit = async () => {
         
-        const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjQ3OTQ1MiwianRpIjoiMTMwYWNjMjItYjNhNi00MDEzLTk2MzAtMDJhZDI4NTk3NWZkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzEyNDc5NDUyLCJjc3JmIjoiZTc4OGQ1ZWUtYTM0NC00YTlhLThhNTQtNzY4ZjNjYmMwMGI4IiwiZXhwIjoxNzEyNTA4MjUyfQ.IN-xplzG6Be9Tfwf7c52_OxEaeSOgGpGUYK-QJ8Mm4c'; // Replace 'YOUR_JWT_TOKEN_HERE' with the actual JWT token
+        
 
         const url = `/user/${userid}`;
         const formDataToSend = new FormData();
@@ -63,9 +63,9 @@ const Updateworkerdetails = () => {
 
         try {
             const response = await fetch(url, {
-                method: 'PUT',
+                method: 'PATCH',
                 headers: {
-                    'Authorization': `Bearer ${jwtToken}`
+                    'Authorization': `Bearer ${localStorage.getItem("jwt")}`
                 },
                 body: formDataToSend
             });

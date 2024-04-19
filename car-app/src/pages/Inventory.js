@@ -1,64 +1,64 @@
-import React from 'react';
-
+import React, { useState, useEffect } from 'react';
+import PopUp from './PopUp'; 
 
 const Inventory = () => {
-  const menuItem = [
-    {
-      
-      image:
-        "https://images.pexels.com/photos/116675/pexels-photo-116675.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-        },
-    {
-      
-      image:
-        "https://images.pexels.com/photos/116675/pexels-photo-116675.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    },
-    {
-      
-      image:
-        "https://images.pexels.com/photos/116675/pexels-photo-116675.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    },
-    {
-    
-      image:
-        "https://images.pexels.com/photos/116675/pexels-photo-116675.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    },
-    {
-    
-      image:
-        "https://images.pexels.com/photos/116675/pexels-photo-116675.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    },
-    {
-    
-      image:
-        "https://images.pexels.com/photos/116675/pexels-photo-116675.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    }
-  ];
-  
+    const [openPopup, setOpenPopup] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [inventory, setInventory] = useState([]);
 
+    useEffect(() => {
+        fetch('/inventory', {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('jwt')}`
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            setInventory(data); 
+        })
+        .catch(error => {
+            console.error('There was a problem with your fetch operation:', error);
+        });
+    }, []); 
 
-  return (
-    <div className="flex flex-wrap bg-slate200 rounded-lg  shadow-md  mt-8 m-auto relative w-[1000px] h-[500px]">
-      {/* Card */}
+    const handleOpenPopup = (image) => {
+        setSelectedImage(image);
+        setOpenPopup(true);
+    };
 
-      {menuItem.map(({ image }, index) => {
-        return (
-          <div key={index} className="rounded-xl relative w-full md:w-1/3 px-2  bg-white shadow-md gap-4">
-            {/* Overlay */}
-            <div className="rounded-xl relative w-full md:w-1/3 px-2  bg-white shadow-md grid-cols-10 gap-4">
-            </div>
-            <img
-              className="max-h-[160px]  md:max-h-[200px] w-full object-cover rounded-xl"
-              src={image}
-              alt="/"
-            />
-          </div>
-        );
-      })}
-    </div>
-  );
+    const handleClosePopup = () => {
+        setSelectedImage(null);
+        setOpenPopup(false);
+    };
+
+    return (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {inventory.map(item => (
+                <div key={item.id}>
+                    <img
+                        src={item.image}
+                        alt={item.make}
+                        onClick={() => handleOpenPopup(item.image)}
+                        className="cursor-pointer"
+                    />
+                </div>
+            ))}
+
+            {openPopup && (
+                <PopUp
+                    openPopup={openPopup}
+                    closePopup={handleClosePopup}
+                    inventory={inventory.find(item => item.image === selectedImage)} 
+                />
+            )}
+        </div>
+    );
 };
 
-
-
-  export default Invetory;
+export default Inventory;

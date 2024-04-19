@@ -1,86 +1,102 @@
-import React, { lazy, Suspense, useState,useEffect } from 'react';
-import { Route, Routes,useNavigate  } from 'react-router-dom';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
+import { Route, Routes, useNavigate, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Sidebar from './components/Sidebar';
+import Sidebar from "./components/Sidebar";
 import Navbar from './components/Navbar';
+import Login from "./components/Login";
+import 'react-toastify/dist/ReactToastify.css';
 
 // Lazy loading components
 const AddUser = lazy(() => import('./pages/AddUser'));
-const AddInventory = lazy(() => import('./pages/AddInventory'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Profile = lazy(() => import('./pages/Profile'));
 const Workers = lazy(() => import('./pages/Workers'));
 const WorkerByDetail = lazy(() => import('./pages/WorkerByDetail'));
+const Sales = lazy(() => import('./pages/Sales'));
+const SellerSaleDashboard = lazy(() => import('./pages/SellerSaleDashboard'));
+const SaleDetails = lazy(() => import('./pages/SaleDetails'));
+const Invoice = lazy(()=>import('./pages/invoice'))
 const Inventory = lazy(() => import('./pages/Inventory'));
 
 
 function App() {
-  const [sidebarToggle, setbarToggle] = useState(false);
-  const [user, setUser] = useState(null);
-  const navigate = useNavigate()
-
-  useEffect(()=>{
-    localStorage.setItem("jwt","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjUxNTYzMiwianRpIjoiODBhN2ZkNDctOWNhYS00ZWFiLWI0MDktNjRjNmE5ZGVkMzljIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzEyNTE1NjMyLCJjc3JmIjoiNmEwMDRiYTMtMTExZi00MTE1LWFjMjktZjUwMzY0NDg5M2M4IiwiZXhwIjoxNzEyNTQ0NDMyfQ.anYx0OzxZtJau2KKiC7i3UOUKNVLdZ32g8YujmhzouU")
-  })
+  const [sidebarToggle, setSidebarToggle] = useState(false);
+  const [user, setUser] = useState(() => JSON.parse(localStorage.getItem('user')));
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const checkSession = () => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
       fetch(`/checksession`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem("jwt")}`
+          'Authorization': `Bearer ${jwt}`
         },
-        // credentials: 'include'
       })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Failed to check session');
-        }
-      })
+      .then(response => response.ok ? response.json() : Promise.reject('Failed to check session'))
       .then(userData => {
         setUser(userData);
-        navigate(window.location.pathname); 
       })
       .catch(error => {
         console.error('Error checking session:', error);
-        
+        localStorage.removeItem('jwt');  // Clear JWT as the session is no longer valid
+        setUser(null);  // Clear user state
+        navigate('/login');
       });
-    };
-
-    // if (accessToken) {
-      checkSession();
-    // }
+    }
   }, [navigate]);
-  
+
+  const handleLogout = () => {
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('user');
+    setUser(null);
+    navigate('/login');
+  };
 
   return (
-    <>
-      <div className="flex">
-        <ToastContainer />
-        <Sidebar sidebarToggle={sidebarToggle} />
-        <div className={`${sidebarToggle ? '' : 'ml-64'} w-full`}>
-          <Navbar sidebarToggle={sidebarToggle} setbarToggle={setbarToggle} user={user}/>
-        </div>
-      </div>
-
-      <Suspense fallback={<div>Loading...</div>}>
+    <div className="flex">
+      <ToastContainer />
+      {user ? (
+        <>
+          <Sidebar sidebarToggle={sidebarToggle} user={user} />
+          <div className={`${sidebarToggle ? '' : 'ml-64'} w-full `}>
+            <Navbar sidebarToggle={sidebarToggle} setSidebarToggle={setSidebarToggle} user={user} handleLogout={handleLogout} />
+            <Suspense fallback={<div>Loading...</div>}>
+              <Routes>
+                <Route path="/AddUser" element={<AddUser user={user} />} />
+                <Route path="/profile" element={<Profile user={user} />} />
+                <Route path="/Inventory" element={<Inventory />} />
+                <Route path="/workers" element={<Workers user={user} />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
+                <Route path="/sales" element={<Sales />} />
+                <Route path="/invoice" element={<Invoice />} />
+                <Route path='/sellersaledashboard' element={<SellerSaleDashboard />} />
+                <Route path="/sale/:saleid" element={<SaleDetails Details />} />
+              </Routes>
+            </Suspense>
+          </div>
+        </>
+      ) : (
         <Routes>
+          <Route path="*" element={<Navigate to="/login" replace />} />
+          <Route path="/login" element={<Login onLoginSuccess={(userData, jwtToken) => {
+            setUser(userData);
+            localStorage.setItem('jwt', jwtToken);
+            localStorage.setItem('user', JSON.stringify(userData));
+          }} />} />
           <Route path="/AddUser" element={<AddUser />} />
           <Route path="/profile" element={<Profile  user={user}/>} />
           <Route path="/Inventory" element={<Inventory />} />
           <Route path="/workers" element={<Workers />} />
           <Route path="/dashboard" element={<Dashboard/>} />
-          <Route path="/display" element={<Display/>} />
           <Route path="/workers/:username/:userid" element={<WorkerByDetail/>} />
 
           {/* Add other routes here */}
         </Routes>
-      </Suspense>
-    </>
+      )}
+    </div>
   );
 }
 
