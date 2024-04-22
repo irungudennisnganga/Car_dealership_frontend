@@ -8,7 +8,7 @@ const AccordionItem = ({ title, children }) => {
     };
   
     return (
-      <div className="border border-gray-300 rounded-md mb-2">
+      <div className="border border-gray-300 rounded-md mb-2 bg-cardbackground">
         <button
           onClick={toggleAccordion}
           className="w-full p-4 bg-gray-200 flex justify-between items-center"

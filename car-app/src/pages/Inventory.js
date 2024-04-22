@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PopUp from './PopUp'; 
+import AccordionItem from '../components/AccordionItem';
+import  AddInventory from './AddInventory'
 
 const Inventory = () => {
     const [openPopup, setOpenPopup] = useState(false);
@@ -38,6 +40,10 @@ const Inventory = () => {
     };
 
     return (
+        <>
+        <AccordionItem title='add inventory'>
+            <AddInventory/>
+        </AccordionItem>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {inventory.map(item => (
                 <div key={item.id}>
@@ -58,6 +64,7 @@ const Inventory = () => {
                 />
             )}
         </div>
+        </>
     );
 };
 
