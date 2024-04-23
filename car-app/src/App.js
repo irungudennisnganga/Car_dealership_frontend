@@ -71,12 +71,11 @@ function App() {
                 <Route path="/workers" element={<Workers user={user} />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
-<<<<<<< HEAD
-                <Route path="/sales" element={<Sales user={user} />} />
-=======
+
+                {/* <Route path="/sales" element={<Sales user={user} />} /> */}
                 <Route path="/sales" element={<Sales />} />
                 <Route path="/invoice" element={<Invoice />} />
->>>>>>> refs/remotes/origin/develop
+
                 <Route path='/sellersaledashboard' element={<SellerSaleDashboard />} />
                 <Route path="/sale/:saleid" element={<SaleDetails Details />} />
                 

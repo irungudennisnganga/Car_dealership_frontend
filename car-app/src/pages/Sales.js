@@ -103,7 +103,9 @@ const Sales = ({user}) => {
 
   return (
     <div className="bg-cardbackground m-auto mt-10 relative w-[1000px] h-auto mr-[50px] overflow-y-auto">
-      {user.role==="seller"&&(<AccordionItem title="Add Sale">
+      {user?
+        <div>
+        {user.role==="seller"&&(<AccordionItem title="Add Sale">
         <AddSales onAddSale={handleAddSale} />
       </AccordionItem>)} 
       
@@ -131,7 +133,9 @@ const Sales = ({user}) => {
           ))}
         </tbody>
       </table>
-    </div>
+</div>:<h2>null</h2>
+      }
+          </div>
   );
 };
 
