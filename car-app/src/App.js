@@ -17,6 +17,7 @@ const Sales = lazy(() => import('./pages/Sales'));
 const SellerSaleDashboard = lazy(() => import('./pages/SellerSaleDashboard'));
 const SaleDetails = lazy(() => import('./pages/SaleDetails'));
 
+
 function App() {
   const [sidebarToggle, setSidebarToggle] = useState(false);
   const [user, setUser] = useState(() => JSON.parse(localStorage.getItem('user')));
@@ -68,9 +69,11 @@ function App() {
                 <Route path="/workers" element={<Workers user={user} />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
-                <Route path="/sales" element={<Sales />} />
+                <Route path="/sales" element={<Sales user={user} />} />
                 <Route path='/sellersaledashboard' element={<SellerSaleDashboard />} />
                 <Route path="/sale/:saleid" element={<SaleDetails Details />} />
+                
+                
               </Routes>
             </Suspense>
           </div>
