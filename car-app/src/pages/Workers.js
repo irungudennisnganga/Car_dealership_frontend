@@ -41,7 +41,7 @@ const Workers = ({user}) => {
         </thead>
         <tbody  style={{ marginTop: '1rem' }}>
           {workers?.map(worker => (
-            <tr key={worker.id}  onClick={()=>navigatetouser(worker.first_name,worker.id)} >
+            <tr key={worker.id}  onClick={()=>navigatetouser(worker.first_name,worker.id)} className="cursor-pointer hover:bg-gray-100">
               <td className="w-1/4 border-transparent text-left py-2">{worker.first_name} {worker.last_name}</td>
               <td className="w-[250px] border-transparent text-left py-2">{worker.email}</td>
               <td className="w-1/4 border-transparent text-left py-2">{worker.contact}</td>

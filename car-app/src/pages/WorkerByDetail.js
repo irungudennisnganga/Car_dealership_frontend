@@ -56,18 +56,21 @@ console.log(worker)
               </div>
             </div>
           </div>
-          <div className="flex-1 m-3">
-            <div>
-              <div>Summary</div>
-            </div>
-            <div className="grid gap-2">
-              <p className="text-base "><span className='font-semibold'>Total sales :</span> {worker.sales ? worker.sales.length : 0}</p>
-              <p className="text-base "><span className='font-semibold'>Commission :</span> {worker.sales ? worker.sales.reduce((acc, sale) => acc + sale.commision, 0) : 0}</p>
-            </div>
-            
-
-            {/* Accordion for Update Worker Details */}
-          </div>
+          <div>
+  {worker.role === 'seller' && <div>Summary</div>}
+</div>
+<div className="grid gap-2">
+  {(worker.role === 'seller' ) && (
+    <>
+      <p className="text-base ">
+        <span className='font-semibold'>Total sales :</span> {worker.sales ? worker.sales.length : 0}
+      </p>
+      <p className="text-base ">
+        <span className='font-semibold'>Commission :</span> {worker.sales ? worker.sales.reduce((acc, sale) => acc + sale.commision, 0) : 0}
+      </p>
+    </>
+  )}
+</div>
         </div>
         </>
       )}

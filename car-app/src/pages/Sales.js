@@ -120,7 +120,7 @@ const Sales = ({user}) => {
         </thead>
         <tbody>
           {sales.map(sale => (
-            <tr key={sale.id} onClick={() => navigatetosale(sale.id)}>
+            <tr key={sale.id} onClick={() => navigatetosale(sale.id)} className="cursor-pointer hover:bg-gray-100">
               <td className="border-transparent text-left py-2">{sale.seller.Names}</td>
               <td className="border-transparent text-left py-2">{sale.customer.Names}</td>
               <td className="border-transparent text-left py-2">{sale.commision}</td>
