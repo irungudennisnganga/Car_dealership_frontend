@@ -2,7 +2,7 @@ import React from 'react';
 import { FaBars, FaSearch, FaBell, FaUserCircle, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Navbar = ({ sidebarToggle, setbarToggle, user ,handleLogout}) => {
+const Navbar = ({ sidebarToggle, setSidebarToggle, user ,handleLogout}) => {
   const navigate = useNavigate();
 
   // Simplified navigation functions
@@ -20,7 +20,7 @@ const Navbar = ({ sidebarToggle, setbarToggle, user ,handleLogout}) => {
       <nav className="bg-cyan-50 px-4 py-3 flex justify-between items-center">
         <div className='flex items-center text-xl'>
           {/* Improved accessibility with aria-label */}
-          <FaBars className='text-white mr-4 cursor-pointer' onClick={() => setbarToggle(!sidebarToggle)} aria-label="Toggle sidebar" />
+          <FaBars className='text-white mr-4 cursor-pointer' onClick={() => setSidebarToggle(!sidebarToggle)} aria-label="Toggle sidebar" />
           <span className='text-black font-semibold'>AutoCar</span>
         </div>
         <div className='flex items-center gap-x-5'>

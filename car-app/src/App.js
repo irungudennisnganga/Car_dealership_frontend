@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import Login from "./components/Login";
 import 'react-toastify/dist/ReactToastify.css';
 
+
 // Lazy loading components
 const AddUser = lazy(() => import('./pages/AddUser'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
@@ -17,7 +18,7 @@ const SellerSaleDashboard = lazy(() => import('./pages/SellerSaleDashboard'));
 const SaleDetails = lazy(() => import('./pages/SaleDetails'));
 const Invoice = lazy(()=>import('./pages/invoice'))
 const Inventory = lazy(() => import('./pages/Inventory'));
-
+const Invoicebysellername = lazy(()=>import('./pages/Invoicebysellername'))
 
 function App() {
   const [sidebarToggle, setSidebarToggle] = useState(false);
@@ -55,13 +56,16 @@ function App() {
   };
 
   return (
-    <div className="flex">
+      <>
       <ToastContainer />
       {user ? (
         <>
+        <div className="flex">
           <Sidebar sidebarToggle={sidebarToggle} user={user} />
           <div className={`${sidebarToggle ? '' : 'ml-64'} w-full `}>
             <Navbar sidebarToggle={sidebarToggle} setSidebarToggle={setSidebarToggle} user={user} handleLogout={handleLogout} />
+            </div>
+            </div>
             <Suspense fallback={<div>Loading...</div>}>
               <Routes>
                 <Route path="/AddUser" element={<AddUser user={user} />} />
@@ -74,12 +78,13 @@ function App() {
                 <Route path="/invoice" element={<Invoice />} />
                 <Route path='/sellersaledashboard' element={<SellerSaleDashboard />} />
                 <Route path="/sale/:saleid" element={<SaleDetails Details />} />
+                <Route path='/invoice/:username' element={<Invoicebysellername />}/>
               </Routes>
             </Suspense>
-          </div>
-        </>
-      ) : (
-        <Routes>
+            </>
+         
+        ) : (
+          <Routes>
           <Route path="*" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<Login onLoginSuccess={(userData, jwtToken) => {
             setUser(userData);
@@ -96,7 +101,8 @@ function App() {
           {/* Add other routes here */}
         </Routes>
       )}
-    </div>
+      </>
+   
   );
 }
 

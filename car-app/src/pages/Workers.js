@@ -10,7 +10,7 @@ const Workers = ({user}) => {
   }
 
   useEffect(() => {
-    fetch('users', {
+    fetch('/users', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
