@@ -18,11 +18,12 @@ const SellerSaleDashboard = lazy(() => import('./pages/SellerSaleDashboard'));
 const SaleDetails = lazy(() => import('./pages/SaleDetails'));
 const Invoice = lazy(()=>import('./pages/invoice'))
 const Inventory = lazy(() => import('./pages/Inventory'));
-const Invoicebysellername = lazy(()=>import('./pages/Invoicebysellername'))
+const Invoicebysellername = lazy(() => import('./pages/Invoicebysellername'))
+const InvoicebyId = lazy(()=>import('./pages/Invoicebyid'))
 
 function App() {
   const [sidebarToggle, setSidebarToggle] = useState(false);
-  const [user, setUser] = useState(() => JSON.parse(localStorage.getItem('user')));
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,6 +39,7 @@ function App() {
       .then(response => response.ok ? response.json() : Promise.reject('Failed to check session'))
       .then(userData => {
         setUser(userData);
+       
       })
       .catch(error => {
         console.error('Error checking session:', error);
@@ -76,12 +78,13 @@ function App() {
                 <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
 
                 {/* <Route path="/sales" element={<Sales user={user} />} /> */}
-                <Route path="/sales" element={<Sales />} />
-                <Route path="/invoice" element={<Invoice />} />
+              <Route path="/sales" element={<Sales user={ user} />} />
+              <Route path="/invoice" element={<Invoice user={ user} />} />
 
                 <Route path='/sellersaledashboard' element={<SellerSaleDashboard />} />
                 <Route path="/sale/:saleid" element={<SaleDetails Details />} />
-                <Route path='/invoice/:username' element={<Invoicebysellername />}/>
+              <Route path='/invoice/:username' element={<Invoicebysellername />} />
+              <Route path='/invoices/:invoiceid' element={<InvoicebyId />}/>
               </Routes>
             </Suspense>
             </>
