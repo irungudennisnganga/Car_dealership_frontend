@@ -30,7 +30,10 @@ const Invoice = ({ user }) => {
     }
   }, [user.role]);  // Depend on user.role to refetch when it changes
 
-  const navigateToDetail = (invoice, role) => {
+  const navigateToCreate = (invoiceId) => {
+    navigate(`/create-invoice/${invoiceId}`);
+  };
+const navigateToDetail = (invoice, role) => {
     if (role === 'admin' || role === 'super admin') {
       const firstName = invoice.seller_name.split(' ')[0]; // Extract first name
       navigate(`/invoice/${firstName}`);
@@ -38,7 +41,6 @@ const Invoice = ({ user }) => {
       navigate(`/invoices/${invoice.id}`);
     }
   };
-
   function formatDate(dateString) {
     const date = new Date(dateString);
     return `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}`;
@@ -46,6 +48,17 @@ const Invoice = ({ user }) => {
 
   return (
     <div className="bg-cardbackground m-auto mt-10 relative w-[1000px] h-auto mr-[50px] overflow-y-auto">
+      {user.role === 'seller' && (
+        <div className="p-4">
+          <button 
+            className="bg-cyan300 hover:bg-cyan400 text-white font-bold py-2 px-4 rounded"
+            onClick={() => navigateToCreate('new')} // Assuming 'new' indicates creating a new invoice
+          >
+            Create New Invoice
+          </button>
+        </div>
+      )}
+
       {invoices.length > 0 && (
         <table className="table-auto w-full table-fixed border-collapse ml-4">
           <thead>
@@ -55,7 +68,7 @@ const Invoice = ({ user }) => {
               {user.role === 'seller' && <th className="w-1/4 text-left py-2">Balance</th>}
               <th className="w-1/4 text-left py-2">{user.role === 'seller' ? 'Total Amount' : 'Total Sales'}</th>
               {user.role === 'seller' && <th className="w-1/4 text-left py-2">Installments</th>}
-              <th className="w-1/4 text-left py-2">Date</th>
+              {user.role === 'seller' && <th className="w-1/4 text-left py-2">Date</th>}
             </tr>
           </thead>
           <tbody>
@@ -66,7 +79,7 @@ const Invoice = ({ user }) => {
                 {user.role === 'seller' && <td className="border-transparent text-left py-2">{invoice.balance}</td>}
                 <td className="border-transparent text-left py-2">{user.role === 'seller' ? invoice.total_amount : invoice.total_sales}</td>
                 {user.role === 'seller' && <td className="border-transparent text-left py-2">{invoice.installments}</td>}
-                <td className="border-transparent text-left py-2">{formatDate(user.role === 'seller' ? invoice.created_at : invoice.date)}</td>
+                {user.role === 'seller' && <td className="border-transparent text-left py-2">{formatDate(user.role === 'seller' ? invoice.created_at : null)}</td>}
               </tr>
             ))}
           </tbody>

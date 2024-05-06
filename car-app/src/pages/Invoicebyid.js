@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import logo from '../images/autocar.jpg';
+import logo from '../images/autocar.jpg'; // Ensure the path is correct for your logo
 
 const Invoicebyid = () => {
     const [invoice, setInvoice] = useState(null);
@@ -26,15 +26,15 @@ const Invoicebyid = () => {
     }
 
     return (
-        <div className="max-w-4xl mx-auto my-10 bg-white shadow-md overflow-hidden mt-10 mr-[50px]">
+        <div className="invoice-container max-w-4xl mx-auto my-10 bg-white shadow-md overflow-hidden mt-10 pl-7">
             <div className="p-5 bg-blue-100 flex justify-between items-center">
                 <div>
                     <img src={logo} alt="Business Logo" className="h-16" />
                     <h1 className="text-lg font-bold">Business Name</h1>
                     <address className="not-italic">
                         Office Address<br/>
-                        By-pass,Kiambu road,<br/>
-                        Kiambu county,Kenya<br/>
+                        By-pass, Kiambu road,<br/>
+                        Kiambu county, Kenya<br/>
                         (+254) 123 456 7890
                     </address>
                 </div>
@@ -58,28 +58,27 @@ const Invoicebyid = () => {
                         </tr>
                     </thead>
                     <tbody className="bg-white">
-                       
-                            <tr key={invoice.id} className="bg-white border-b">
-                              <td className="px-6 py-4">{invoice.vehicle.make}  {invoice.vehicle.year}</td>
-                              <td className="px-6 py-4">{invoice.total_amount}</td>
-                                <td className="px-6 py-4">${invoice.amount_paid.toFixed(2)}</td>
-                                <td className="px-6 py-4">{invoice.balance}</td>
-                                {/* <td className="px-6 py-4">${(invoice.total_amount* invoice.quantity).toFixed(2)}</td> */}
-                            </tr>
-                       
+                        <tr key={invoice.id} className="bg-white border-b">
+                            <td className="px-6 py-4">{invoice.vehicle.make} {invoice.vehicle.year}</td>
+                            <td className="px-6 py-4">{invoice.total_amount}</td>
+                            <td className="px-6 py-4">${invoice.amount_paid.toFixed(2)}</td>
+                            <td className="px-6 py-4">{invoice.balance}</td>
+                        </tr>
                     </tbody>
                 </table>
                 <div className="text-right mt-4">
-                    {/* <p>Subtotal: ${invoice.subtotal.toFixed(2)}</p> */}
                     <p>Tax (15%): ${invoice.tax.toFixed(2)}</p>
-                    {/* <p>Discount (5%): -${invoice?.discount.toFixed(2)}</p>
-                    <p className="text-lg font-bold">Total Due: ${invoice?.total_due.toFixed(2)}</p> */}
                 </div>
             </div>
 
             <div className="bg-blue-100 p-4 text-sm text-gray-600">
                 <p>Thank you for your business</p>
                 <p>Questions? Email us at support@businessname.com</p>
+            </div>
+            <div className="text-center my-4">
+                <button onClick={() => window.print()} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Print Invoice
+                </button>
             </div>
         </div>
     );

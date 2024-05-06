@@ -3,31 +3,12 @@ import PopUp from './PopUp';
 import AccordionItem from '../components/AccordionItem';
 import  AddInventory from './AddInventory'
 
-const Inventory = () => {
+const Inventory = ({inventory}) => {
     const [openPopup, setOpenPopup] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
-    const [inventory, setInventory] = useState([]);
+    
 
-    useEffect(() => {
-        fetch('/inventory', {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('jwt')}`
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            setInventory(data); 
-        })
-        .catch(error => {
-            console.error('There was a problem with your fetch operation:', error);
-        });
-    }, []); 
+   
 
     const handleOpenPopup = (image) => {
         setSelectedImage(image);

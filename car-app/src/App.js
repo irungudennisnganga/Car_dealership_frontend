@@ -19,11 +19,14 @@ const SaleDetails = lazy(() => import('./pages/SaleDetails'));
 const Invoice = lazy(()=>import('./pages/invoice'))
 const Inventory = lazy(() => import('./pages/Inventory'));
 const Invoicebysellername = lazy(() => import('./pages/Invoicebysellername'))
-const InvoicebyId = lazy(()=>import('./pages/Invoicebyid'))
+const InvoicebyId = lazy(() => import('./pages/Invoicebyid'))
+const NewInvoice = lazy(()=>import('./pages/NewInvoice'))
 
 function App() {
   const [sidebarToggle, setSidebarToggle] = useState(false);
   const [user, setUser] = useState(null);
+  const [inventory, setInventory] = useState([]);
+  const[customer,setCustomer]=useState([])
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -57,6 +60,50 @@ function App() {
     navigate('/login');
   };
 
+
+   useEffect(() => {
+        fetch('/inventory', {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('jwt')}`
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            setInventory(data); 
+        })
+        .catch(error => {
+            console.error('There was a problem with your fetch operation:', error);
+        });
+   }, []); 
+  
+  
+  
+   useEffect(() => {
+        fetch('/customerdetails', {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('jwt')}`
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            setCustomer(data); 
+        })
+        .catch(error => {
+            console.error('There was a problem with your fetch operation:', error);
+        });
+    }, []); 
   return (
       <>
       <ToastContainer />
@@ -72,7 +119,7 @@ function App() {
               <Routes>
                 <Route path="/AddUser" element={<AddUser user={user} />} />
                 <Route path="/profile" element={<Profile user={user} />} />
-                <Route path="/Inventory" element={<Inventory />} />
+              <Route path="/Inventory" element={<Inventory inventory={ inventory} />} />
                 <Route path="/workers" element={<Workers user={user} />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
@@ -82,9 +129,10 @@ function App() {
               <Route path="/invoice" element={<Invoice user={ user} />} />
 
                 <Route path='/sellersaledashboard' element={<SellerSaleDashboard />} />
-                <Route path="/sale/:saleid" element={<SaleDetails Details />} />
+                <Route path="/sale/:saleid" element={<SaleDetails  />} />
               <Route path='/invoice/:username' element={<Invoicebysellername />} />
-              <Route path='/invoices/:invoiceid' element={<InvoicebyId />}/>
+              <Route path='/invoices/:invoiceid' element={<InvoicebyId />} />
+              <Route path='/create-invoice/:new' element={<NewInvoice customers={ customer} inventory={inventory} />} />
               </Routes>
             </Suspense>
             </>
