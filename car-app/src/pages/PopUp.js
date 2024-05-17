@@ -16,13 +16,13 @@ const PopUp = ({ openPopup, closePopup, inventory }) => {
       id='ModelContainer'
       onClick={handleLosePopUp}
       className='fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 z-50'>
-      <div className='relative p-4  bg-cyan400 w-10/12 md:w-3/4 lg:w-2/3 max-h-[90%] overflow-y-auto shadow-lg rounded-lg'>
+      <div className='relative p-4 bg-cyan400 w-10/12 md:w-3/4 lg:w-2/3 max-h-[90%] overflow-y-auto shadow-lg rounded-lg'>
         {/* First row */}
         <div className="grid grid-cols-1">
           <Carousel showArrows={true} showThumbs={false} showStatus={false} infiniteLoop={true}>
             {inventory.gallery.map((image, index) => (
               <div key={index}>
-                <img src={image} alt={`Gallery ${index + 1}`} />
+                <img className="h-[500px] object-cover" src={image} alt={`Gallery ${index + 1}`} />
               </div>
             ))}
           </Carousel>
