@@ -22,6 +22,7 @@ const AddSale = ({ sellerId, token }) => {
     useEffect(() => {
         const fetchCustomers = async () => {
             try {
+                // adjust this code to work as expected
                 const response = await fetch(`your-api-url/customers?sellerId=${sellerId}`, {
                     method: 'GET',
                     headers: {
@@ -41,6 +42,7 @@ const AddSale = ({ sellerId, token }) => {
 
         const fetchInventory = async () => {
             try {
+                // adjust this code to work as expected
                 const response = await fetch('your-api-url/inventory', {
                     method: 'GET',
                     headers: {
