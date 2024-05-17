@@ -35,9 +35,8 @@ function App() {
       fetch(`/checksession`, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${jwt}`
-        },
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`
+      },
       })
       .then(response => response.ok ? response.json() : Promise.reject('Failed to check session'))
       .then(userData => {
@@ -119,7 +118,7 @@ function App() {
               <Routes>
                 <Route path="/AddUser" element={<AddUser user={user} />} />
                 <Route path="/profile" element={<Profile user={user} />} />
-              <Route path="/Inventory" element={<Inventory inventory={ inventory} />} />
+              <Route path="/Inventory" element={<Inventory inventory={inventory} />} />
                 <Route path="/workers" element={<Workers user={user} />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />

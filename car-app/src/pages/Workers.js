@@ -13,7 +13,7 @@ const Workers = ({user}) => {
     fetch('/users', {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
+        
         // Include your JWT token for authentication if required
         'Authorization': `Bearer ${localStorage.getItem("jwt")}`
       }
@@ -28,14 +28,14 @@ const Workers = ({user}) => {
   }, []);
 
   return (
-    <div className="bg-cardbackground m-auto mt-10 relative w-[900px] h-[500px] mr-[150px] overflow-y-auto">
+    <div className="bg-cardbackground m-72 mt-10 relative w-[900px] h-[500px] mr-[150px] overflow-y-auto">
       <table className="table-auto w-full table-fixed border-collapse ml-4">
         <thead>
           <tr>
             <th className="w-1/4 text-left py-2">Name</th>
             <th className="w-[250px] text-left py-2">Email</th>
             <th className="w-1/4 text-left py-2">Contact</th>
-            {user.role==='super admin' && <th className="w-1/4 text-left py-2">Role</th>}
+            {/* {user.role==='super admin' && <th className="w-1/4 text-left py-2">Role</th>} */}
             <th className="w-1/4 text-left py-2">Actions</th>
           </tr>
         </thead>

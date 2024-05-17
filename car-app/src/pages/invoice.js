@@ -47,7 +47,7 @@ const navigateToDetail = (invoice, role) => {
   }
 
   return (
-    <div className="bg-cardbackground m-auto mt-10 relative w-[1000px] h-auto mr-[50px] overflow-y-auto">
+    <div className="bg-cardbackground m-72 mt-10 relative w-[1000px] h-auto mr-[50px] overflow-y-auto">
       {user.role === 'seller' && (
         <div className="p-4">
           <button 

@@ -4,7 +4,7 @@ import imageplaceholder from '../images/imageplaceholder.jpg';
 import PhoneInput from 'react-phone-number-input'; // Importing PhoneInput from the right module
 import 'react-phone-number-input/style.css';
 import 'react-toastify/dist/ReactToastify.css';
-
+import Swal from 'sweetalert2'
 const Updateworkerdetails = () => {
     const { userid } = useParams();
     const inputRef = useRef(null);
@@ -71,8 +71,21 @@ const Updateworkerdetails = () => {
             });
 
             if (!response.ok) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'User Not Updated Successful! Please Try Again',
+                    icon: 'error',
+                    confirmButtonText: 'Try Again!'
+                  })
                 throw new Error('Failed to update user');
             }
+
+            Swal.fire({
+                title: 'Success!',
+                text: 'User Updated Successfully',
+                icon: 'Success',
+                confirmButtonText: 'Cool'
+              })
 
             // Handle success, show notification, etc.
         } catch (error) {

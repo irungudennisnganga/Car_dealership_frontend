@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import imageplaceholder from '../images/imageplaceholder.jpg';
 import { useDropzone } from 'react-dropzone'; 
 import { useForm } from 'react-hook-form';
-
+import Swal from 'sweetalert2'
 
 
 
@@ -58,7 +58,7 @@ const AddInventory = () => {
 
 
     const onSubmit = (data) => {
-        
+        // Add a post request to post rhe inventory to our backend
         console.log(data);
     };
 

@@ -38,7 +38,7 @@ const Invoicebysellername = () => {
     navigate(`/invoices/${invoiceid}`)
   }
   return (
-   <div className="bg-cardbackground m-auto mt-10 relative w-[1000px] h-auto mr-[50px] overflow-y-auto">
+   <div className="bg-cardbackground m-72 mt-10 relative w-[1000px] h-auto mr-[50px] overflow-y-auto">
      
       
       <table className="table-auto w-full table-fixed border-collapse ml-4">

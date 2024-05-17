@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
-
+import Swal from 'sweetalert2'
 const AddSale = ({ sellerId, token }) => {
     const [selectedStatus, setSelectedStatus] = useState('');
     const [selectedCustomer, setSelectedCustomer] = useState('');

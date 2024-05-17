@@ -102,7 +102,7 @@ const Sales = ({user}) => {
   }
 
   return (
-    <div className="bg-cardbackground m-auto mt-10 relative w-[1000px] h-auto mr-[50px] overflow-y-auto">
+    <div className="bg-cardbackground m-72 mt-10 relative w-[1000px] h-auto mr-[50px] overflow-y-auto">
       {user?
         <div>
         {user.role==="seller"&&(<AccordionItem title="Add Sale">

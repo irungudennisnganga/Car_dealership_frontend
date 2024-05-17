@@ -21,7 +21,7 @@ const Inventory = ({inventory}) => {
     };
 
     return (
-        <>
+        <div className='m-72 mt-0'>
         <AccordionItem title='add inventory'>
             <AddInventory/>
         </AccordionItem>
@@ -32,11 +32,11 @@ const Inventory = ({inventory}) => {
                         src={item.image}
                         alt={item.make}
                         onClick={() => handleOpenPopup(item.image)}
-                        className="cursor-pointer"
+                        className="cursor-pointer w-full h-auto mt-1 mb-4 object-cover"
                     />
                 </div>
             ))}
-
+        </div>
             {openPopup && (
                 <PopUp
                     openPopup={openPopup}
@@ -44,8 +44,8 @@ const Inventory = ({inventory}) => {
                     inventory={inventory.find(item => item.image === selectedImage)} 
                 />
             )}
+        
         </div>
-        </>
     );
 };
 

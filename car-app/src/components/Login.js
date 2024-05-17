@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate ,Link} from 'react-router-dom';
 import logo from '../images/autocar.jpg';
-
+import Swal from 'sweetalert2'
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -19,16 +19,29 @@ const Login = () => {
                 body: JSON.stringify({ email, password }),
             });
             if (!response.ok) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Wrong Credentials! Please try again',
+                    icon: 'error',
+                    confirmButtonText: 'Cancel'
+                  })
                 throw new Error('Login failed');
+                
             }
             const data = await response.json();
-            const expiresIn = data.expires_in; 
-            const expirationTime = Date.now() + expiresIn * 1000; // Convert expiresIn to milliseconds
+            // const expiresIn = data.expires_in; 
+            // const expirationTime = Date.now() + expiresIn * 1000; // Convert expiresIn to milliseconds
             localStorage.setItem('jwt', data.access_token);
-            localStorage.setItem('tokenExpiration', expirationTime);
+            // localStorage.setItem('tokenExpiration', expirationTime);
            
-            console.log('Login successful');
-            navigate('/dashboard'); // Redirect to dashboard on successful login
+            // console.log('Login successful');
+            navigate('/dashboard');
+            Swal.fire({
+                title: 'Success!',
+                text: 'Welcome🎉, Login successful',
+                icon: 'success',
+                confirmButtonText: 'Cool'
+              }) // Redirect to dashboard on successful login
         } catch (error) {
             console.error('Login failed:', error);
             setError('Login failed. Please check your credentials.');
