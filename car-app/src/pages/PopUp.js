@@ -1,7 +1,7 @@
 import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-
+import './Popup.css'
 const PopUp = ({ openPopup, closePopup, inventory }) => {
   const handleLosePopUp = (e) => {
     if (e.target.id === 'ModelContainer') {
@@ -63,7 +63,8 @@ const PopUp = ({ openPopup, closePopup, inventory }) => {
        
         {/* Close button */}
         <div className="flex justify-center mt-5">
-          <button onClick={closePopup} className="bg-gray-300 text-gray-600 hover:bg-gray-400 py-2 px-4 rounded-md">Close</button>
+          {/* remeber to correct this stylings  */}
+          <button onClick={closePopup} className="close hover:bg-blue-800 font-bold  py-2 px-4 rounded-md">Close</button>
         </div>
       </div>
     </div>

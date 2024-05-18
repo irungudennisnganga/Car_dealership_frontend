@@ -2,12 +2,9 @@ import React, { useState, useRef } from 'react';
 import imageplaceholder from '../images/imageplaceholder.jpg';
 import { useDropzone } from 'react-dropzone'; 
 import { useForm } from 'react-hook-form';
-import Swal from 'sweetalert2'
-
-
+import Swal from 'sweetalert2';
 
 const AddInventory = () => {
-    
     const [make, setMake] = useState('');
     const [price, setPrice] = useState('');
     const [color, setColor] = useState('');
@@ -17,7 +14,7 @@ const AddInventory = () => {
     const [features, setFeatures] = useState('');
     const [stock_number, setStocknumber] = useState('');
     const [country_of_origin, setCountryoforigin] = useState('');
-    const [import_document, setImportdocument] = useState('');
+    const [import_document, setImportdocument] = useState(null);
     const [model, setModel] = useState('');
     const [currency, setCurrency] = useState('');
     const [mileage, setMileage] = useState('');
@@ -35,11 +32,8 @@ const AddInventory = () => {
     const [condition, setCondition] = useState('');
     const [doors, setDoors] = useState('');
     const [gallery_images, setGalleryImages] = useState([]);
-    const {  handleSubmit } = useForm();
-    
+    const { handleSubmit } = useForm();
 
-
-    
     const handleImageClick = () => {
         inputRef.current.click();
     };
@@ -49,20 +43,62 @@ const AddInventory = () => {
         setImage(file);
     };
 
-   
     const handleGallery = (acceptedFiles) => {
         setGalleryImages([...gallery_images, ...acceptedFiles]);
     };
 
     const { getRootProps: getGalleryRootProps, getInputProps: getGalleryInputProps } = useDropzone({ onDrop: handleGallery });
 
+    const onSubmit = async (data) => {
+        const formData = new FormData();
+        formData.append('make', make);
+        formData.append('price', price);
+        formData.append('color', color);
+        formData.append('transmission', transmission);
+        formData.append('drive_type', drive_type);
+        formData.append('availability', availability);
+        formData.append('features', features);
+        formData.append('stock_number', stock_number);
+        formData.append('country_of_origin', country_of_origin);
+        formData.append('import_document', import_document);
+        formData.append('model', model);
+        formData.append('currency', currency);
+        formData.append('mileage', mileage);
+        formData.append('fuel_type', fuel_type);
+        formData.append('trim_level', trim_level);
+        formData.append('cylinder', cylinder);
+        formData.append('image', image);
+        formData.append('purchase_cost', purchase_cost);
+        formData.append('import_date', import_date);
+        formData.append('year', year);
+        formData.append('vin', vin);
+        formData.append('body_type', body_type);
+        formData.append('engine_size', engine_size);
+        formData.append('condition', condition);
+        formData.append('doors', doors);
+        gallery_images.forEach((file, index) => {
+            formData.append(`gallery_images[${index}]`, file);
+        });
+console.log(gallery_images)
+        try {
+            const response = await fetch('/inventory', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+                  },
+                body: formData,
+            });
 
-    const onSubmit = (data) => {
-        // Add a post request to post rhe inventory to our backend
-        console.log(data);
+            if (response.ok) {
+                Swal.fire('Success', 'Inventory added successfully', 'success');
+            } else {
+                Swal.fire('Error', 'Failed to add inventory', 'error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            Swal.fire('Error', 'Failed to add inventory', 'error');
+        }
     };
-
-
 
     return(
         
@@ -187,7 +223,7 @@ const AddInventory = () => {
                       
                         <div className="mb-4 mt-8">
                                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="country">
-                                    Country
+                                    Country Of Origin
                                 </label>
                                 <input
                                     className="border rounded-md w-full py-2 px-3"
@@ -333,7 +369,7 @@ const AddInventory = () => {
                         </div>
                         <div className="mb-4 mt-8">
                             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="import_date">
-                                Start Date
+                                Import Date
                             </label>
                             <input
                                 className="border rounded-md w-full py-2 px-3"
@@ -493,9 +529,9 @@ const AddInventory = () => {
                             </div>
                             <div>
                                 {gallery_images.map(file => (
-                                    <div key={file.name}>
-                                        <image style={{ width: '100px' }} />
-                                        <p>{file.name} - {file.size} bytes</p>
+                                     <div key={file.name}>
+                                    <img style={{ width: '100px' }} src={URL.createObjectURL(file)} alt={file.name} />
+                                    <p>{file.name} - {file.size} bytes</p>
                                     </div>
                                 ))}
                             </div>

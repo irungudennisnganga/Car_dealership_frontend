@@ -28,7 +28,7 @@ function App() {
   const [inventory, setInventory] = useState([]);
   const[customer,setCustomer]=useState([])
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
@@ -41,6 +41,7 @@ function App() {
       .then(response => response.ok ? response.json() : Promise.reject('Failed to check session'))
       .then(userData => {
         setUser(userData);
+        
        
       })
       .catch(error => {
@@ -98,6 +99,7 @@ function App() {
         })
         .then(data => {
             setCustomer(data); 
+           
         })
         .catch(error => {
             console.error('There was a problem with your fetch operation:', error);
@@ -118,7 +120,7 @@ function App() {
               <Routes>
                 <Route path="/AddUser" element={<AddUser user={user} />} />
                 <Route path="/profile" element={<Profile user={user} />} />
-              <Route path="/Inventory" element={<Inventory inventory={inventory} />} />
+              <Route path="/Inventory" element={<Inventory inventory={inventory} user={user} />} />
                 <Route path="/workers" element={<Workers user={user} />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
@@ -132,6 +134,7 @@ function App() {
               <Route path='/invoice/:username' element={<Invoicebysellername />} />
               <Route path='/invoices/:invoiceid' element={<InvoicebyId />} />
               <Route path='/create-invoice/:new' element={<NewInvoice customers={ customer} inventory={inventory} />} />
+              <Route path="/" element={<Dashboard />} />
               </Routes>
             </Suspense>
             </>

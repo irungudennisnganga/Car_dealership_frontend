@@ -55,6 +55,7 @@ const Updateworkerdetails = () => {
 
         const url = `/user/${userid}`;
         const formDataToSend = new FormData();
+        // add id statment to check the values that are present to append them to the formdata
         formDataToSend.append('first_name', formData.firstname);
         formDataToSend.append('last_name', formData.lastname);
         formDataToSend.append('email', formData.email);
@@ -89,6 +90,12 @@ const Updateworkerdetails = () => {
 
             // Handle success, show notification, etc.
         } catch (error) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'User Not Updated Successful! Please Try Again',
+                icon: 'error',
+                confirmButtonText: 'Try Again!'
+              })
             console.error('Error updating user:', error);
             // Handle error, show error message, etc.
         }

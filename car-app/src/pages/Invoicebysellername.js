@@ -41,7 +41,7 @@ const Invoicebysellername = () => {
    <div className="bg-cardbackground m-72 mt-10 relative w-[1000px] h-auto mr-[50px] overflow-y-auto">
      
       
-      <table className="table-auto w-full table-fixed border-collapse ml-4">
+      <table className=" w-full table-fixed border-collapse ml-4">
         <thead>
           <tr>
             <th className="w-1/4 text-left py-2">Customer Name</th>
