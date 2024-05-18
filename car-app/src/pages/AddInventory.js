@@ -71,13 +71,13 @@ const AddInventory = () => {
         formData.append('purchase_cost', purchase_cost);
         formData.append('import_date', import_date);
         formData.append('year', year);
-        formData.append('vin', vin);
-        formData.append('body_type', body_type);
+        formData.append('VIN', vin);
+        formData.append('body_style', body_type);
         formData.append('engine_size', engine_size);
         formData.append('condition', condition);
         formData.append('doors', doors);
         gallery_images.forEach((file, index) => {
-            formData.append(`gallery_images[${index}]`, file);
+            formData.append(`gallery_images`, file);
         });
 console.log(gallery_images)
         try {
