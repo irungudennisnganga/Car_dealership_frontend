@@ -5,7 +5,7 @@ import Sidebar from "./components/Sidebar";
 import Navbar from './components/Navbar';
 import Login from "./components/Login";
 import 'react-toastify/dist/ReactToastify.css';
-
+import Receipt from './pages/Receipt';
 
 // Lazy loading components
 const AddUser = lazy(() => import('./pages/AddUser'));
@@ -124,6 +124,7 @@ function App() {
                 <Route path="/workers" element={<Workers user={user} />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
+                <Route path="/receipt" element={<Receipt user={ user} />} />
 
                 {/* <Route path="/sales" element={<Sales user={user} />} /> */}
               <Route path="/sales" element={<Sales user={ user} />} />

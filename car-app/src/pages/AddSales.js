@@ -23,7 +23,7 @@ const AddSale = ({ sellerId, token }) => {
         const fetchCustomers = async () => {
             try {
                 // adjust this code to work as expected
-                const response = await fetch(`your-api-url/customers?sellerId=${sellerId}`, {
+                const response = await fetch(`/customers`, {
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${token}`,
