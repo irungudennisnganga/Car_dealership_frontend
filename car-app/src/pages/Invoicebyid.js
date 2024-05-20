@@ -43,6 +43,7 @@ const Invoicebyid = () => {
                     <p className="text-sm">Date: {invoice.date_of_purchase}</p>
                     <p className="text-sm">To: {invoice.customer_name.name}</p>
                     <p className="text-sm">Address: {invoice.customer_name.address}</p>
+                    <p className="text-sm">Email: {invoice.customer_name.email}</p>
                 </div>
             </div>
 
@@ -50,7 +51,7 @@ const Invoicebyid = () => {
                 <table className="w-full text-sm text-left text-gray-500">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                         <tr>
-                            <th scope="col" className="px-6 py-3">Item Description</th>
+                            <th scope="col" className="px-6 py-3">Car Description</th>
                             <th scope="col" className="px-6 py-3">Total cost </th>
                             <th scope="col" className="px-6 py-3">Amount paid</th>
                             <th scope="col" className="px-6 py-3">Balance</th>
@@ -59,10 +60,12 @@ const Invoicebyid = () => {
                     </thead>
                     <tbody className="bg-white">
                         <tr key={invoice.id} className="bg-white border-b">
-                            <td className="px-6 py-4">{invoice.vehicle.make} {invoice.vehicle.year}</td>
+                            <td className="px-6 py-4">{invoice.vehicle.make}  {invoice.vehicle.model}    {invoice.vehicle.year}</td>
                             <td className="px-6 py-4">{invoice.total_amount}</td>
-                            <td className="px-6 py-4">${invoice.amount_paid.toFixed(2)}</td>
+                            <td className="px-6 py-4">{invoice.amount_paid.toFixed(2)}</td>
                             <td className="px-6 py-4">{invoice.balance}</td>
+                            <td className="px-6 py-4">{invoice.amount_paid.toFixed(2)}</td>
+                            
                         </tr>
                     </tbody>
                 </table>

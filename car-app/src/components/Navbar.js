@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaBars, FaSearch, FaBell, FaUserCircle, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
-import PopUp from '../pages/PopUp';
+// import PopUp from '../pages/PopUp';
 
 const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
   const navigate = useNavigate();

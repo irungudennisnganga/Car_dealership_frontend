@@ -6,7 +6,7 @@ import Navbar from './components/Navbar';
 import Login from "./components/Login";
 import 'react-toastify/dist/ReactToastify.css';
 import Receipt from './pages/Receipt';
-
+import Report from './pages/Report';
 // Lazy loading components
 const AddUser = lazy(() => import('./pages/AddUser'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
@@ -85,7 +85,7 @@ function App() {
   
   
    useEffect(() => {
-        fetch('/customerdetails', {
+        fetch('/customers', {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('jwt')}`
@@ -129,6 +129,7 @@ function App() {
                 {/* <Route path="/sales" element={<Sales user={user} />} /> */}
               <Route path="/sales" element={<Sales user={ user} />} />
               <Route path="/invoice" element={<Invoice user={ user} />} />
+              <Route path="/report" element={<Report user={ user} />} />
 
                 <Route path='/sellersaledashboard' element={<SellerSaleDashboard />} />
                 <Route path="/sale/:saleid" element={<SaleDetails  />} />

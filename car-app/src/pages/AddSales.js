@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
-import Swal from 'sweetalert2'
+// import Swal from 'sweetalert2'
 const AddSale = ({ sellerId, token }) => {
     const [selectedStatus, setSelectedStatus] = useState('');
     const [selectedCustomer, setSelectedCustomer] = useState('');
@@ -23,7 +23,7 @@ const AddSale = ({ sellerId, token }) => {
         const fetchCustomers = async () => {
             try {
                 // adjust this code to work as expected
-                const response = await fetch(`/customers`, {
+                const response = await fetch(`http://127.0.0.1:5555/customer`, {
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${token}`,

@@ -29,7 +29,7 @@ const NewInvoice = ({ customers, inventory }) => {
     const [error, setError] = useState(null);
     
 
-console.log(formData. date_of_purchase)
+  console.log(formData.date_of_purchase)
     const formatDate = (date) => {
   const d = new Date(date);
   let month = '' + (d.getMonth() + 1);

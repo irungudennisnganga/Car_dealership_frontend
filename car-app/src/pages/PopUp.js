@@ -22,7 +22,7 @@ const PopUp = ({ openPopup, closePopup, inventory }) => {
           <Carousel showArrows={true} showThumbs={false} showStatus={false} infiniteLoop={true}>
             {inventory.gallery.map((image, index) => (
               <div key={index}>
-                <img className="h-[700px] object-cover" src={image} alt={`Gallery ${index + 1}`} />
+                <img className="h-auto object-cover" src={image} alt={`Gallery ${index + 1}`} />
               </div>
             ))}
           </Carousel>

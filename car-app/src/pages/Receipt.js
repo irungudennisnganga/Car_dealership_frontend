@@ -55,9 +55,11 @@ const Receipt = ({ user }) => {
                         </div>
                         <div>
                             <h2 className="text-2xl font-semibold text-blue-600">RECEIPT</h2>
-                            <p className="text-sm">Date: {receipt.invoice.date}</p>
-                            <p className="text-sm">To: {receipt.customer.Names}</p>
-                            <p className="text-sm">Address: {receipt.customer.email}</p>
+                            <p className="text-sm">Date: {receipt.created_at}</p>
+                            <p className="text-sm">Customer: {receipt.customer.Names}</p>
+                            <p className="text-sm">Customer Email: {receipt.customer.email}</p>
+                            <p className="text-sm">Seller: {receipt.user.names}</p>
+                            <p className="text-sm">Seller Email: {receipt.user.email}</p>
                         </div>
                     </div>
 
@@ -65,7 +67,7 @@ const Receipt = ({ user }) => {
                         <table className="w-full text-sm text-left text-gray-500">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
-                                    <th scope="col" className="px-6 py-3">Item Description</th>
+                                    {/* <th scope="col" className="px-6 py-3">Item Description</th> */}
                                     <th scope="col" className="px-6 py-3">Total cost</th>
                                     <th scope="col" className="px-6 py-3">Amount paid</th>
                                     <th scope="col" className="px-6 py-3">Balance</th>
@@ -73,9 +75,9 @@ const Receipt = ({ user }) => {
                             </thead>
                             <tbody className="bg-white">
                                 <tr key={receipt.id} className="bg-white border-b">
+                                    {/* <td className="px-6 py-4">{receipt.invoice.total_amount}</td> */}
                                     <td className="px-6 py-4">{receipt.invoice.total_amount}</td>
-                                    <td className="px-6 py-4">{receipt.invoice.total_amount}</td>
-                                    <td className="px-6 py-4">${receipt.amount_paid.toFixed(2)}</td>
+                                    <td className="px-6 py-4">{receipt.amount_paid.toFixed(2)}</td>
                                     <td className="px-6 py-4">{receipt.invoice.balance}</td>
                                 </tr>
                             </tbody>

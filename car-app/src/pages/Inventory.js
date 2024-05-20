@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PopUp from './PopUp'; 
 import AccordionItem from '../components/AccordionItem';
 import  AddInventory from './AddInventory'
@@ -12,6 +12,7 @@ const Inventory = ({inventory, user}) => {
 
     const handleOpenPopup = (image) => {
         setSelectedImage(image);
+        console.log(image)
         setOpenPopup(true);
     };
 
@@ -28,14 +29,14 @@ const Inventory = ({inventory, user}) => {
             </AccordionItem>:null
             }
        
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 ">
             {inventory.map(item => (
-                <div key={item.id} className='bg-green-600 cursor-pointer' onClick={() => handleOpenPopup(item.image)}>
+                <div key={item.id} className='bg-green-600 cursor-pointer ' onClick={() => handleOpenPopup(item.image)}>
                     <img
                         src={item.image}
                         alt={item.make}
                         
-                        className="w-full h-auto mt-1 mb-4 object-cover"
+                        className="w-full h-96 mt-1 mb-4 object-cover"
                     />
                     <h4 className='font-bold text-blue-800'>{item.make}  --  {item.model}</h4>
                 </div>
