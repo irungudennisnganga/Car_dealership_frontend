@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useState, useEffect } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useNavigate, Navigate, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
@@ -28,6 +28,7 @@ function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
   const [inventory, setInventory] = useState([]);
   const [customer, setCustomer] = useState([]);
+  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
@@ -42,6 +43,9 @@ function App() {
       .then(response => response.ok ? response.json() : Promise.reject('Failed to check session'))
       .then(userData => {
         setUser(userData);
+        if (location.pathname === '/login') {
+          navigate('/', { replace: true });
+        }
       })
       .catch(error => {
         console.error('Error checking session:', error);
@@ -49,7 +53,7 @@ function App() {
         setUser(null);
       });
     }
-  }, [user]);
+  }, [user, location.pathname, navigate]);
 
   useEffect(() => {
     fetch('/inventory', {
@@ -92,11 +96,19 @@ function App() {
       console.error('Error fetching customers:', error);
     });
   }, []); 
-// this useEffect is used everytime a user refresh to stop taking the user to the login route
+
   useEffect(() => {
     // Save user to local storage on user change
     localStorage.setItem('user', JSON.stringify(user));
   }, [user]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('user');
+    setUser(null);
+    // Use location state to redirect to login route after logout
+    return <Navigate to="/login" replace />;
+  };
 
   return (
     <>
@@ -109,13 +121,10 @@ function App() {
               sidebarToggle={sidebarToggle}
               setSidebarToggle={setSidebarToggle}
               user={user}
-              handleLogout={() => {
-                localStorage.removeItem('jwt');
-                setUser(null);
-              }}
+              handleLogout={handleLogout}
             />
             <Suspense fallback={<div>Loading...</div>}>
-              <Routes location={location}>
+              <Routes>
                 <Route path="/AddUser" element={<AddUser user={user} />} />
                 <Route path="/profile" element={<Profile user={user} />} />
                 <Route path="/Inventory" element={<Inventory inventory={inventory} user={user} />} />
@@ -138,10 +147,15 @@ function App() {
         </div>
       ) : (
         // Route to login if user is not authenticated
-        <Login onLoginSuccess={(userData, jwtToken) => {
-          setUser(userData);
-          localStorage.setItem('jwt', jwtToken);
-        }} />
+        <Routes>
+          <Route path="*" element={<Navigate to="/login" replace />} />
+          <Route path="/login" element={<Login onLoginSuccess={(userData, jwtToken) => {
+            setUser(userData);
+            localStorage.setItem('jwt', jwtToken);
+            // Navigate to the dashboard after successful login
+            navigate('/dashboard', { replace: true });
+          }} />} />
+        </Routes>
       )}
     </>
   );
