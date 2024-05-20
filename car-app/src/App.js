@@ -5,7 +5,7 @@ import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 import Login from './components/Login';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { XlviLoader } from "react-awesome-loaders";
 // Lazy-loaded components
 const AddUser = lazy(() => import('./pages/AddUser'));
 const Profile = lazy(() => import('./pages/Profile'));
@@ -123,7 +123,11 @@ function App() {
               user={user}
               handleLogout={handleLogout}
             />
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<XlviLoader
+        boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
+        desktopSize={"128px"}
+        mobileSize={"100px"}
+      />}>
               <Routes>
                 <Route path="/AddUser" element={<AddUser user={user} />} />
                 <Route path="/profile" element={<Profile user={user} />} />

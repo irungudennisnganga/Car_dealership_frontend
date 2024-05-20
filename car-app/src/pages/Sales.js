@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import AddSales from './AddSales'; // Assuming you have an AddSales component
 import { useNavigate } from 'react-router-dom';
 import AccordionItem from '../components/AccordionItem';
+import { XlviLoader } from "react-awesome-loaders";
 
 const Sales = ({ user,customers }) => {
   const [sales, setSales] = useState([]);
@@ -54,7 +55,15 @@ const Sales = ({ user,customers }) => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return<div className="flex items-center justify-center h-screen">
+                
+    <XlviLoader
+        boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
+        desktopSize={"128px"}
+        mobileSize={"100px"}
+        className={'object-center'}
+    />
+</div>
   }
 
   if (error) {

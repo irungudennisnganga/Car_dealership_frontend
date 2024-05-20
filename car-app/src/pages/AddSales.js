@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types'
+import { XlviLoader } from "react-awesome-loaders";
+
 const AddSale = ({ sellerId, token, customer }) => {
     const [selectedStatus, setSelectedStatus] = useState('');
     const [selectedCustomer, setSelectedCustomer] = useState('');
@@ -142,7 +144,15 @@ const AddSale = ({ sellerId, token, customer }) => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return      <div className="flex items-center justify-center h-screen">
+                
+        <XlviLoader
+            boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
+            desktopSize={"128px"}
+            mobileSize={"100px"}
+            className={'object-center'}
+        />
+    </div>
     }
 
     return (

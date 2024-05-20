@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import PopUp from './PopUp'; 
 import AccordionItem from '../components/AccordionItem';
 import AddInventory from './AddInventory';
+import { XlviLoader } from "react-awesome-loaders";
 
 const Inventory = ({ inventory, user }) => {
   const [openPopup, setOpenPopup] = useState(false);
@@ -13,7 +14,15 @@ const Inventory = ({ inventory, user }) => {
   }, [user]);
 
   if (!user) {
-    return <div>Loading user information...</div>;
+    return <div className="flex items-center justify-center h-screen">
+                
+    <XlviLoader
+        boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
+        desktopSize={"128px"}
+        mobileSize={"100px"}
+        className={'object-center'}
+    />
+</div>
   }
 
   const handleOpenPopup = (image) => {

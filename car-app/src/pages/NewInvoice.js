@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import PropTypes from 'prop-types';
+import { XlviLoader } from "react-awesome-loaders";
+
 const NewInvoice = ({ customers, inventory }) => {
   const [formData, setFormData] = useState({
     date_of_purchase: '',
@@ -138,7 +140,17 @@ console.log(customers)
       setLoading(false);
     }
   };
-
+if (!loading){
+  return <div className="flex items-center justify-center h-screen">
+                
+  <XlviLoader
+      boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
+      desktopSize={"128px"}
+      mobileSize={"100px"}
+      className={'object-center'}
+  />
+</div>
+}
   return (
       <div className="bg-slate200 p-8 rounded-lg shadow-lg max-w-4xl mx-auto ">
           <Toaster/>
@@ -285,7 +297,7 @@ console.log(customers)
         </div>
         <div className="mt-6">
           <button type="submit" disabled={loading} className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500  bg-cyan300 hover:shadow hover:bg-cyan40 ">
-            {loading ? 'Creating...' : 'Create Invoice'}
+            {/* {loading ? 'Creating...' : 'Create Invoice'} */}
           </button>
         </div>
       </form>

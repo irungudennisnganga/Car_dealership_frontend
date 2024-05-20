@@ -1,15 +1,19 @@
 import React, { useState } from "react";
-import { useNavigate ,Link} from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import logo from '../images/autocar.jpg';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import { XlviLoader } from "react-awesome-loaders";
+
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false); // Start with false, loader is shown when set to true
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true); // Set loading to true when request starts
         try {
             const response = await fetch('/login', {
                 method: 'POST',
@@ -24,33 +28,43 @@ const Login = () => {
                     text: 'Wrong Credentials! Please try again',
                     icon: 'error',
                     confirmButtonText: 'Cancel'
-                  })
+                });
                 throw new Error('Login failed');
-                
             }
             const data = await response.json();
-            // const expiresIn = data.expires_in; 
-            // const expirationTime = Date.now() + expiresIn * 1000; // Convert expiresIn to milliseconds
             localStorage.setItem('jwt', data.access_token);
-            // localStorage.setItem('tokenExpiration', expirationTime);
-           
-            // console.log('Login successful');
-            navigate('/dashboard');
+            setLoading(false); // Set loading to false before navigating
             Swal.fire({
                 title: 'Success!',
                 text: 'Welcome🎉, Login successful',
                 icon: 'success',
                 confirmButtonText: 'Cool'
-              }) // Redirect to dashboard on successful login
+            });
+            navigate('/dashboard'); // Redirect to dashboard on successful login
         } catch (error) {
             console.error('Login failed:', error);
             setError('Login failed. Please check your credentials.');
+            setLoading(false); // Set loading to false in case of error
         }
     };
 
+    if (loading) { // Show loader when loading is true
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <h3>Wait For The Verification To Be Completed......</h3>
+                <XlviLoader
+                    boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
+                    desktopSize={"128px"}
+                    mobileSize={"100px"}
+                    className={'object-center'}
+                />
+            </div>
+        );
+    }
+
     return (
         <section className="h-screen flex flex-col px-2 py-2 m-auto w-full md:flex-row justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0 bg-blue-900">
-            <div className="md:w-1/3 max-w-lg ">
+            <div className="md:w-1/3 max-w-lg">
                 <img src={logo} alt="logo" />
             </div>
             <div className="md:w-1/3 max-w-sm">
@@ -76,8 +90,8 @@ const Login = () => {
                     />
                     <div className="mt-4 flex justify-between font-semibold text-sm">
                         <Link to="/" className="text-blue-600 hover:text-blue-700 hover:underline hover:underline-offset-4">
-                        Forgot Password?
-                            </Link>
+                            Forgot Password?
+                        </Link>
                     </div>
                     {error && (
                         <div className="text-red-500">{error}</div>
