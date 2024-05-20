@@ -5,6 +5,8 @@ import 'react-phone-number-input/style.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2'
+import PropTypes from 'prop-types';
+
 const AddUser = ({ user }) => {
   const inputRef = useRef(null);
   const [formData, setFormData] = useState({
@@ -213,6 +215,12 @@ const AddUser = ({ user }) => {
       <button className="bg-cyan300 rounded-md hover:shadow hover:bg-cyan400 text-white font-bold py-2 px-4 block mx-auto mt-4 my-2.5" onClick={handleSubmit}>Submit</button>
     </div>
   );
+};
+
+AddUser.propTypes = {
+  user: PropTypes.shape({
+    role: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default AddUser;

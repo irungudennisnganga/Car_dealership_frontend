@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import AddSales from './AddSales'; // Assuming you have an AddSales component
 import { useNavigate } from 'react-router-dom';
 import AccordionItem from '../components/AccordionItem';
@@ -103,6 +104,12 @@ const Sales = ({ user }) => {
       )}
     </div>
   );
+};
+
+Sales.propTypes = {
+  user: PropTypes.shape({
+    role: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default Sales;

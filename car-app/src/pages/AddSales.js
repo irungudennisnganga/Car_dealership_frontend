@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
-// import Swal from 'sweetalert2'
+
 const AddSale = ({ sellerId, token }) => {
     const [selectedStatus, setSelectedStatus] = useState('');
     const [selectedCustomer, setSelectedCustomer] = useState('');
     const [customers, setCustomers] = useState([]);
     const [inventory, setInventory] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [formData, setFormData] = useState({
-        status:"",
-        history:"",
-        discount:"",
-        discountPercentage: 0, // Added discountPercentage
-        sale_date:"",
-        customer_id:"",
-        inventory_id:"",
-        promotions:"",
-        commission:"",
-        commissionPercentage: 0, // Added commissionPercentage
+        status: "",
+        history: "",
+        discount: "",
+        discountPercentage: 0,
+        sale_date: "",
+        customer_id: "",
+        inventory_id: "",
+        promotions: "",
+        commission: "",
+        commissionPercentage: 0,
     });
 
     useEffect(() => {
         const fetchCustomers = async () => {
             try {
-                // adjust this code to work as expected
                 const response = await fetch(`http://127.0.0.1:5555/customer`, {
                     method: 'GET',
                     headers: {
@@ -42,7 +42,6 @@ const AddSale = ({ sellerId, token }) => {
 
         const fetchInventory = async () => {
             try {
-                // adjust this code to work as expected
                 const response = await fetch('/inventory', {
                     method: 'GET',
                     headers: {
@@ -57,6 +56,8 @@ const AddSale = ({ sellerId, token }) => {
                 setInventory(data.inventory);
             } catch (error) {
                 console.error(error);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -81,29 +82,29 @@ const AddSale = ({ sellerId, token }) => {
             return response.json();
         })
         .then(data => {
-            data.message
-            ?   
+            if (data.message) {
                 toast.success(data.message, {
                     position: "top-right",
                     autoClose: 2000,
                     onClose: () => {
                         setFormData({
-                            status:"",
-                            history:"",
-                            discount:"",
-                            sale_date:"",
-                            customer_id:"",
-                            inventory_id:"",
-                            promotions:"",
-                            commission:"",
+                            status: "",
+                            history: "",
+                            discount: "",
+                            sale_date: "",
+                            customer_id: "",
+                            inventory_id: "",
+                            promotions: "",
+                            commission: "",
                         });
                     }
-                })
-            :
+                });
+            } else {
                 toast.error(data.error, {
                     position: "top-right",
                     autoClose: 2000
                 });
+            }
         })
         .catch(error => {
             console.error('Error:', error);
@@ -127,17 +128,16 @@ const AddSale = ({ sellerId, token }) => {
     };
 
     const handleAmountChange = (event) => {
-      const price = event.target.value;
-      const discount = calculateDiscount(price, formData.discountPercentage);
-      const amount = price - discount;
-      setFormData({
-          ...formData,
-          discount,
-          amount,
-          discountPercentage: event.target.value // Update the discount percentage if needed
-      });
-  };
-  
+        const price = event.target.value;
+        const discount = calculateDiscount(price, formData.discountPercentage);
+        const amount = price - discount;
+        setFormData({
+            ...formData,
+            discount,
+            amount,
+            discountPercentage: event.target.value
+        });
+    };
 
     const handleDateChange = (event) => {
         setFormData({
@@ -176,6 +176,10 @@ const AddSale = ({ sellerId, token }) => {
             inventory_id: event.target.value
         });
     };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div>
