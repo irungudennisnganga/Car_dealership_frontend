@@ -163,6 +163,7 @@ const AddSale = ({ sellerId, token, customer }) => {
                     <select id="customers" value={selectedCustomer} onChange={handleCustomerChange}>
                         <option value="">Select...</option>
                         {customers.map((x) => (
+                            // correct this to take customers id not names
                             <option key={x.id} value={x.id}>{x.first_name} {x.last_name}</option>
                         ))}
                     </select>
