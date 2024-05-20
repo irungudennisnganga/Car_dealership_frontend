@@ -132,7 +132,7 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
                 <Route path="/receipt" element={<Receipt user={user} />} />
-                <Route path="/sales" element={<Sales user={user} />} />
+                <Route path="/sales" element={<Sales user={user} customers={customer} />} />
                 <Route path="/invoice" element={<Invoice user={user} />} />
                 <Route path="/report" element={<Report user={user} />} />
                 <Route path="/sellersaledashboard" element={<SellerSaleDashboard />} />

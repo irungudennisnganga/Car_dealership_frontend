@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
-
-const AddSale = ({ sellerId, token }) => {
+import PropTypes from 'prop-types'
+const AddSale = ({ sellerId, token, customer }) => {
     const [selectedStatus, setSelectedStatus] = useState('');
     const [selectedCustomer, setSelectedCustomer] = useState('');
     const [customers, setCustomers] = useState([]);
@@ -16,30 +16,10 @@ const AddSale = ({ sellerId, token }) => {
         customer_id: "",
         inventory_id: "",
         promotions: "",
-        commission: "",
         commissionPercentage: 0,
     });
 
     useEffect(() => {
-        const fetchCustomers = async () => {
-            try {
-                const response = await fetch(`http://127.0.0.1:5555/customer`, {
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to fetch customers');
-                }
-                const data = await response.json();
-                setCustomers(data.customers);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
         const fetchInventory = async () => {
             try {
                 const response = await fetch('/inventory', {
@@ -53,7 +33,7 @@ const AddSale = ({ sellerId, token }) => {
                     throw new Error('Failed to fetch inventory');
                 }
                 const data = await response.json();
-                setInventory(data.inventory);
+                setInventory(data);
             } catch (error) {
                 console.error(error);
             } finally {
@@ -61,9 +41,9 @@ const AddSale = ({ sellerId, token }) => {
             }
         };
 
-        fetchCustomers();
         fetchInventory();
-    }, [sellerId, token]);
+        setCustomers(customer);
+    }, [sellerId, token, customer]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -95,8 +75,9 @@ const AddSale = ({ sellerId, token }) => {
                             customer_id: "",
                             inventory_id: "",
                             promotions: "",
-                            commission: "",
                         });
+                        setSelectedStatus('');
+                        setSelectedCustomer('');
                     }
                 });
             } else {
@@ -120,22 +101,22 @@ const AddSale = ({ sellerId, token }) => {
     };
 
     const handleCustomerChange = (e) => {
-        setSelectedCustomer(e.target.value);
+        const customerId = e.target.value;
+        setSelectedCustomer(customerId);
         setFormData({
             ...formData,
-            customer_id: e.target.value
+            customer_id: customerId
         });
+        console.log("Selected customer ID:", customerId); // Add this line for debugging
     };
 
     const handleAmountChange = (event) => {
         const price = event.target.value;
-        const discount = calculateDiscount(price, formData.discountPercentage);
-        const amount = price - discount;
+        const discount = 200;
+        
         setFormData({
             ...formData,
             discount,
-            amount,
-            discountPercentage: event.target.value
         });
     };
 
@@ -143,23 +124,6 @@ const AddSale = ({ sellerId, token }) => {
         setFormData({
             ...formData,
             sale_date: event.target.value
-        });
-    };
-
-    const calculateDiscount = (price, discountPercentage) => {
-        return (price * discountPercentage) / 100;
-    };
-
-    const calculateCommission = (price, commissionPercentage) => {
-        return (price * commissionPercentage) / 100;
-    };
-
-    const handleCommissionChange = (event) => {
-        const commission = calculateCommission(event.target.value, formData.commissionPercentage);
-        setFormData({
-            ...formData,
-            commission,
-            commission_amount: event.target.value
         });
     };
 
@@ -198,8 +162,8 @@ const AddSale = ({ sellerId, token }) => {
                     Customer:
                     <select id="customers" value={selectedCustomer} onChange={handleCustomerChange}>
                         <option value="">Select...</option>
-                        {customers.map((customer) => (
-                            <option key={customer.id} value={customer.id}>{customer.name}</option>
+                        {customers.map((x) => (
+                            <option key={x.id} value={x.id}>{x.first_name} {x.last_name}</option>
                         ))}
                     </select>
                     {selectedCustomer && <p>Selected Customer ID: {selectedCustomer}</p>}
@@ -221,14 +185,6 @@ const AddSale = ({ sellerId, token }) => {
                     />
                 </label>
                 <label>
-                    Commission:
-                    <input
-                        type="number"
-                        value={formData.commission}
-                        onChange={handleCommissionChange}
-                    />
-                </label>
-                <label>
                     Promotions:
                     <input
                         type="text"
@@ -241,7 +197,7 @@ const AddSale = ({ sellerId, token }) => {
                     <select id="vehicles" value={formData.inventory_id} onChange={handleVehicleChange}>
                         <option value="">Select...</option>
                         {inventory.map((vehicle) => (
-                            <option key={vehicle.id} value={vehicle.id}>{vehicle.name}</option>
+                            <option key={vehicle.id} value={vehicle.id}>{vehicle.make} {vehicle.model}</option>
                         ))}
                     </select>
                 </label>
@@ -249,6 +205,12 @@ const AddSale = ({ sellerId, token }) => {
             </form>
         </div>
     );
+};
+
+AddSale.propTypes = {
+    sellerId: PropTypes.string.isRequired,
+    token: PropTypes.string.isRequired,
+    customer: PropTypes.array.isRequired
 };
 
 export default AddSale;

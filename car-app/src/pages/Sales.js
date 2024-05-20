@@ -4,7 +4,7 @@ import AddSales from './AddSales'; // Assuming you have an AddSales component
 import { useNavigate } from 'react-router-dom';
 import AccordionItem from '../components/AccordionItem';
 
-const Sales = ({ user }) => {
+const Sales = ({ user,customers }) => {
   const [sales, setSales] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,7 +13,7 @@ const Sales = ({ user }) => {
   function navigatetosale(saleid) {
     navigate(`/sale/${saleid}`);
   }
-
+  // console.log(customers)
   useEffect(() => {
     let endpoint = '';
 
@@ -67,7 +67,7 @@ const Sales = ({ user }) => {
         <div>
           {user.role === 'seller' && (
             <AccordionItem title="Add Sale">
-              <AddSales onAddSale={handleAddSale} />
+              <AddSales onAddSale={handleAddSale} customer={customers}/>
             </AccordionItem>
           )}
           <table className="table-auto w-full table-fixed border-collapse ml-4">

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-
+import PropTypes from 'prop-types';
 const NewInvoice = ({ customers, inventory }) => {
   const [formData, setFormData] = useState({
     date_of_purchase: '',
@@ -29,7 +29,7 @@ const NewInvoice = ({ customers, inventory }) => {
     const [error, setError] = useState(null);
     
 
-  console.log(formData.date_of_purchase)
+  console.log(customers)
     const formatDate = (date) => {
   const d = new Date(date);
   let month = '' + (d.getMonth() + 1);
@@ -44,7 +44,7 @@ const NewInvoice = ({ customers, inventory }) => {
   return [year, month, day].join('-');
 };
 
-
+console.log(customers)
   // Method to handle input changes and recalculate dependent fields
   const handleChange = (e) => {
   const { name, value } = e.target;
@@ -149,7 +149,7 @@ const NewInvoice = ({ customers, inventory }) => {
             <select name="vehicle_id" id="vehicle_id" value={formData.vehicle_id} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
               <option value="">Select Vehicle</option>
               {inventory.map(item => (
-                <option key={item.VIN} value={item.id}>{item.make} {item.model} - {item.year}</option>
+                <option key={item.id} value={item.id}>{item.make} {item.model} - {item.year}</option>
               ))}
             </select>
           </div>
@@ -158,7 +158,7 @@ const NewInvoice = ({ customers, inventory }) => {
             <select name="customer_id" id="customer_id" value={formData.customer_id} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
               <option value="">Select Customer</option>
               {customers.map(customer => (
-                <option key={customer.email} value={customer.id}>{customer.first_name} {customer.last_name}</option>
+                <option key={customer.id} value={customer.id}>{customer.first_name} {customer.last_name}</option>
               ))}
             </select>
           </div>
@@ -291,6 +291,11 @@ const NewInvoice = ({ customers, inventory }) => {
       </form>
     </div>
   );
+};
+
+NewInvoice.propTypes = {
+  customers: PropTypes.array.isRequired, // Corrected prop type
+  inventory: PropTypes.array.isRequired // Corrected prop type
 };
 
 export default NewInvoice;
