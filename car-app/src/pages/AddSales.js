@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import { XlviLoader } from "react-awesome-loaders";
 import { useNavigate } from 'react-router-dom';
 
@@ -155,80 +155,86 @@ const AddSale = ({ sellerId, token, customer }) => {
     };
 
     if (loading) {
-        return      <div className="flex items-center justify-center h-screen">
-                
-        <XlviLoader
-            boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
-            desktopSize={"128px"}
-            mobileSize={"100px"}
-            className={'object-center'}
-        />
-    </div>
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <XlviLoader
+                    boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
+                    desktopSize={"128px"}
+                    mobileSize={"100px"}
+                    className={'object-center'}
+                />
+            </div>
+        );
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="status">Status:</label>
-                    <select id="status" value={selectedStatus} onChange={handleStatusChange}>
-                        <option value="">Select...</option>
-                        <option value="pending">Pending</option>
-                        <option value="approved">Approved</option>
-                        <option value="rejected">Rejected</option>
-                    </select>
-                    {selectedStatus && <p>Selected Status: {selectedStatus}</p>}
+        <div className="p-4 bg-slate200">
+            <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <label htmlFor="status" className="block">Status:</label>
+                        <select id="status" value={selectedStatus} onChange={handleStatusChange} className="border p-2 rounded-md w-full">
+                            <option value="">Select...</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                        {selectedStatus && <p>Selected Status: {selectedStatus}</p>}
+                    </div>
+                    <div>
+                        <label htmlFor="customers" className="block">Customer:</label>
+                        <select id="customers" value={selectedCustomer} onChange={handleCustomerChange} className="border p-2 rounded-md w-full">
+                            <option value="">Select...</option>
+                            {customers.map((x) => (
+                                <option key={x.id} value={x.id}>{x.first_name} {x.last_name}</option>
+                            ))}
+                        </select>
+                        {selectedCustomer && <p>Selected Customer ID: {selectedCustomer}</p>}
+                    </div>
                 </div>
-                <label>
-                    Customer:
-                    <select id="customers" value={selectedCustomer} onChange={handleCustomerChange}>
-                        <option value="">Select...</option>
-                        {customers.map((x) => (
-                            // correct this to take customers id not names
-                            <option key={x.id} value={x.id}>{x.first_name} {x.last_name}</option>
-                        ))}
-                    </select>
-                    {selectedCustomer && <p>Selected Customer ID: {selectedCustomer}</p>}
-                </label>
-                <label>
-                    Amount:
-                    <input
-                        type="number"
-                        value={formData.discount}
-                        onChange={handleAmountChange}
-                    />
-                </label>
-                <label>
-                    Date:
-                    <input
-                        type="date"
-                        value={formData.sale_date}
-                        onChange={handleDateChange}
-                    />
-                </label>
-                <label>
-                    Promotions:
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <label htmlFor="amount" className="block">Amount:</label>
+                        <input
+                            type="number"
+                            value={formData.discount}
+                            onChange={handleAmountChange}
+                            className="border p-2 rounded-md w-full"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="date" className="block">Date:</label>
+                        <input
+                            type="date"
+                            value={formData.sale_date}
+                            onChange={handleDateChange}
+                            className="border p-2 rounded-md w-full"
+                        />
+                    </div>
+                </div>
+                <div>
+                    <label htmlFor="promotions" className="block">Promotions:</label>
                     <input
                         type="text"
                         value={formData.promotions}
                         onChange={handlePromotionsChange}
+                        className="border p-2 rounded-md w-full"
                     />
-                </label>
-                <label>
-                    Vehicle Name:
-                    <select id="vehicles" value={formData.inventory_id} onChange={handleVehicleChange}>
+                </div>
+                <div>
+                    <label htmlFor="vehicles" className="block">Vehicle Name:</label>
+                    <select id="vehicles" value={formData.inventory_id} onChange={handleVehicleChange} className="border p-2 rounded-md w-full">
                         <option value="">Select...</option>
                         {inventory.map((vehicle) => (
                             <option key={vehicle.id} value={vehicle.id}>{vehicle.make} {vehicle.model}</option>
                         ))}
                     </select>
-                </label>
-                <button type="submit">Add Sale</button>
+                </div>
+                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md close hover:bg-blue-600">Add Sale</button>
             </form>
         </div>
     );
 };
-
 AddSale.propTypes = {
     sellerId: PropTypes.string.isRequired,
     // token: PropTypes.string.isRequired,

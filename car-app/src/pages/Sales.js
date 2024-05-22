@@ -71,7 +71,7 @@ const Sales = ({ user,customers }) => {
   }
 
   return (
-    <div className="bg-cardbackground m-72 mt-10 relative w-[1000px] h-auto mr-[50px] overflow-y-auto">
+    <div className="bg-cyan-50 m-72 mt-10 relative w-[1000px] h-auto mr-[50px] overflow-y-auto">
       {user ? (
         <div>
           {user.role === 'seller' && (

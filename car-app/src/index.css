@@ -22,3 +22,7 @@
         display: none;
     }
 }
+.close{
+    background-color: #e23249;
+    color: white;
+}
