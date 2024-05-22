@@ -3,6 +3,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import PropTypes from 'prop-types';
 import { XlviLoader } from "react-awesome-loaders";
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const NewInvoice = ({ customers, inventory }) => {
   const [formData, setFormData] = useState({
@@ -32,8 +33,11 @@ const NewInvoice = ({ customers, inventory }) => {
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
   const [sales, setSales] = useState([]);
-
+  const {  id } = useParams();
+  
+  // console.log(id)
   const formatDate = (date) => {
+
     const d = new Date(date);
     let month = '' + (d.getMonth() + 1);
     let day = '' + d.getDate();
@@ -44,6 +48,13 @@ const NewInvoice = ({ customers, inventory }) => {
 
     return [year, month, day].join('-');
   };
+  filterInventoryById(id)
+  function filterInventoryById (id)  {
+    const data = inventory.filter(item => item.id === id);
+    // console.log
+  };
+
+  console.log(inventory.find(item => item.id === id))
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -150,7 +161,7 @@ console.log(formData)
     };
     fetchSales();
   }, []);
-
+console.log(inventory)
   return (
     <div className="bg-slate200 p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
       <Toaster />
@@ -216,7 +227,13 @@ console.log(formData)
           </div>
           <div className="col-span-2 sm:col-span-1">
             <label htmlFor="currency" className="block text-sm font-medium text-gray-700">Currency</label>
-            <input type="text" name="currency" id="currency" value={formData.currency} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
+            <select name="currency" id="currency" value={formData.currency} onChange={handleChange}  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+              <option value="">Currency</option>
+              <option value="KSH">KSH </option>
+              <option value="USD">USD (US Dollar)</option>
+            
+            </select>
+            {/* <input type="text"  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required /> */}
           </div>
           <div className="col-span-2">
             <label htmlFor="fee" className="block text-sm font-medium text-gray-700">Fee</label>

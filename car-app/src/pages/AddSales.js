@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types'
 import { XlviLoader } from "react-awesome-loaders";
+import { useNavigate } from 'react-router-dom';
 
 const AddSale = ({ sellerId, token, customer }) => {
     const [selectedStatus, setSelectedStatus] = useState('');
@@ -9,6 +10,7 @@ const AddSale = ({ sellerId, token, customer }) => {
     const [customers, setCustomers] = useState([]);
     const [inventory, setInventory] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         status: "",
         history: "",
@@ -20,6 +22,10 @@ const AddSale = ({ sellerId, token, customer }) => {
         promotions: "",
         commissionPercentage: 0,
     });
+
+    const navigateToCreate = (invoiceId,id) => {
+        navigate(`/create-invoice/${invoiceId}/${id}`);
+      };
 
     useEffect(() => {
         const fetchInventory = async () => {
@@ -36,6 +42,7 @@ const AddSale = ({ sellerId, token, customer }) => {
                 }
                 const data = await response.json();
                 setInventory(data);
+                
             } catch (error) {
                 console.error(error);
             } finally {
@@ -69,6 +76,11 @@ const AddSale = ({ sellerId, token, customer }) => {
                     position: "top-right",
                     autoClose: 2000,
                     onClose: () => {
+                        setSelectedStatus('');
+                        setSelectedCustomer('');
+                       const id=formData.inventory_id
+                        console.log(id)
+                        navigateToCreate("new",id)
                         setFormData({
                             status: "",
                             history: "",
@@ -78,8 +90,7 @@ const AddSale = ({ sellerId, token, customer }) => {
                             inventory_id: "",
                             promotions: "",
                         });
-                        setSelectedStatus('');
-                        setSelectedCustomer('');
+                        
                     }
                 });
             } else {
@@ -220,7 +231,7 @@ const AddSale = ({ sellerId, token, customer }) => {
 
 AddSale.propTypes = {
     sellerId: PropTypes.string.isRequired,
-    token: PropTypes.string.isRequired,
+    // token: PropTypes.string.isRequired,
     customer: PropTypes.array.isRequired
 };
 
