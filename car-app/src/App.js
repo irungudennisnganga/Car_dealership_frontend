@@ -5,7 +5,7 @@ import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 import Login from './components/Login';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { XlviLoader } from "react-awesome-loaders";
 // Lazy-loaded components
 const AddUser = lazy(() => import('./pages/AddUser'));
 const Profile = lazy(() => import('./pages/Profile'));
@@ -123,7 +123,11 @@ function App() {
               user={user}
               handleLogout={handleLogout}
             />
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<XlviLoader
+        boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
+        desktopSize={"128px"}
+        mobileSize={"100px"}
+      />}>
               <Routes>
                 <Route path="/AddUser" element={<AddUser user={user} />} />
                 <Route path="/profile" element={<Profile user={user} />} />
@@ -132,14 +136,14 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
                 <Route path="/receipt" element={<Receipt user={user} />} />
-                <Route path="/sales" element={<Sales user={user} />} />
+                <Route path="/sales" element={<Sales user={user} customers={customer} />} />
                 <Route path="/invoice" element={<Invoice user={user} />} />
                 <Route path="/report" element={<Report user={user} />} />
                 <Route path="/sellersaledashboard" element={<SellerSaleDashboard />} />
                 <Route path="/sale/:saleid" element={<SaleDetails />} />
                 <Route path="/invoice/:username" element={<Invoicebysellername />} />
                 <Route path="/invoices/:invoiceid" element={<InvoicebyId />} />
-                <Route path="/create-invoice/:new" element={<NewInvoice customers={customer} inventory={inventory} />} />
+                <Route path="/create-invoice/:new/:id" element={<NewInvoice customers={customer} inventory={inventory} />} />
                 <Route path="/" element={<Dashboard />} />
               </Routes>
             </Suspense>

@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2'
 import PropTypes from 'prop-types';
-
+import { XlviLoader } from "react-awesome-loaders";
 const AddUser = ({ user }) => {
   const inputRef = useRef(null);
   const [formData, setFormData] = useState({
@@ -17,6 +17,7 @@ const AddUser = ({ user }) => {
     role: '',
     image: null
   });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (user.role === 'super admin') {
@@ -122,6 +123,7 @@ const AddUser = ({ user }) => {
               });
             }
           });
+          setLoading(true)
         } else {
           toast.error(data.error, {
             position: "top-right",
@@ -133,6 +135,14 @@ const AddUser = ({ user }) => {
         console.error('There was a problem with your fetch operation:', error);
       });
   };
+
+  // if(!loading){
+  //   return <XlviLoader
+  //   boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
+  //   desktopSize={"128px"}
+  //   mobileSize={"100px"}
+  // />;
+  // }
 
   return (
     <div className="m-80 bg-slate200 rounded-lg overflow-hidden mt-10 relative w-[700px] h-[300px] mr-[200px]">
@@ -211,7 +221,15 @@ const AddUser = ({ user }) => {
           <input type="file" ref={inputRef} onChange={handleImageChange} className='hidden' />
         </div>
       </div>
-
+            {loading ?<div className="flex items-center justify-center h-screen">
+                
+                <XlviLoader
+                    boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
+                    desktopSize={"128px"}
+                    mobileSize={"100px"}
+                    className={'object-center'}
+                />
+            </div>:null}
       <button className="bg-cyan300 rounded-md hover:shadow hover:bg-cyan400 text-white font-bold py-2 px-4 block mx-auto mt-4 my-2.5" onClick={handleSubmit}>Submit</button>
     </div>
   );

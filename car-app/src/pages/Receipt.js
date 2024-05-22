@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import logo from '../images/autocar.jpg'; // Ensure the path is correct for your logo
+import { XlviLoader } from "react-awesome-loaders";
 
 const Receipt = ({ user }) => {
     const [receipts, setReceipts] = useState([]);
@@ -31,7 +32,15 @@ const Receipt = ({ user }) => {
     }, [receiptId]);
 
     if (loading) {
-        return <div>Loading...</div>; // Display a loading message or spinner until the data is fetched
+        return<div className="flex items-center justify-center h-screen">
+                
+        <XlviLoader
+            boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
+            desktopSize={"128px"}
+            mobileSize={"100px"}
+            className={'object-center'}
+        />
+    </div> // Display a loading message or spinner until the data is fetched
     }
 
     if (error) {

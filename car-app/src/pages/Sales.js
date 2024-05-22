@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import AddSales from './AddSales'; // Assuming you have an AddSales component
 import { useNavigate } from 'react-router-dom';
 import AccordionItem from '../components/AccordionItem';
+import { XlviLoader } from "react-awesome-loaders";
 
-const Sales = ({ user }) => {
+const Sales = ({ user,customers }) => {
   const [sales, setSales] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,7 +14,7 @@ const Sales = ({ user }) => {
   function navigatetosale(saleid) {
     navigate(`/sale/${saleid}`);
   }
-
+  // console.log(customers)
   useEffect(() => {
     let endpoint = '';
 
@@ -54,7 +55,15 @@ const Sales = ({ user }) => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return<div className="flex items-center justify-center h-screen">
+                
+    <XlviLoader
+        boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
+        desktopSize={"128px"}
+        mobileSize={"100px"}
+        className={'object-center'}
+    />
+</div>
   }
 
   if (error) {
@@ -67,7 +76,7 @@ const Sales = ({ user }) => {
         <div>
           {user.role === 'seller' && (
             <AccordionItem title="Add Sale">
-              <AddSales onAddSale={handleAddSale} />
+              <AddSales onAddSale={handleAddSale} customer={customers}/>
             </AccordionItem>
           )}
           <table className="table-auto w-full table-fixed border-collapse ml-4">
