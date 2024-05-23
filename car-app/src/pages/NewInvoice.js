@@ -149,7 +149,7 @@ console.log(formData)
   useEffect(() => {
     const fetchSales = async () => {
       try {
-        const response = await axios.get('/sales', {
+        const response = await axios.get('/saleinvoice', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('jwt')}`
           }

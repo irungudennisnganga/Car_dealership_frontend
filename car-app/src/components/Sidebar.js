@@ -35,6 +35,7 @@ const Sidebar = ({ sidebarToggle , user}) => {
                         </Link>
                     </li>
                 )}
+        
         <li className='bg-cyan300 py-2 p-4 rounded-md hover:shadow hover:bg-cyan400 my-2.5'>
           <FontAwesomeIcon icon={faBoxOpen} className='inline-block w-6 h-6 mr-2 -mt-2' />
           <Link to="/inventory" className='p-2'>
@@ -53,6 +54,22 @@ const Sidebar = ({ sidebarToggle , user}) => {
           <FontAwesomeIcon icon={faUserPlus} className='inline-block w-6 h-6 mr-2 -mt-2' />
           <Link to="/adduser" className='p-2'>
             Add Seller
+          </Link>
+        </li>
+        )}
+        {user.role==='seller' && (
+          <li className='bg-cyan300 py-2 p-4 rounded-md hover:shadow hover:bg-cyan400 my-2.5'>
+          <FontAwesomeIcon icon={faUserPlus} className='inline-block w-6 h-6 mr-2 -mt-2' />
+          <Link to="/AddCustomer" className='p-2'>
+            Add Customer
+          </Link>
+        </li>
+        )}
+        {(user.role==='seller' || user.role==='super admin' || user.role==='admin') && (
+          <li className='bg-cyan300 py-2 p-4 rounded-md hover:shadow hover:bg-cyan400 my-2.5'>
+          <FontAwesomeIcon icon={faUsers} className='inline-block w-6 h-6 mr-2 -mt-2' />
+          <Link to="/customers" className='p-2'>
+            Added Customer
           </Link>
         </li>
         )}

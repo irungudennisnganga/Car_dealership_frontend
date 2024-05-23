@@ -30,9 +30,7 @@ const Invoice = ({ user }) => {
     }
   }, [user.role]);  // Depend on user.role to refetch when it changes
 
-  const navigateToCreate = (invoiceId) => {
-    navigate(`/create-invoice/${invoiceId}`);
-  };
+  
 const navigateToDetail = (invoice, role) => {
     if (role === 'admin' || role === 'super admin') {
       const firstName = invoice.seller_name.split(' ')[0]; // Extract first name
@@ -48,16 +46,7 @@ const navigateToDetail = (invoice, role) => {
 
   return (
     <div className="bg-cyan-50 m-72 mt-10 relative w-[1000px] h-auto mr-[50px] overflow-y-auto">
-      {user.role === 'seller' && (
-        <div className="p-4">
-          <button 
-            className="bg-cyan300 hover:bg-cyan400 text-white font-bold py-2 px-4 rounded"
-            onClick={() => navigateToCreate('new')} // Assuming 'new' indicates creating a new invoice
-          >
-            Create New Invoice
-          </button>
-        </div>
-      )}
+      
 
       {invoices.length > 0 && (
         <table className="table-auto w-full table-fixed border-collapse ml-4">

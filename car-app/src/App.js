@@ -6,6 +6,8 @@ import Navbar from './components/Navbar';
 import Login from './components/Login';
 import 'react-toastify/dist/ReactToastify.css';
 import { XlviLoader } from "react-awesome-loaders";
+import AddCustomer from './pages/AddCustomer';
+import Customers from './pages/Customers';
 // Lazy-loaded components
 const AddUser = lazy(() => import('./pages/AddUser'));
 const Profile = lazy(() => import('./pages/Profile'));
@@ -130,9 +132,11 @@ function App() {
       />}>
               <Routes>
                 <Route path="/AddUser" element={<AddUser user={user} />} />
+                <Route path="/AddCustomer" element={<AddCustomer user={user} />} />
                 <Route path="/profile" element={<Profile user={user} />} />
                 <Route path="/Inventory" element={<Inventory inventory={inventory} user={user} />} />
                 <Route path="/workers" element={<Workers user={user} />} />
+                <Route path="/customers" element={<Customers user={user} />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
                 <Route path="/receipt" element={<Receipt user={user} />} />
