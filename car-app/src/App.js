@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { XlviLoader } from "react-awesome-loaders";
 import AddCustomer from './pages/AddCustomer';
 import Customers from './pages/Customers';
+import CreateReceipt from './pages/CreateReceipt';
 // Lazy-loaded components
 const AddUser = lazy(() => import('./pages/AddUser'));
 const Profile = lazy(() => import('./pages/Profile'));
@@ -111,7 +112,7 @@ function App() {
     // Use location state to redirect to login route after logout
     return <Navigate to="/login" replace />;
   };
-
+// console.log(customer)
   return (
     <>
       <ToastContainer />
@@ -139,7 +140,8 @@ function App() {
                 <Route path="/customers" element={<Customers user={user} />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
-                <Route path="/receipt" element={<Receipt user={user} />} />
+                <Route path="/receipt" element={<Receipt user={user} customer={customer}  />} />
+                <Route path="/receipt/new" element={<CreateReceipt user={user} customers={customer} />} />
                 <Route path="/sales" element={<Sales user={user} customers={customer} />} />
                 <Route path="/invoice" element={<Invoice user={user} />} />
                 <Route path="/report" element={<Report user={user} />} />

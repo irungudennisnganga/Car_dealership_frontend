@@ -15,8 +15,6 @@ const NewInvoice = ({ customers, inventory }) => {
     currency: '',
     customer_id: '',
     vehicle_id: '',
-    balance: '',
-    total_amount: '',
     installments: '',
     pending_cleared: '',
     signature: '',
@@ -30,14 +28,11 @@ const NewInvoice = ({ customers, inventory }) => {
   });
 
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
   const [sales, setSales] = useState([]);
-  const {  id } = useParams();
-  
-  // console.log(id)
-  const formatDate = (date) => {
+  const { id } = useParams();
 
+  const formatDate = (date) => {
     const d = new Date(date);
     let month = '' + (d.getMonth() + 1);
     let day = '' + d.getDate();
@@ -48,22 +43,15 @@ const NewInvoice = ({ customers, inventory }) => {
 
     return [year, month, day].join('-');
   };
-  filterInventoryById(id)
-  function filterInventoryById (id)  {
-    const data = inventory.filter(item => item.id === id);
-    // console.log
-  };
-
-  console.log(inventory.find(item => item.id === id))
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     let updatedValues = {};
 
-    updatedValues[name] = (['total_amount', 'amount_paid', 'fee', 'tax'].includes(name)) ? Number(value) : value;
+    updatedValues[name] = (['amount_paid', 'fee', 'tax'].includes(name)) ? Number(value) : value;
 
-    if (name === 'total_amount' || name === 'amount_paid' || name === 'fee') {
-      const newTotalAmount = name === 'total_amount' ? Number(value) : Number(formData.total_amount);
+    if (name === 'amount_paid' || name === 'fee') {
+      const newTotalAmount = name === 'amount_paid' ? Number(value) : Number(formData.amount_paid);
       const newAmountPaid = name === 'amount_paid' ? Number(value) : Number(formData.amount_paid);
       const newTax = calculateTax(newTotalAmount);
       updatedValues.tax = newTax;
@@ -97,7 +85,6 @@ const NewInvoice = ({ customers, inventory }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setMessage(null);
     setError(null);
 
     try {
@@ -126,8 +113,6 @@ const NewInvoice = ({ customers, inventory }) => {
         currency: '',
         customer_id: '',
         vehicle_id: '',
-        balance: '',
-        total_amount: '',
         installments: '',
         pending_cleared: '',
         signature: '',
@@ -145,7 +130,7 @@ const NewInvoice = ({ customers, inventory }) => {
       setLoading(false);
     }
   };
-console.log(formData)
+
   useEffect(() => {
     const fetchSales = async () => {
       try {
@@ -161,7 +146,7 @@ console.log(formData)
     };
     fetchSales();
   }, []);
-console.log(inventory)
+
   return (
     <div className="bg-slate200 p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
       <Toaster />
@@ -193,21 +178,21 @@ console.log(inventory)
             </select>
           </div>
           <div className="col-span-2 sm:col-span-1">
-            <label htmlFor="total_amount" className="block text-sm font-medium text-gray-700">Total Amount</label>
-            <input type="number" name="total_amount" id="total_amount" value={formData.total_amount} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
+            <label htmlFor="amount_paid" className="block text-sm font-medium text-gray-700">Amount Paid</label>
+            <input type="number" name="amount_paid" id="amount_paid" value={formData.amount_paid} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
           </div>
           <div className="col-span-2 sm:col-span-1">
             <label htmlFor="tax" className="block text-sm font-medium text-gray-700">Tax</label>
             <input type="number" name="tax" id="tax" value={formData.tax} readOnly className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
           </div>
-          <div className="col-span-2 sm:col-span-1">
+          {/* <div className="col-span-2 sm:col-span-1">
             <label htmlFor="amount_paid" className="block text-sm font-medium text-gray-700">Amount Paid</label>
             <input type="number" name="amount_paid" id="amount_paid" value={formData.amount_paid} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
-          </div>
-          <div className="col-span-2 sm:col-span-1">
+          </div> */}
+          {/* <div className="col-span-2 sm:col-span-1">
             <label htmlFor="balance" className="block text-sm font-medium text-gray-700">Balance</label>
             <input type="text" name="balance" id="balance" value={formData.balance} readOnly className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-          </div>
+          </div> */}
           <div className="col-span-2 sm:col-span-1">
             <label htmlFor="date_of_purchase" className="block text-sm font-medium text-gray-700">Date of Purchase</label>
             <input type="date" name="date_of_purchase" id="date_of_purchase" value={formData.date_of_purchase} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
@@ -277,7 +262,7 @@ console.log(inventory)
           </div>
         </div>
         <div className="mt-6">
-          <button type="submit" disabled={loading} className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50">
+          <button type="submit" disabled={loading} className="close px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50">
             {loading ? (
               <XlviLoader
                 boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
@@ -291,7 +276,7 @@ console.log(inventory)
         </div>
       </form>
       {error && <div className="mt-4 text-red-500">{error}</div>}
-      {message && <div className="mt-4 text-green-500">{message}</div>}
+      {/* {message && <div className="mt-4 text-green-500">{message}</div>} */}
     </div>
   );
 };
