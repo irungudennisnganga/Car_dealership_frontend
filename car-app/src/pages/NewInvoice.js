@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate  } from 'react-router-dom';
 
 const NewInvoice = ({ customers, inventory }) => {
+  const { id, customer } = useParams();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     date_of_purchase: '',
     method: '',
@@ -12,8 +15,8 @@ const NewInvoice = ({ customers, inventory }) => {
     fee: '',
     tax: '',
     currency: '',
-    customer_id: '',
-    vehicle_id: '',
+    customer_id: customer || '',
+    vehicle_id: id || '',
     installments: '',
     pending_cleared: '',
     signature: '',
@@ -29,7 +32,6 @@ const NewInvoice = ({ customers, inventory }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [sales, setSales] = useState([]);
-  const { id } = useParams();
 
   const formatDate = (date) => {
     const d = new Date(date);
@@ -80,6 +82,9 @@ const NewInvoice = ({ customers, inventory }) => {
 
     return ((totalNum - paidNum) + taxNum).toFixed(2);
   };
+  const navigateToCreate = () => {
+    navigate(`/receipt`);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -103,6 +108,7 @@ const NewInvoice = ({ customers, inventory }) => {
       }
 
       toast.success(`Invoice created successfully with ID: ${data.invoice_id}`);
+      navigateToCreate()
       setFormData({
         date_of_purchase: '',
         method: '',
@@ -110,8 +116,8 @@ const NewInvoice = ({ customers, inventory }) => {
         fee: '',
         tax: '',
         currency: '',
-        customer_id: '',
-        vehicle_id: '',
+        customer_id: customer || '',
+        vehicle_id: id || '',
         installments: '',
         pending_cleared: '',
         signature: '',
@@ -146,28 +152,24 @@ const NewInvoice = ({ customers, inventory }) => {
     fetchSales();
   }, []);
 
+  useEffect(() => {
+    // Update formData with URL parameters
+    setFormData(prev => ({
+      ...prev,
+      customer_id: customer,
+      vehicle_id: id
+    }));
+  }, [id, customer]);
+
+
   return (
     <div className="bg-slate200 p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
       <Toaster />
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-4">
+         
           <div className="col-span-2 sm:col-span-1">
-            <label htmlFor="vehicle_id" className="block text-sm font-medium text-gray-700">Vehicle</label>
-            <select name="vehicle_id" id="vehicle_id" value={formData.vehicle_id} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-              <option value="">Select Vehicle</option>
-              {inventory.map(item => (
-                <option key={item.id} value={item.id} required>{item.make} {item.model} - {item.year}</option>
-              ))}
-            </select>
-          </div>
-          <div className="col-span-2 sm:col-span-1">
-            <label htmlFor="customer_id" className="block text-sm font-medium text-gray-700">Customer</label>
-            <select name="customer_id" id="customer_id" value={formData.customer_id} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-              <option value="">Select Customer</option>
-              {customers.map(customer => (
-                <option key={customer.id} value={customer.id} required>{customer.first_name} {customer.last_name}</option>
-              ))}
-            </select>
+          
             <label htmlFor="sale_id" className="block text-sm font-medium text-gray-700">Sale</label>
             <select name="sale_id" id="sale_id" value={formData.sale_id} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
               <option value="">Select Sale</option>

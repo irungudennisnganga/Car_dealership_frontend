@@ -23,8 +23,8 @@ const AddSale = ({ sellerId, token, customer }) => {
         commissionPercentage: 0,
     });
 
-    const navigateToCreate = (invoiceId,id) => {
-        navigate(`/create-invoice/${invoiceId}/${id}`);
+    const navigateToCreate = (invoiceId,id, customer) => {
+        navigate(`/create-invoice/${invoiceId}/${id}/${customer}`);
       };
 
     useEffect(() => {
@@ -79,8 +79,9 @@ const AddSale = ({ sellerId, token, customer }) => {
                         setSelectedStatus('');
                         setSelectedCustomer('');
                        const id=formData.inventory_id
+                       const customer =formData.customer_id
                         console.log(id)
-                        navigateToCreate("new",id)
+                        navigateToCreate("new",id,customer)
                         setFormData({
                             status: "",
                             history: "",

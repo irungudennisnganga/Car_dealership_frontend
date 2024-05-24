@@ -149,7 +149,7 @@ function App() {
                 <Route path="/sale/:saleid" element={<SaleDetails />} />
                 <Route path="/invoice/:username" element={<Invoicebysellername />} />
                 <Route path="/invoices/:invoiceid" element={<InvoicebyId />} />
-                <Route path="/create-invoice/:new/:id" element={<NewInvoice customers={customer} inventory={inventory} />} />
+                <Route path="/create-invoice/:new/:id/:customer" element={<NewInvoice customers={customer} inventory={inventory} />} />
                 <Route path="/" element={<Dashboard />} />
               </Routes>
             </Suspense>
