@@ -156,6 +156,7 @@ const AddUser = ({ user }) => {
             placeholder="John"
             value={formData.first_name}
             onChange={handleFirstnameChange}
+            required
           />
         </div>
         <div className="flex items-center mb-4">
@@ -167,6 +168,7 @@ const AddUser = ({ user }) => {
             placeholder="Doe"
             value={formData.last_name}
             onChange={handleLastnameChange}
+            required
           />
         </div>
         <div className="flex items-center mb-4">
@@ -192,6 +194,7 @@ const AddUser = ({ user }) => {
             placeholder="johndoe@example.com"
             value={formData.email}
             onChange={handleEmailChange}
+            required
           />
         </div>
         <div className="flex items-center">
@@ -201,6 +204,7 @@ const AddUser = ({ user }) => {
             className="form-select mt-1 block ml-4 flex-none w-72"
             value={formData.role}
             onChange={handleRoleChange}
+            required
           >
             <option value="">Select a role</option>
             {user.role === 'super admin' && <option value="admin">Admin</option>}

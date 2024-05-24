@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import PropTypes from 'prop-types';
-import { XlviLoader } from "react-awesome-loaders";
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
@@ -157,7 +156,7 @@ const NewInvoice = ({ customers, inventory }) => {
             <select name="vehicle_id" id="vehicle_id" value={formData.vehicle_id} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
               <option value="">Select Vehicle</option>
               {inventory.map(item => (
-                <option key={item.id} value={item.id}>{item.make} {item.model} - {item.year}</option>
+                <option key={item.id} value={item.id} required>{item.make} {item.model} - {item.year}</option>
               ))}
             </select>
           </div>
@@ -166,40 +165,33 @@ const NewInvoice = ({ customers, inventory }) => {
             <select name="customer_id" id="customer_id" value={formData.customer_id} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
               <option value="">Select Customer</option>
               {customers.map(customer => (
-                <option key={customer.id} value={customer.id}>{customer.first_name} {customer.last_name}</option>
+                <option key={customer.id} value={customer.id} required>{customer.first_name} {customer.last_name}</option>
               ))}
             </select>
             <label htmlFor="sale_id" className="block text-sm font-medium text-gray-700">Sale</label>
             <select name="sale_id" id="sale_id" value={formData.sale_id} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
               <option value="">Select Sale</option>
               {sales.length > 0 ? sales.map(sale => (
-                <option key={sale.id} value={sale.id}>{sale.customer.Names} -- {sale.inventory_id.name}</option>
+                <option key={sale.id} value={sale.id} required>{sale.customer.Names} -- {sale.inventory_id.name}</option>
               )) : <option value="">Loading sales...</option>}
             </select>
           </div>
           <div className="col-span-2 sm:col-span-1">
             <label htmlFor="amount_paid" className="block text-sm font-medium text-gray-700">Amount Paid</label>
-            <input type="number" name="amount_paid" id="amount_paid" value={formData.amount_paid} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
+            <input type="number" name="amount_paid" id="amount_paid" value={formData.amount_paid}  onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
           </div>
           <div className="col-span-2 sm:col-span-1">
             <label htmlFor="tax" className="block text-sm font-medium text-gray-700">Tax</label>
             <input type="number" name="tax" id="tax" value={formData.tax} readOnly className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
           </div>
-          {/* <div className="col-span-2 sm:col-span-1">
-            <label htmlFor="amount_paid" className="block text-sm font-medium text-gray-700">Amount Paid</label>
-            <input type="number" name="amount_paid" id="amount_paid" value={formData.amount_paid} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
-          </div> */}
-          {/* <div className="col-span-2 sm:col-span-1">
-            <label htmlFor="balance" className="block text-sm font-medium text-gray-700">Balance</label>
-            <input type="text" name="balance" id="balance" value={formData.balance} readOnly className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-          </div> */}
+         
           <div className="col-span-2 sm:col-span-1">
             <label htmlFor="date_of_purchase" className="block text-sm font-medium text-gray-700">Date of Purchase</label>
             <input type="date" name="date_of_purchase" id="date_of_purchase" value={formData.date_of_purchase} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
           </div>
           <div className="col-span-2 sm:col-span-1">
             <label htmlFor="method" className="block text-sm font-medium text-gray-700">Method</label>
-            <select name="method" id="method" value={formData.method} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+            <select name="method" id="method" value={formData.method}  onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
               <option value="">Select Method</option>
               <option value="cash">Cash</option>
               <option value="credit">Credit</option>
@@ -212,7 +204,7 @@ const NewInvoice = ({ customers, inventory }) => {
           </div>
           <div className="col-span-2 sm:col-span-1">
             <label htmlFor="currency" className="block text-sm font-medium text-gray-700">Currency</label>
-            <select name="currency" id="currency" value={formData.currency} onChange={handleChange}  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+            <select name="currency" id="currency" value={formData.currency}  onChange={handleChange}  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
               <option value="">Currency</option>
               <option value="KSH">KSH </option>
               <option value="USD">USD (US Dollar)</option>
@@ -222,7 +214,7 @@ const NewInvoice = ({ customers, inventory }) => {
           </div>
           <div className="col-span-2">
             <label htmlFor="fee" className="block text-sm font-medium text-gray-700">Fee</label>
-            <input type="number" name="fee" id="fee" value={formData.fee} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
+            <input type="number" name="fee" id="fee" value={formData.fee} req onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
           </div>
           <div className="col-span-2">
             <label htmlFor="installments" className="block text-sm font-medium text-gray-700">Installments</label>
@@ -264,11 +256,7 @@ const NewInvoice = ({ customers, inventory }) => {
         <div className="mt-6">
           <button type="submit" disabled={loading} className="close px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50">
             {loading ? (
-              <XlviLoader
-                boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
-                desktopSize={"60px"}
-                mobileSize={"60px"}
-              />
+              'creating invoive....'
             ) : (
               'Create Invoice'
             )}

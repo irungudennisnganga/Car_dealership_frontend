@@ -186,7 +186,7 @@ const AddSale = ({ sellerId, token, customer }) => {
                         <select id="customers" value={selectedCustomer} onChange={handleCustomerChange} className="border p-2 rounded-md w-full">
                             <option value="">Select...</option>
                             {customers.map((x) => (
-                                <option key={x.id} value={x.id}>{x.first_name} {x.last_name}</option>
+                                <option key={x.id} value={x.id} required>{x.first_name} {x.last_name}</option>
                             ))}
                         </select>
                         {selectedCustomer && <p>Selected Customer ID: {selectedCustomer}</p>}
@@ -194,7 +194,7 @@ const AddSale = ({ sellerId, token, customer }) => {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                     <div>
-                        <label htmlFor="amount" className="block">Amount:</label>
+                        <label htmlFor="amount" className="block">Discount:</label>
                         <input
                             type="number"
                             value={formData.discount}
@@ -209,6 +209,7 @@ const AddSale = ({ sellerId, token, customer }) => {
                             value={formData.sale_date}
                             onChange={handleDateChange}
                             className="border p-2 rounded-md w-full"
+                            required
                         />
                     </div>
                 </div>
@@ -219,6 +220,7 @@ const AddSale = ({ sellerId, token, customer }) => {
                         value={formData.promotions}
                         onChange={handlePromotionsChange}
                         className="border p-2 rounded-md w-full"
+                        required
                     />
                 </div>
                 <div>
@@ -226,7 +228,7 @@ const AddSale = ({ sellerId, token, customer }) => {
                     <select id="vehicles" value={formData.inventory_id} onChange={handleVehicleChange} className="border p-2 rounded-md w-full">
                         <option value="">Select...</option>
                         {inventory.map((vehicle) => (
-                            <option key={vehicle.id} value={vehicle.id}>{vehicle.make} {vehicle.model}</option>
+                            <option key={vehicle.id} value={vehicle.id} required>{vehicle.make} {vehicle.model}</option>
                         ))}
                     </select>
                 </div>
