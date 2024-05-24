@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { XlviLoader } from "react-awesome-loaders";
 import { useNavigate } from 'react-router-dom';
 
-const AddSale = ({ sellerId, token, customer }) => {
+const AddSale = ({  token, customer }) => {
     const [selectedStatus, setSelectedStatus] = useState('');
     const [selectedCustomer, setSelectedCustomer] = useState('');
     const [customers, setCustomers] = useState([]);
@@ -52,7 +52,7 @@ const AddSale = ({ sellerId, token, customer }) => {
 
         fetchInventory();
         setCustomers(customer);
-    }, [sellerId, token, customer]);
+    }, [ token, customer]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -239,7 +239,7 @@ const AddSale = ({ sellerId, token, customer }) => {
     );
 };
 AddSale.propTypes = {
-    sellerId: PropTypes.string.isRequired,
+    // sellerId: PropTypes.string.isRequired,
     // token: PropTypes.string.isRequired,
     customer: PropTypes.array.isRequired
 };

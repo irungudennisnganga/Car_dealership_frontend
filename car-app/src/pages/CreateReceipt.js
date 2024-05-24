@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import Swal from 'sweetalert2'
 
-const CreateReceipt = ({ user }) => {
+const CreateReceipt = () => {
   const [formData, setFormData] = useState({
     customer_id: '',
     invoice_id: '',
@@ -189,8 +188,6 @@ console.log(formData)
   );
 };
 
-CreateReceipt.propTypes = {
-  user: PropTypes.object.isRequired,
-};
+
 
 export default CreateReceipt;
