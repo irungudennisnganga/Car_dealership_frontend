@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import logo from '../images/autocar.jpg'; // Ensure the path is correct for your logo
+import logo from '../images/autocar.jpg'; 
 import { XlviLoader } from "react-awesome-loaders";
+
 const Invoicebyid = () => {
     const [invoice, setInvoice] = useState(null);
     const { invoiceid } = useParams();

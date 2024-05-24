@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import logo from '../images/autocar.jpg'; // Ensure the path is correct for your logo
 import { XlviLoader } from "react-awesome-loaders";
+import AccordionItem from '../components/AccordionItem';
+import CreateReceipt from './CreateReceipt';
 
-const Receipt = ({ user }) => {
+const Receipt = ({ user,customers }) => {
     const [receipts, setReceipts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -48,7 +50,14 @@ const Receipt = ({ user }) => {
     }
 
     return (
-        <div>
+        <div className='m-32 mt-9'>
+            {/* <div className='m-32 mt-9'> */}
+      {(user.role === 'seller') && (
+        <AccordionItem title='Create New Receipt'>
+          <CreateReceipt  />
+        </AccordionItem>
+      )}
+
             {receipts.map((receipt) => (
                 <div key={receipt.id} className="invoice-container max-w-4xl mx-auto my-10 bg-white shadow-md overflow-hidden mt-10 pl-7">
                     <div className="p-5 bg-blue-100 flex justify-between items-center">

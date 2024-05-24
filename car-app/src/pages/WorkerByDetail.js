@@ -29,12 +29,12 @@ const WorkerByDetail = () => {
   }, [userid]);
 
   
-console.log(worker)
+// console.log(worker)
 
 
   return (
     <>
-    <div className="bg-cardbackground m-auto mt-10 relative w-[800px] h-auto">
+    <div className="bg-cyan-50 m-auto mt-10 relative w-[800px] h-auto">
       {worker && (
         <>
     <div className="mt-4">

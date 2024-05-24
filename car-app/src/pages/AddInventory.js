@@ -79,7 +79,7 @@ const AddInventory = () => {
         gallery_images.forEach((file, index) => {
             formData.append(`gallery_images`, file);
         });
-console.log(gallery_images)
+// console.log(gallery_images)
         try {
             const response = await fetch('/inventory', {
                 method: 'POST',

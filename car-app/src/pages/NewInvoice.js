@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import PropTypes from 'prop-types';
-import { XlviLoader } from "react-awesome-loaders";
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate  } from 'react-router-dom';
 
 const NewInvoice = ({ customers, inventory }) => {
+  const { id, customer } = useParams();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     date_of_purchase: '',
     method: '',
@@ -13,10 +15,8 @@ const NewInvoice = ({ customers, inventory }) => {
     fee: '',
     tax: '',
     currency: '',
-    customer_id: '',
-    vehicle_id: '',
-    balance: '',
-    total_amount: '',
+    customer_id: customer || '',
+    vehicle_id: id || '',
     installments: '',
     pending_cleared: '',
     signature: '',
@@ -30,14 +30,10 @@ const NewInvoice = ({ customers, inventory }) => {
   });
 
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
   const [sales, setSales] = useState([]);
-  const {  id } = useParams();
-  
-  // console.log(id)
-  const formatDate = (date) => {
 
+  const formatDate = (date) => {
     const d = new Date(date);
     let month = '' + (d.getMonth() + 1);
     let day = '' + d.getDate();
@@ -48,22 +44,15 @@ const NewInvoice = ({ customers, inventory }) => {
 
     return [year, month, day].join('-');
   };
-  filterInventoryById(id)
-  function filterInventoryById (id)  {
-    const data = inventory.filter(item => item.id === id);
-    // console.log
-  };
-
-  console.log(inventory.find(item => item.id === id))
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     let updatedValues = {};
 
-    updatedValues[name] = (['total_amount', 'amount_paid', 'fee', 'tax'].includes(name)) ? Number(value) : value;
+    updatedValues[name] = (['amount_paid', 'fee', 'tax'].includes(name)) ? Number(value) : value;
 
-    if (name === 'total_amount' || name === 'amount_paid' || name === 'fee') {
-      const newTotalAmount = name === 'total_amount' ? Number(value) : Number(formData.total_amount);
+    if (name === 'amount_paid' || name === 'fee') {
+      const newTotalAmount = name === 'amount_paid' ? Number(value) : Number(formData.amount_paid);
       const newAmountPaid = name === 'amount_paid' ? Number(value) : Number(formData.amount_paid);
       const newTax = calculateTax(newTotalAmount);
       updatedValues.tax = newTax;
@@ -93,11 +82,13 @@ const NewInvoice = ({ customers, inventory }) => {
 
     return ((totalNum - paidNum) + taxNum).toFixed(2);
   };
+  const navigateToCreate = () => {
+    navigate(`/receipt`);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setMessage(null);
     setError(null);
 
     try {
@@ -117,6 +108,7 @@ const NewInvoice = ({ customers, inventory }) => {
       }
 
       toast.success(`Invoice created successfully with ID: ${data.invoice_id}`);
+      navigateToCreate()
       setFormData({
         date_of_purchase: '',
         method: '',
@@ -124,10 +116,8 @@ const NewInvoice = ({ customers, inventory }) => {
         fee: '',
         tax: '',
         currency: '',
-        customer_id: '',
-        vehicle_id: '',
-        balance: '',
-        total_amount: '',
+        customer_id: customer || '',
+        vehicle_id: id || '',
         installments: '',
         pending_cleared: '',
         signature: '',
@@ -145,11 +135,11 @@ const NewInvoice = ({ customers, inventory }) => {
       setLoading(false);
     }
   };
-console.log(formData)
+
   useEffect(() => {
     const fetchSales = async () => {
       try {
-        const response = await axios.get('/sales', {
+        const response = await axios.get('/saleinvoice', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('jwt')}`
           }
@@ -161,60 +151,49 @@ console.log(formData)
     };
     fetchSales();
   }, []);
-console.log(inventory)
+
+  useEffect(() => {
+    // Update formData with URL parameters
+    setFormData(prev => ({
+      ...prev,
+      customer_id: customer,
+      vehicle_id: id
+    }));
+  }, [id, customer]);
+
+
   return (
     <div className="bg-slate200 p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
       <Toaster />
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-4">
+         
           <div className="col-span-2 sm:col-span-1">
-            <label htmlFor="vehicle_id" className="block text-sm font-medium text-gray-700">Vehicle</label>
-            <select name="vehicle_id" id="vehicle_id" value={formData.vehicle_id} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-              <option value="">Select Vehicle</option>
-              {inventory.map(item => (
-                <option key={item.id} value={item.id}>{item.make} {item.model} - {item.year}</option>
-              ))}
-            </select>
-          </div>
-          <div className="col-span-2 sm:col-span-1">
-            <label htmlFor="customer_id" className="block text-sm font-medium text-gray-700">Customer</label>
-            <select name="customer_id" id="customer_id" value={formData.customer_id} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-              <option value="">Select Customer</option>
-              {customers.map(customer => (
-                <option key={customer.id} value={customer.id}>{customer.first_name} {customer.last_name}</option>
-              ))}
-            </select>
+          
             <label htmlFor="sale_id" className="block text-sm font-medium text-gray-700">Sale</label>
             <select name="sale_id" id="sale_id" value={formData.sale_id} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
               <option value="">Select Sale</option>
               {sales.length > 0 ? sales.map(sale => (
-                <option key={sale.id} value={sale.id}>{sale.customer.Names} -- {sale.inventory_id.name}</option>
+                <option key={sale.id} value={sale.id} required>{sale.customer.Names} -- {sale.inventory_id.name}</option>
               )) : <option value="">Loading sales...</option>}
             </select>
           </div>
           <div className="col-span-2 sm:col-span-1">
-            <label htmlFor="total_amount" className="block text-sm font-medium text-gray-700">Total Amount</label>
-            <input type="number" name="total_amount" id="total_amount" value={formData.total_amount} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
+            <label htmlFor="amount_paid" className="block text-sm font-medium text-gray-700">Amount Paid</label>
+            <input type="number" name="amount_paid" id="amount_paid" value={formData.amount_paid}  onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
           </div>
           <div className="col-span-2 sm:col-span-1">
             <label htmlFor="tax" className="block text-sm font-medium text-gray-700">Tax</label>
             <input type="number" name="tax" id="tax" value={formData.tax} readOnly className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
           </div>
-          <div className="col-span-2 sm:col-span-1">
-            <label htmlFor="amount_paid" className="block text-sm font-medium text-gray-700">Amount Paid</label>
-            <input type="number" name="amount_paid" id="amount_paid" value={formData.amount_paid} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
-          </div>
-          <div className="col-span-2 sm:col-span-1">
-            <label htmlFor="balance" className="block text-sm font-medium text-gray-700">Balance</label>
-            <input type="text" name="balance" id="balance" value={formData.balance} readOnly className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-          </div>
+         
           <div className="col-span-2 sm:col-span-1">
             <label htmlFor="date_of_purchase" className="block text-sm font-medium text-gray-700">Date of Purchase</label>
             <input type="date" name="date_of_purchase" id="date_of_purchase" value={formData.date_of_purchase} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
           </div>
           <div className="col-span-2 sm:col-span-1">
             <label htmlFor="method" className="block text-sm font-medium text-gray-700">Method</label>
-            <select name="method" id="method" value={formData.method} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+            <select name="method" id="method" value={formData.method}  onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
               <option value="">Select Method</option>
               <option value="cash">Cash</option>
               <option value="credit">Credit</option>
@@ -227,7 +206,7 @@ console.log(inventory)
           </div>
           <div className="col-span-2 sm:col-span-1">
             <label htmlFor="currency" className="block text-sm font-medium text-gray-700">Currency</label>
-            <select name="currency" id="currency" value={formData.currency} onChange={handleChange}  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+            <select name="currency" id="currency" value={formData.currency}  onChange={handleChange}  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
               <option value="">Currency</option>
               <option value="KSH">KSH </option>
               <option value="USD">USD (US Dollar)</option>
@@ -237,7 +216,7 @@ console.log(inventory)
           </div>
           <div className="col-span-2">
             <label htmlFor="fee" className="block text-sm font-medium text-gray-700">Fee</label>
-            <input type="number" name="fee" id="fee" value={formData.fee} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
+            <input type="number" name="fee" id="fee" value={formData.fee} req onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
           </div>
           <div className="col-span-2">
             <label htmlFor="installments" className="block text-sm font-medium text-gray-700">Installments</label>
@@ -277,13 +256,9 @@ console.log(inventory)
           </div>
         </div>
         <div className="mt-6">
-          <button type="submit" disabled={loading} className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50">
+          <button type="submit" disabled={loading} className="close px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50">
             {loading ? (
-              <XlviLoader
-                boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
-                desktopSize={"60px"}
-                mobileSize={"60px"}
-              />
+              'creating invoive....'
             ) : (
               'Create Invoice'
             )}
@@ -291,7 +266,7 @@ console.log(inventory)
         </div>
       </form>
       {error && <div className="mt-4 text-red-500">{error}</div>}
-      {message && <div className="mt-4 text-green-500">{message}</div>}
+      {/* {message && <div className="mt-4 text-green-500">{message}</div>} */}
     </div>
   );
 };

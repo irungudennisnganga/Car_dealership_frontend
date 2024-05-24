@@ -4,7 +4,7 @@ import React from "react"
 export default function Profile({user}) {
 
   return (
-    <div className=" bg-cardbackground m-auto mt-10 relative w-[600px] h-[300px]">
+    <div className=" bg-cyan-50 m-auto mt-10 relative w-[600px] h-[300px]">
       <div className="flex gap-6">
         <div className="w-[300px]">
             <div className='pl-1'>

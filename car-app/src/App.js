@@ -6,7 +6,13 @@ import Navbar from './components/Navbar';
 import Login from './components/Login';
 import 'react-toastify/dist/ReactToastify.css';
 import { XlviLoader } from "react-awesome-loaders";
+
+
+
 // Lazy-loaded components
+const AddCustomer = lazy(() => import('./pages/AddCustomer'));
+const Customers = lazy(() => import('./pages/Customers'));
+const CreateReceipt = lazy(() => import('./pages/CreateReceipt'));
 const AddUser = lazy(() => import('./pages/AddUser'));
 const Profile = lazy(() => import('./pages/Profile'));
 const Inventory = lazy(() => import('./pages/Inventory'));
@@ -109,7 +115,7 @@ function App() {
     // Use location state to redirect to login route after logout
     return <Navigate to="/login" replace />;
   };
-
+// console.log(customer)
   return (
     <>
       <ToastContainer />
@@ -130,12 +136,15 @@ function App() {
       />}>
               <Routes>
                 <Route path="/AddUser" element={<AddUser user={user} />} />
+                <Route path="/AddCustomer" element={<AddCustomer user={user} />} />
                 <Route path="/profile" element={<Profile user={user} />} />
                 <Route path="/Inventory" element={<Inventory inventory={inventory} user={user} />} />
                 <Route path="/workers" element={<Workers user={user} />} />
+                <Route path="/customers" element={<Customers user={user} />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
-                <Route path="/receipt" element={<Receipt user={user} />} />
+                <Route path="/receipt" element={<Receipt user={user} customer={customer}  />} />
+                <Route path="/receipt/new" element={<CreateReceipt user={user} customers={customer} />} />
                 <Route path="/sales" element={<Sales user={user} customers={customer} />} />
                 <Route path="/invoice" element={<Invoice user={user} />} />
                 <Route path="/report" element={<Report user={user} />} />
@@ -143,7 +152,7 @@ function App() {
                 <Route path="/sale/:saleid" element={<SaleDetails />} />
                 <Route path="/invoice/:username" element={<Invoicebysellername />} />
                 <Route path="/invoices/:invoiceid" element={<InvoicebyId />} />
-                <Route path="/create-invoice/:new/:id" element={<NewInvoice customers={customer} inventory={inventory} />} />
+                <Route path="/create-invoice/:new/:id/:customer" element={<NewInvoice customers={customer} inventory={inventory} />} />
                 <Route path="/" element={<Dashboard />} />
               </Routes>
             </Suspense>

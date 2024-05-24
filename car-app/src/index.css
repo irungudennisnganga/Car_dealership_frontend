@@ -22,3 +22,11 @@
         display: none;
     }
 }
+.close{
+    background-color: #e23249;
+    color: white;
+}
+.close:hover{
+    background-color: #4285eb;
+    color: white;
+}
