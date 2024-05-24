@@ -104,13 +104,13 @@ const CreateReceipt = () => {
             icon: 'success',
             confirmButtonText: 'Cool'
           })
-        console.log('Receipt created:', data);
+        // console.log('Receipt created:', data);
       })
       .catch((error) => {
         setError(error.message);
       });
   };
-console.log(formData)
+// console.log(formData)
   return (
     <div className="bg-cyan-50 m-72 mt-10 relative w-[700px] p-4">
       <h2 className="text-xl font-bold mb-4">Create Receipt</h2>

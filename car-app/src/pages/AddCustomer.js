@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState} from 'react';
 import imageplaceholder from '../images/imageplaceholder.jpg';
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';

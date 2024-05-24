@@ -29,7 +29,7 @@ const WorkerByDetail = () => {
   }, [userid]);
 
   
-console.log(worker)
+// console.log(worker)
 
 
   return (

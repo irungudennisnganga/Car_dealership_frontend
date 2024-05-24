@@ -6,10 +6,13 @@ import Navbar from './components/Navbar';
 import Login from './components/Login';
 import 'react-toastify/dist/ReactToastify.css';
 import { XlviLoader } from "react-awesome-loaders";
-import AddCustomer from './pages/AddCustomer';
-import Customers from './pages/Customers';
-import CreateReceipt from './pages/CreateReceipt';
+
+
+
 // Lazy-loaded components
+const AddCustomer = lazy(() => import('./pages/AddCustomer'));
+const Customers = lazy(() => import('./pages/Customers'));
+const CreateReceipt = lazy(() => import('./pages/CreateReceipt'));
 const AddUser = lazy(() => import('./pages/AddUser'));
 const Profile = lazy(() => import('./pages/Profile'));
 const Inventory = lazy(() => import('./pages/Inventory'));

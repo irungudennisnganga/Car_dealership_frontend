@@ -80,7 +80,7 @@ const AddSale = ({  token, customer }) => {
                         setSelectedCustomer('');
                        const id=formData.inventory_id
                        const customer =formData.customer_id
-                        console.log(id)
+                        // console.log(id)
                         navigateToCreate("new",id,customer)
                         setFormData({
                             status: "",
@@ -121,7 +121,7 @@ const AddSale = ({  token, customer }) => {
             ...formData,
             customer_id: customerId
         });
-        console.log("Selected customer ID:", customerId); // Add this line for debugging
+        // console.log("Selected customer ID:", customerId); // Add this line for debugging
     };
 
     const handleAmountChange = (event) => {
