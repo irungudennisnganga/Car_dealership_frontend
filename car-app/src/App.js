@@ -141,7 +141,7 @@ function App() {
                 <Route path="/Inventory" element={<Inventory inventory={inventory} user={user} />} />
                 <Route path="/workers" element={<Workers user={user} />} />
                 <Route path="/customers" element={<Customers user={user} />} />
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/dashboard" element={<Dashboard user={user} inventory={inventory}/>} />
                 <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
                 <Route path="/receipt" element={<Receipt user={user} customer={customer}  />} />
                 <Route path="/receipt/new" element={<CreateReceipt user={user} customers={customer} />} />

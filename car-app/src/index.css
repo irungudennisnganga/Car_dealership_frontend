@@ -22,6 +22,9 @@
         display: none;
     }
 }
+.dashboard{
+    color: rgb(5, 199, 109);
+}
 .close{
     background-color: #e23249;
     color: white;
