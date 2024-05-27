@@ -61,12 +61,12 @@ console.log(reports)
   }, [token]); // Include token as a dependency to re-fetch data if token changes
 
   return (
-    <div className="dashboard">
+    <div className="dashboard mb-4">
       <h1 className="text-2xl mb-4 text-green-700">Dashboard</h1>
       <div className="flex justify-evenly">
        
         
-        <div className="chart  m-auto">
+        <div className="chart  m-auto mt-3">
           <h2 className="text-xl mb-2 mt-0">Sales</h2>
           <BarChart width={1000} height={500} data={sales}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -78,7 +78,7 @@ console.log(reports)
             <Bar dataKey="discount" fill="#82ca9d" />
           </BarChart>
         </div>
-        <div className="chart ml-4 mr-4">
+        <div className="chart ml-4 mr-4 mt-3">
           <h2 className="text-xl mb-2">Inventories</h2>
           <PieChart width={500} height={500} className='text-white'>
             <Pie
@@ -101,7 +101,7 @@ console.log(reports)
           </PieChart>
         </div>
       </div>
-      <div className="chart  m-auto">
+      <div className="chart  m-auto mt-3">
           {/* <h2 className="text-xl mb-2 mt-0">Report</h2> */}
           <Report report={reports} />
         </div>

@@ -11,7 +11,7 @@ const Report = ({report}) => {
         <div className='mt-62mb-auto object-center'>
             <h2 className='text-2xl mb-4 dashboard '>Reports</h2>
             {/* {error && <div style={{ color: 'red' }}>Error: {error.message}</div>} */}
-            <ResponsiveContainer width="100%" height={400}>
+            <ResponsiveContainer width="90%" height={400}>
                 <LineChart
                     width={600}
                     height={400}
