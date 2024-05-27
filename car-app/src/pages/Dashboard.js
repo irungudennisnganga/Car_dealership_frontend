@@ -1,13 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell } from 'recharts';
+import Report from './Report';
 
-const Dashboard = ({ user, inventory }) => {
+const Dashboard = () => {
   const [users, setUsers] = useState([]);
   const [inventories, setInventories] = useState([]);
   const [sales, setSales] = useState([]);
   const token = localStorage.getItem('jwt'); // Assuming the JWT token is stored in localStorage
+  const [reports, setReports] = useState([]);
 
+  useEffect(() => {
+    fetch('/report', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      setReports(data); 
+    });
+}, []);
+
+console.log(reports)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -44,6 +65,19 @@ const Dashboard = ({ user, inventory }) => {
       <h1 className="text-2xl mb-4 text-green-700">Dashboard</h1>
       <div className="flex justify-evenly">
        
+        
+        <div className="chart  m-auto">
+          <h2 className="text-xl mb-2 mt-0">Sales</h2>
+          <BarChart width={1000} height={500} data={sales}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="id" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="commision" fill="#8884d8" />
+            <Bar dataKey="discount" fill="#82ca9d" />
+          </BarChart>
+        </div>
         <div className="chart ml-4 mr-4">
           <h2 className="text-xl mb-2">Inventories</h2>
           <PieChart width={500} height={500} className='text-white'>
@@ -66,19 +100,12 @@ const Dashboard = ({ user, inventory }) => {
             <Tooltip />
           </PieChart>
         </div>
-        <div className="chart  m-auto">
-          <h2 className="text-xl mb-2 mt-0">Sales</h2>
-          <BarChart width={600} height={300} data={sales}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="id" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="commision" fill="#8884d8" />
-            <Bar dataKey="discount" fill="#82ca9d" />
-          </BarChart>
-        </div>
       </div>
+      <div className="chart  m-auto">
+          {/* <h2 className="text-xl mb-2 mt-0">Report</h2> */}
+          <Report report={reports} />
+        </div>
+        
     </div>
   );
 };

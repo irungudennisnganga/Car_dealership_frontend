@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from 'react-router-dom';
 import logo from '../images/autocar.jpg';
 import Swal from 'sweetalert2';
-import { XlviLoader } from "react-awesome-loaders";
+// import { XlviLoader } from "react-awesome-loaders";
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -52,12 +52,7 @@ const Login = () => {
         return (
             <div className="flex items-center justify-center h-screen">
                 <h3>Wait For The Verification To Be Completed......</h3>
-                <XlviLoader
-                    boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
-                    desktopSize={"128px"}
-                    mobileSize={"100px"}
-                    className={'object-center'}
-                />
+                <h2>Loading...</h2>
             </div>
         );
     }

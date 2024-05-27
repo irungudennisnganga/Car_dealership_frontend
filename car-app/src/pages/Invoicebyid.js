@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import logo from '../images/autocar.jpg'; 
-import { XlviLoader } from "react-awesome-loaders";
+// import { XlviLoader } from "react-awesome-loaders";
 
 const Invoicebyid = () => {
     const [invoice, setInvoice] = useState(null);
@@ -25,12 +25,7 @@ const Invoicebyid = () => {
     if (!invoice) {
         return<div className="flex items-center justify-center h-screen">
                 
-        <XlviLoader
-            boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
-            desktopSize={"128px"}
-            mobileSize={"100px"}
-            className={'object-center'}
-        />
+        <h2>Loading...</h2>
     </div>// Display a loading message or spinner until the data is fetched
     }
 

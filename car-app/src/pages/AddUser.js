@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2'
 import PropTypes from 'prop-types';
-import { XlviLoader } from "react-awesome-loaders";
+// import { XlviLoader } from "react-awesome-loaders";
 const AddUser = ({ user }) => {
   const inputRef = useRef(null);
   const [formData, setFormData] = useState({
@@ -227,12 +227,7 @@ const AddUser = ({ user }) => {
       </div>
             {loading ?<div className="flex items-center justify-center h-screen">
                 
-                <XlviLoader
-                    boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
-                    desktopSize={"128px"}
-                    mobileSize={"100px"}
-                    className={'object-center'}
-                />
+               <h2>Loading...</h2>
             </div>:null}
       <button className="bg-cyan300 rounded-md hover:shadow hover:bg-cyan400 text-white font-bold py-2 px-4 block mx-auto mt-4 my-2.5" onClick={handleSubmit}>Submit</button>
     </div>

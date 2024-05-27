@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
-import { XlviLoader } from "react-awesome-loaders";
+// import { XlviLoader } from "react-awesome-loaders";
 import { useNavigate } from 'react-router-dom';
 
 const AddSale = ({  token, customer }) => {
@@ -158,12 +158,7 @@ const AddSale = ({  token, customer }) => {
     if (loading) {
         return (
             <div className="flex items-center justify-center h-screen">
-                <XlviLoader
-                    boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
-                    desktopSize={"128px"}
-                    mobileSize={"100px"}
-                    className={'object-center'}
-                />
+                <h2>Loading...</h2>
             </div>
         );
     }

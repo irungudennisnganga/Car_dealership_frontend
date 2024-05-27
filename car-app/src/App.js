@@ -5,7 +5,7 @@ import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 import Login from './components/Login';
 import 'react-toastify/dist/ReactToastify.css';
-import { XlviLoader } from "react-awesome-loaders";
+// import { XlviLoader } from "react-awesome-loaders";
 
 
 
@@ -34,6 +34,7 @@ function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
   const [inventory, setInventory] = useState([]);
   const [customer, setCustomer] = useState([]);
+  
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -103,6 +104,7 @@ function App() {
     });
   }, []); 
 
+  
   useEffect(() => {
     // Save user to local storage on user change
     localStorage.setItem('user', JSON.stringify(user));
@@ -129,11 +131,7 @@ function App() {
               user={user}
               handleLogout={handleLogout}
             />
-            <Suspense fallback={<XlviLoader
-        boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
-        desktopSize={"128px"}
-        mobileSize={"100px"}
-      />}>
+            <Suspense fallback={<h2>Loading</h2>}>
               <Routes>
                 <Route path="/AddUser" element={<AddUser user={user} />} />
                 <Route path="/AddCustomer" element={<AddCustomer user={user} />} />
@@ -141,13 +139,13 @@ function App() {
                 <Route path="/Inventory" element={<Inventory inventory={inventory} user={user} />} />
                 <Route path="/workers" element={<Workers user={user} />} />
                 <Route path="/customers" element={<Customers user={user} />} />
-                <Route path="/dashboard" element={<Dashboard user={user} inventory={inventory}/>} />
+                <Route path="/dashboard" element={<Dashboard  />} />
                 <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
                 <Route path="/receipt" element={<Receipt user={user} customer={customer}  />} />
                 <Route path="/receipt/new" element={<CreateReceipt user={user} customers={customer} />} />
                 <Route path="/sales" element={<Sales user={user} customers={customer} />} />
                 <Route path="/invoice" element={<Invoice user={user} />} />
-                <Route path="/report" element={<Report user={user} />} />
+                {/* <Route path="/report" element={<Report report={reports} />} /> */}
                 <Route path="/sellersaledashboard" element={<SellerSaleDashboard />} />
                 <Route path="/sale/:saleid" element={<SaleDetails />} />
                 <Route path="/invoice/:username" element={<Invoicebysellername />} />
