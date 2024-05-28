@@ -44,7 +44,7 @@ if(!loading){
     visible={true}
     />)
 }
-console.log(reports)
+// console.log(reports)
   useEffect(() => {
     const fetchData = async () => {
       try {

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { FaBars, FaSearch, FaBell, FaUserCircle, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
-// import PopUp from '../pages/PopUp';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
   const navigate = useNavigate();
+  const location = useLocation(); // Get the current location
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
@@ -15,8 +15,8 @@ const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
   const userRole = user ? user.role : "";
 
   const handleSearch = () => {
-    fetch(`/inventory`, {
-      method: 'GET',
+    fetch(`/search?query=${searchQuery}&currentPath=${location.pathname}`, {
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('jwt')}`
       }
@@ -40,6 +40,9 @@ const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
     });
   };
 
+  // Function to check if the link is active
+  const isActive = (path) => location.pathname === path;
+  // console.log(location)
   return (
     <>
       <nav className="bg-cyan-50 px-4 py-3 flex justify-between items-center fixed top-0 w-[87%] mx-auto rounded shadow z-10">
@@ -62,7 +65,7 @@ const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
           </div>
           <div className='relative'>
             <Link to="/profile" aria-label="User Profile">
-              <FaUserCircle className='w-6 h-6 text-white mt-1' />
+              <FaUserCircle className={`w-6 h-6 mt-1 ${isActive('/profile') ? 'text-blue-500' : 'text-white'}`} />
             </Link>
           </div>
           <div className='hidden sm:block'>
