@@ -6,7 +6,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2'
 import PropTypes from 'prop-types';
-// import { XlviLoader } from "react-awesome-loaders";
+import { CirclesWithBar } from 'react-loader-spinner'
+
 const AddUser = ({ user }) => {
   const inputRef = useRef(null);
   const [formData, setFormData] = useState({
@@ -227,7 +228,18 @@ const AddUser = ({ user }) => {
       </div>
             {loading ?<div className="flex items-center justify-center h-screen">
                 
-               <h2>Loading...</h2>
+            (<CirclesWithBar
+                    height="100"
+                    width="100"
+                    color="#4fa94d"
+                    outerCircleColor="#4fa94d"
+                    innerCircleColor="#4fa94d"
+                    barColor="#4fa94d"
+                    ariaLabel="circles-with-bar-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    />)
             </div>:null}
       <button className="bg-cyan300 rounded-md hover:shadow hover:bg-cyan400 text-white font-bold py-2 px-4 block mx-auto mt-4 my-2.5" onClick={handleSubmit}>Submit</button>
     </div>

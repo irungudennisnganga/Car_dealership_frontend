@@ -5,7 +5,7 @@ import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 import Login from './components/Login';
 import 'react-toastify/dist/ReactToastify.css';
-// import { XlviLoader } from "react-awesome-loaders";
+import { CirclesWithBar } from 'react-loader-spinner'
 
 
 
@@ -131,7 +131,18 @@ function App() {
               user={user}
               handleLogout={handleLogout}
             />
-            <Suspense fallback={<h2>Loading</h2>}>
+            <Suspense className="flex items-center justify-center h-screen" fallback={(<CirclesWithBar
+                    height="100"
+                    width="100"
+                    color="#4fa94d"
+                    outerCircleColor="#4fa94d"
+                    innerCircleColor="#4fa94d"
+                    barColor="#4fa94d"
+                    ariaLabel="circles-with-bar-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    />)}>
               <Routes>
                 <Route path="/AddUser" element={<AddUser user={user} />} />
                 <Route path="/AddCustomer" element={<AddCustomer user={user} />} />

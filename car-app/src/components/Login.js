@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import logo from '../images/autocar.jpg';
 import Swal from 'sweetalert2';
 // import { XlviLoader } from "react-awesome-loaders";
+import { CirclesWithBar } from 'react-loader-spinner'
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -51,9 +52,21 @@ const Login = () => {
     if (loading) { // Show loader when loading is true
         return (
             <div className="flex items-center justify-center h-screen">
-                <h3>Wait For The Verification To Be Completed......</h3>
-                <h2>Loading...</h2>
-            </div>
+                <h3 className="block mb-3">Wait For The Verification To Be Completed......</h3><br /> <br />
+                (<CirclesWithBar
+                    height="100"
+                    width="100"
+                    color="#4fa94d"
+                    outerCircleColor="#4fa94d"
+                    innerCircleColor="#4fa94d"
+                    barColor="#4fa94d"
+                    ariaLabel="circles-with-bar-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    />)
+
+                </div>
         );
     }
 

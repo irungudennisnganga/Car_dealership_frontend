@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
-// import { XlviLoader } from "react-awesome-loaders";
+import { CirclesWithBar } from 'react-loader-spinner'
 import { useNavigate } from 'react-router-dom';
 
 const AddSale = ({  token, customer }) => {
@@ -158,7 +158,18 @@ const AddSale = ({  token, customer }) => {
     if (loading) {
         return (
             <div className="flex items-center justify-center h-screen">
-                <h2>Loading...</h2>
+                (<CirclesWithBar
+                    height="100"
+                    width="100"
+                    color="#4fa94d"
+                    outerCircleColor="#4fa94d"
+                    innerCircleColor="#4fa94d"
+                    barColor="#4fa94d"
+                    ariaLabel="circles-with-bar-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    />)
             </div>
         );
     }

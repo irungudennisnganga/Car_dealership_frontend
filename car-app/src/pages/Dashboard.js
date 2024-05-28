@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell } from 'recharts';
 import Report from './Report';
+import { CirclesWithBar } from 'react-loader-spinner'
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
@@ -9,6 +10,7 @@ const Dashboard = () => {
   const [sales, setSales] = useState([]);
   const token = localStorage.getItem('jwt'); // Assuming the JWT token is stored in localStorage
   const [reports, setReports] = useState([]);
+  const [loading, setLoading]=useState(false)
 
   useEffect(() => {
     fetch('/report', {
@@ -25,9 +27,23 @@ const Dashboard = () => {
     })
     .then(data => {
       setReports(data); 
+      setLoading(true)
     });
 }, []);
-
+if(!loading){
+  (<CirclesWithBar
+    height="100"
+    width="100"
+    color="#4fa94d"
+    outerCircleColor="#4fa94d"
+    innerCircleColor="#4fa94d"
+    barColor="#4fa94d"
+    ariaLabel="circles-with-bar-loading"
+    wrapperStyle={{}}
+    wrapperClass=""
+    visible={true}
+    />)
+}
 console.log(reports)
   useEffect(() => {
     const fetchData = async () => {

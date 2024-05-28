@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CirclesWithBar } from 'react-loader-spinner'
 
 const Invoice = ({ user }) => {
   const [invoices, setInvoices] = useState([]);
@@ -30,6 +31,20 @@ const Invoice = ({ user }) => {
     }
   }, [user.role]);  // Depend on user.role to refetch when it changes
 
+  if(!invoices){
+    (<CirclesWithBar
+      height="100"
+      width="100"
+      color="#4fa94d"
+      outerCircleColor="#4fa94d"
+      innerCircleColor="#4fa94d"
+      barColor="#4fa94d"
+      ariaLabel="circles-with-bar-loading"
+      wrapperStyle={{}}
+      wrapperClass=""
+      visible={true}
+      />)
+  }
   const navigateToDetail = (invoice, role) => {
     if (role === 'admin' || role === 'super admin') {
       const firstName = invoice.seller_name.split(' ')[0]; // Extract first name

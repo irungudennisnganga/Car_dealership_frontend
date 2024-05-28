@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import logo from '../images/autocar.jpg'; 
-// import { XlviLoader } from "react-awesome-loaders";
+import { CirclesWithBar } from 'react-loader-spinner'
 
 const Invoicebyid = () => {
     const [invoice, setInvoice] = useState(null);
@@ -25,7 +25,18 @@ const Invoicebyid = () => {
     if (!invoice) {
         return<div className="flex items-center justify-center h-screen">
                 
-        <h2>Loading...</h2>
+                (<CirclesWithBar
+                    height="100"
+                    width="100"
+                    color="#4fa94d"
+                    outerCircleColor="#4fa94d"
+                    innerCircleColor="#4fa94d"
+                    barColor="#4fa94d"
+                    ariaLabel="circles-with-bar-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    />)
     </div>// Display a loading message or spinner until the data is fetched
     }
 

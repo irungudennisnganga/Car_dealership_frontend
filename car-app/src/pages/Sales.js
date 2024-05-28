@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import AddSales from './AddSales'; // Assuming you have an AddSales component
 import { useNavigate } from 'react-router-dom';
 import AccordionItem from '../components/AccordionItem';
-// import { XlviLoader } from "react-awesome-loaders";
+import { CirclesWithBar } from 'react-loader-spinner'
 
 const Sales = ({ user, customers }) => {
   const [sales, setSales] = useState([]);
@@ -57,7 +57,18 @@ const Sales = ({ user, customers }) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-       <h2>Loading....</h2>
+       (<CirclesWithBar
+                    height="100"
+                    width="100"
+                    color="#4fa94d"
+                    outerCircleColor="#4fa94d"
+                    innerCircleColor="#4fa94d"
+                    barColor="#4fa94d"
+                    ariaLabel="circles-with-bar-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    />)
       </div>
     );
   }
