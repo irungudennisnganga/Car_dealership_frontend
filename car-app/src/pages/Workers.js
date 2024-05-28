@@ -29,7 +29,7 @@ const Workers = ({ user }) => {
   }, [user.role]);
 
   return (
-    <div className="bg-cyan-50 m-72 mt-10 relative w-[900px] h-[500px] mr-[150px] overflow-y-auto">
+    <div className="bg-cyan-50 m-56 mt-10 relative w-[1100px] h-[500px] mr-[150px] overflow-y-auto">
       <table className="table-auto w-full table-fixed border-collapse ml-4">
         <thead>
           <tr>
@@ -37,7 +37,7 @@ const Workers = ({ user }) => {
             <th className="w-[250px] text-left py-2">Email</th>
             <th className="w-1/4 text-left py-2">Contact</th>
             {user.role === 'super admin' && <th className="w-1/4 text-left py-2">Role</th>}
-            {(user.role === 'super admin' || user.role === 'admin') && <th className="w-1/4 text-left py-2">Actions</th>}
+            {(user.role === 'super admin' || user.role === 'admin') && <th className="w-1/4 text-left py-2">Status</th>}
           </tr>
         </thead>
         <tbody style={{ marginTop: '1rem' }}>
@@ -51,6 +51,7 @@ const Workers = ({ user }) => {
               <td className="w-[250px] border-transparent text-left py-2">{worker.email}</td>
               <td className="w-1/4 border-transparent text-left py-2">{worker.contact}</td>
               {user.role === 'super admin' && <td className="w-1/4 border-transparent text-left py-2">{worker.role}</td>}
+              {(user.role === 'super admin' || user.role === 'admin') && <td className="w-1/4 border-transparent text-left py-2">{worker.status}</td>}
               {(user.role === 'super admin' || user.role === 'admin') && <td className="w-1/4 border-transparent text-left py-2">{/* Add buttons for actions like edit, delete, etc. */}</td>}
             </tr>
           ))}
