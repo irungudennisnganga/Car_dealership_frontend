@@ -52,7 +52,7 @@ const Login = () => {
     if (loading) { // Show loader when loading is true
         return (
             <div className="flex items-center justify-center h-screen">
-                <h3 className="block mb-3">Wait For The Verification To Be Completed......</h3><br /> <br />
+                {/* <h3 className="block mb-3">Wait For The Verification To Be Completed......</h3><br /> <br /> */}
                 (<CirclesWithBar
                     height="100"
                     width="100"

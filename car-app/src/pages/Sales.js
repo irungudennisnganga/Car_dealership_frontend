@@ -78,7 +78,7 @@ const Sales = ({ user, customers }) => {
   }
 
   return (
-    <div className="bg-cyan-50 m-72 mt-10 relative w-[1000px] h-auto mr-[50px] overflow-y-auto">
+    <div className="bg-cyan-50 m-12 mt-10 relative w-[1500px] h-auto mr-[30px] overflow-y-auto">
       {user ? (
         <div>
           {user.role === 'seller' && (
@@ -86,7 +86,7 @@ const Sales = ({ user, customers }) => {
               <AddSales onAddSale={handleAddSale} customer={customers} />
             </AccordionItem>
           )}
-          <table className="table-auto w-full table-fixed border-collapse ml-4">
+          <table className="table-auto w-full table-fixed border-collapse ml-2">
             <thead>
               <tr>
                 {user.role !== 'seller' && <th className="w-1/4 text-left py-2">Seller Name</th>}
@@ -95,6 +95,7 @@ const Sales = ({ user, customers }) => {
                 <th className="w-1/4 text-left py-2">Status</th>
                 <th className="w-1/4 text-left py-2">Sale Date</th>
                 <th className="w-1/4 text-left py-2">Vehicle Name</th>
+                <th className="w-1/4 text-left py-2">Vehicle History</th>
               </tr>
             </thead>
             <tbody>
@@ -102,7 +103,7 @@ const Sales = ({ user, customers }) => {
                 <tr 
                   key={sale.id} 
                   onClick={user.role !== 'seller' ? () => navigatetosale(sale.id) : null} 
-                  className={`cursor-${user.role !== 'seller' ? 'pointer' : 'default'} hover:bg-gray-100`}
+                  className={`cursor-${user.role !== 'seller' ? 'pointer' : 'default'} hover:bg-gray-100 border`}
                 >
                   {user.role !== 'seller' && <td className="border-transparent text-left py-2">{sale.seller.Names}</td>}
                   <td className="border-transparent text-left py-2">{sale.customer.Names}</td>
@@ -110,6 +111,7 @@ const Sales = ({ user, customers }) => {
                   <td className="border-transparent text-left py-2">{sale.status}</td>
                   <td className="border-transparent text-left py-2">{new Date(sale.sale_date).toLocaleDateString()}</td>
                   <td className="border-transparent text-left py-2">{sale.inventory_id.name}</td>
+                  <td className="border-transparent text-left py-2">{sale.history}</td>
                 </tr>
               ))}
             </tbody>

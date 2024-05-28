@@ -25,21 +25,20 @@ const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
       if (!response.ok) {
         throw new Error('Failed to fetch search results');
       }
+      // console.log(response)
       return response.json();
+      
     })
     .then(data => {
-      if (searchQuery) {
-        const filteredData = data.filter(item => {
-          return item.make.toLowerCase().includes(searchQuery.toLowerCase());
-        });
-        setSearchResults(filteredData);
-      }
+      // here we set the data searched  from our backend
+      setSearchResults(data)
+     
     })
     .catch(error => {
       console.error('Error fetching search results:', error);
     });
   };
-
+  console.log(searchResults)
   // Function to check if the link is active
   const isActive = (path) => location.pathname === path;
   // console.log(location)
@@ -88,7 +87,7 @@ const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-5 px-4">
-        {searchResults.map(item => (
+        {/* {searchResults.map(item => (
           <div className='border-solid border-2 border-blue-500' key={item.id}>
             <img
               src={item.image}
@@ -98,7 +97,7 @@ const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
             <h4>{item.make}</h4>
             <h4>{item.model}</h4>
           </div>
-        ))}
+        ))} */}
       </div>
     </>
   );

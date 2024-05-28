@@ -60,7 +60,7 @@ const Invoice = ({ user }) => {
   }
 
   return (
-    <div className="bg-cyan-50 m-72 mt-10 relative w-[1000px] h-auto mr-[50px] overflow-y-auto">
+    <div className="bg-cyan-50 m-44 mt-10 relative w-[1100px] h-auto mr-[50px] overflow-y-auto">
       {invoices.length > 0 && (
         <table className="table-auto w-full table-fixed border-collapse ml-4">
           <thead>
