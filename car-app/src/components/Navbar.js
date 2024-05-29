@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { FaBars, FaSearch, FaBell, FaUserCircle, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import SearchResults from './SearchResults';
+
 
 const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
   const navigate = useNavigate();
   const location = useLocation(); // Get the current location
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+
+  // this useEffect resets the search results everytime the path changes
+  useEffect(() =>{
+    setSearchResults([])
+  },[location])
 
   const goBack = () => navigate(-1);
   const goForward = () => navigate(1);
@@ -87,17 +94,7 @@ const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-5 px-4">
-        {/* {searchResults.map(item => (
-          <div className='border-solid border-2 border-blue-500' key={item.id}>
-            <img
-              src={item.image}
-              alt={item.make}
-              className="cursor-pointer"
-            />
-            <h4>{item.make}</h4>
-            <h4>{item.model}</h4>
-          </div>
-        ))} */}
+       {searchResults.length > 0  ? <SearchResults location={location} data={searchResults} />:null}
       </div>
     </>
   );
