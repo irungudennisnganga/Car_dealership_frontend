@@ -29,7 +29,7 @@ const Workers = ({ user }) => {
   }, [user.role]);
 
   return (
-    <div className="bg-cyan-50 m-56 mt-10 relative w-[1100px] h-[500px] mr-[150px] overflow-y-auto">
+    <div className="bg-cyan-50 m-56 mt-10 relative w-[1100px]  mr-[150px] overflow-y-auto">
       <table className="table-auto w-full table-fixed border-collapse ml-4">
         <thead>
           <tr>
