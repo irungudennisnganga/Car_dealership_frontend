@@ -45,7 +45,7 @@ const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
       console.error('Error fetching search results:', error);
     });
   };
-  console.log(searchResults)
+  // console.log(searchResults)
   // Function to check if the link is active
   const isActive = (path) => location.pathname === path;
   // console.log(location)

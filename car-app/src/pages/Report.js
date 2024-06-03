@@ -1,24 +1,21 @@
 import React from 'react';
-
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const Report = ({report}) => {
-   
 
-  
+const Report = ({report}) => {
+
 
     return (
-        <div className='mt-62mb-auto object-center'>
-            <h2 className='text-2xl mb-4 dashboard '>Reports</h2>
+        <div className='mt-6 mb-auto object-center'>
+            <h2 className='text-2xl mb-4 dashboard'>Reports</h2>
             {/* {error && <div style={{ color: 'red' }}>Error: {error.message}</div>} */}
+            
             <ResponsiveContainer width="90%" height={400}>
                 <LineChart
                     width={600}
                     height={400}
                     data={report}
-                    margin={{
-                        top: 5, right: 30, left: 20, bottom: 5,
-                    }}
+                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="sale_date" />
@@ -29,6 +26,8 @@ const Report = ({report}) => {
                     <Line type="monotone" dataKey="expenses" stroke="#82ca9d" />
                 </LineChart>
             </ResponsiveContainer>
+
+        
         </div>
     );
 }

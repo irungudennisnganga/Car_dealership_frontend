@@ -23,10 +23,10 @@ const AddSale = ({  token, customer }) => {
         commissionPercentage: 0,
     });
 
-    const navigateToCreate = (invoiceId,id, customer) => {
-        navigate(`/create-invoice/${invoiceId}/${id}/${customer}`);
+    const navigateToCreate = (invoiceId,id, customer,sale_id) => {
+        navigate(`/create-invoice/${invoiceId}/${id}/${customer}/${sale_id}`);
       };
-
+    //   console.log(formData)
     useEffect(() => {
         const fetchInventory = async () => {
             try {
@@ -81,7 +81,8 @@ const AddSale = ({  token, customer }) => {
                        const id=formData.inventory_id
                        const customer =formData.customer_id
                         // console.log(id)
-                        navigateToCreate("new",id,customer)
+                        const saleId = data.sale_id; 
+                        navigateToCreate("new",id,customer,saleId)
                         setFormData({
                             status: "",
                             history: "",
@@ -125,7 +126,7 @@ const AddSale = ({  token, customer }) => {
     };
 
     const handleAmountChange = (event) => {
-        const price = event.target.value;
+        // const price = event.target.value;
         const discount = 200;
         
         setFormData({

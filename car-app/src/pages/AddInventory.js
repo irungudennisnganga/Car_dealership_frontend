@@ -30,6 +30,8 @@ const AddInventory = () => {
     const [body_type, setBodytype] = useState('');
     const [engine_size, setEnginesize] = useState('');
     const [condition, setCondition] = useState('');
+    const [transport_fee, setTransportFee] = useState('');
+    const [import_duty, setImportDuty] = useState('');
     const [doors, setDoors] = useState('');
     const [gallery_images, setGalleryImages] = useState([]);
     const { handleSubmit } = useForm();
@@ -76,10 +78,12 @@ const AddInventory = () => {
         formData.append('engine_size', engine_size);
         formData.append('condition', condition);
         formData.append('doors', doors);
+        formData.append('import_duty', import_duty);
+        formData.append('transport_fee', transport_fee);
         gallery_images.forEach((file, index) => {
             formData.append(`gallery_images`, file);
         });
-// console.log(gallery_images)
+
         try {
             const response = await fetch('/inventory', {
                 method: 'POST',
@@ -250,7 +254,36 @@ const AddInventory = () => {
                                     onChange={(e) => setImportdocument(e.target.value)}
                                 />
                         </div>
-                        
+                        <div className="mb-4 mt-8">
+                                <label
+                                    htmlFor="transportfee"
+                                    className="mb-2 inline-block text-neutral-700 dark:text-neutral-200"
+                                >
+                                    Transport Fee
+                                </label>
+                                <input
+                                    className="rounded-md w-full py-2  relative m-0 block min-w-0 flex-auto  border border-solid border-neutral-300 bg-clip-padding px-3  text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
+                                    type="number"
+                                    id="transportfee"
+                                    value={transport_fee}
+                                    onChange={(e) => setTransportFee(e.target.value)}
+                                />
+                        </div>
+                        <div className="mb-4 mt-8">
+                                <label
+                                    htmlFor="import_duty"
+                                    className="mb-2 inline-block text-neutral-700 dark:text-neutral-200"
+                                >
+                                    Import Duty
+                                </label>
+                                <input
+                                    className="rounded-md w-full py-2  relative m-0 block min-w-0 flex-auto  border border-solid border-neutral-300 bg-clip-padding px-3  text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
+                                    type="nummber"
+                                    id="import_duty"
+                                    value={import_duty}
+                                    onChange={(e) => setImportDuty(e.target.value)}
+                                />
+                        </div>
 
                     </div>
                     <div className="w-full md:w-1/3 px-2 mb-2 p-8 bg-white rounded-lg shadow-md">

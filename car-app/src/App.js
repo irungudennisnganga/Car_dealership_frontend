@@ -155,7 +155,7 @@ function App() {
                 <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
                 <Route path="/receipt" element={<Receipt user={user} customer={customer}  />} />
                 <Route path="/receipt/:id" element={<OneReceipt />} />
-                <Route path="/receipt/new" element={<CreateReceipt user={user} customers={customer} />} />
+                <Route path="/receipt/:customer/:invoice/:amount" element={<CreateReceipt user={user} customers={customer} />} />
                 <Route path="/sales" element={<Sales user={user} customers={customer} />} />
                 <Route path="/invoice" element={<Invoice user={user} />} />
                 {/* <Route path="/report" element={<Report report={reports} />} /> */}
@@ -163,7 +163,7 @@ function App() {
                 <Route path="/sale/:saleid" element={<SaleDetails />} />
                 <Route path="/invoice/:username" element={<Invoicebysellername />} />
                 <Route path="/invoices/:invoiceid" element={<InvoicebyId />} />
-                <Route path="/create-invoice/:new/:id/:customer" element={<NewInvoice customers={customer} inventory={inventory} />} />
+                <Route path="/create-invoice/:new/:id/:customer/:sale" element={<NewInvoice />} />
                 <Route path="/" element={<Dashboard />} />
               </Routes>
             </Suspense>

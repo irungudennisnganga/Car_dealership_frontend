@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useParams,useNavigate  } from 'react-router-dom';
 
 const NewInvoice = ({ customers, inventory }) => {
-  const { id, customer } = useParams();
+  const { id, customer,sale } = useParams();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -26,7 +26,7 @@ const NewInvoice = ({ customers, inventory }) => {
     additional_accessories: '',
     notes_instructions: '',
     payment_proof: '',
-    sale_id: ''
+    sale_id: sale || ""
   });
 
   const [loading, setLoading] = useState(false);
@@ -82,8 +82,8 @@ const NewInvoice = ({ customers, inventory }) => {
 
     return ((totalNum - paidNum) + taxNum).toFixed(2);
   };
-  const navigateToCreate = () => {
-    navigate(`/receipt`);
+  const navigateToCreate = (customer,invoice,amount) => {
+    navigate(`/receipt/${customer}/${invoice}/${amount}`);
   };
 
   const handleSubmit = async (e) => {
@@ -108,7 +108,8 @@ const NewInvoice = ({ customers, inventory }) => {
       }
 
       toast.success(`Invoice created successfully with ID: ${data.invoice_id}`);
-      navigateToCreate()
+      const invoice_id =data.invoice_id
+      navigateToCreate(customer,invoice_id,formData.amount_paid)
       setFormData({
         date_of_purchase: '',
         method: '',
@@ -127,7 +128,7 @@ const NewInvoice = ({ customers, inventory }) => {
         additional_accessories: '',
         notes_instructions: '',
         payment_proof: '',
-        sale_id: ''
+        sale_id: sale || ""
       });
     } catch (err) {
       toast.error(err.message || 'An unexpected error occurred');
@@ -167,17 +168,7 @@ const NewInvoice = ({ customers, inventory }) => {
       <Toaster />
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-4">
-         
-          <div className="col-span-2 sm:col-span-1">
-          
-            <label htmlFor="sale_id" className="block text-sm font-medium text-gray-700">Sale</label>
-            <select name="sale_id" id="sale_id" value={formData.sale_id} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-              <option value="">Select Sale</option>
-              {sales.length > 0 ? sales.map(sale => (
-                <option key={sale.id} value={sale.id} required>{sale.customer.Names} -- {sale.inventory_id.name}</option>
-              )) : <option value="">Loading sales...</option>}
-            </select>
-          </div>
+
           <div className="col-span-2 sm:col-span-1">
             <label htmlFor="amount_paid" className="block text-sm font-medium text-gray-700">Amount Paid</label>
             <input type="number" name="amount_paid" id="amount_paid" value={formData.amount_paid}  onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
