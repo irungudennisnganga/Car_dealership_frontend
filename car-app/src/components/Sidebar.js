@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../images/autocar.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTachometerAlt, faUserPlus, faUsers, faBoxOpen, faFileInvoice, faReceipt } from '@fortawesome/free-solid-svg-icons';
+import { faTachometerAlt, faUserPlus, faUsers, faBoxOpen, faFileInvoice, faReceipt, faChartBar } from '@fortawesome/free-solid-svg-icons';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 
 const Sidebar = ({ sidebarToggle , user}) => {
@@ -85,7 +85,12 @@ const Sidebar = ({ sidebarToggle , user}) => {
             Sales
           </Link>
         </li>
-        
+        {user.role ==='seller'  &&(<li className='bg-cyan300 py-2 p-4 rounded-md hover:shadow hover:bg-cyan400 my-2.5'>
+          <FontAwesomeIcon icon={faChartBar} className='inline-block w-6 h-6 mr-2 -mt-2' />
+          <Link to="/report" className='p-2'>
+            Report
+          </Link>
+        </li>)}
         <li className='bg-cyan300 py-2 p-4 rounded-md hover:shadow hover:bg-cyan400 my-2.5'>
           <FontAwesomeIcon icon={faReceipt} className='inline-block w-6 h-6 mr-2 -mt-2' />
           <Link to="/receipt" className='p-2'>
