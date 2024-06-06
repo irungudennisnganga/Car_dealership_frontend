@@ -26,6 +26,14 @@ const Customers = ({ user }) => {
     }
   }, [user.role]);
 
+  if(customers.length ===0){
+    return (
+      <div className="no-sales-message text-center mt-8">
+        <p className="text-xl text-red-500">You currently have no Invoices.</p>
+        <p className="text-lg">Create a sale to access the Invoice.</p>
+      </div>
+    );
+  }
   if (!loading) {
     return (
       <CirclesWithBar
@@ -55,7 +63,8 @@ const Customers = ({ user }) => {
           </tr>
         </thead>
         <tbody style={{ marginTop: '1rem' }}>
-          {customers.map(customer => (
+
+          {customers.length > 0 && customers.map(customer => (
             <tr
               key={customer.id}
               className="hover:bg-gray-100 cursor-pointer"

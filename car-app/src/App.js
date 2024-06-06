@@ -164,7 +164,7 @@ function App() {
                 <Route path="/sale/:saleid" element={<SaleDetails />} />
                 <Route path="/invoice/:username" element={<Invoicebysellername />} />
                 <Route path="/invoices/:invoiceid" element={<InvoicebyId />} />
-                <Route path="/create-invoice/:new/:id/:customer/:sale" element={<NewInvoice />} />
+                <Route path="/create-invoice/:new/:id/:customer/:sale/:date" element={<NewInvoice />} />
                 <Route path="/" element={<Dashboard />} />
               </Routes>
             </Suspense>

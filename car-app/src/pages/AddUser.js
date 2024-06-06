@@ -110,7 +110,7 @@ const AddUser = ({ user }) => {
       })
       .then(data => {
         if (data.message) {
-          toast.success(data.message, {
+          toast.success("User Added Successfully", {
             position: "top-right",
             autoClose: 2000,
             onClose: () => {

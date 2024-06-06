@@ -5,11 +5,11 @@ import axios from 'axios';
 import { useParams,useNavigate  } from 'react-router-dom';
 
 const NewInvoice = ({ customers, inventory }) => {
-  const { id, customer,sale } = useParams();
+  const { id, customer,sale,date } = useParams();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    date_of_purchase: '',
+    date_of_purchase:date || "",
     method: '',
     amount_paid: '',
     fee: '',
@@ -111,7 +111,7 @@ const NewInvoice = ({ customers, inventory }) => {
       const invoice_id =data.invoice_id
       navigateToCreate(customer,invoice_id,formData.amount_paid)
       setFormData({
-        date_of_purchase: '',
+        date_of_purchase: date || '',
         method: '',
         amount_paid: '',
         fee: '',
@@ -179,10 +179,6 @@ const NewInvoice = ({ customers, inventory }) => {
           </div>
          
           <div className="col-span-2 sm:col-span-1">
-            <label htmlFor="date_of_purchase" className="block text-sm font-medium text-gray-700">Date of Purchase</label>
-            <input type="date" name="date_of_purchase" id="date_of_purchase" value={formData.date_of_purchase} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required />
-          </div>
-          <div className="col-span-2 sm:col-span-1">
             <label htmlFor="method" className="block text-sm font-medium text-gray-700">Method</label>
             <select name="method" id="method" value={formData.method}  onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
               <option value="">Select Method</option>
@@ -214,8 +210,8 @@ const NewInvoice = ({ customers, inventory }) => {
             <textarea name="installments" id="installments" value={formData.installments} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
           </div>
           <div className="col-span-2">
-            <label htmlFor="pending_cleared" className="block text-sm font-medium text-gray-700">Pending Cleared</label>
-            <textarea name="pending_cleared" id="pending_cleared" value={formData.pending_cleared} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
+            <label htmlFor="pending_cleared" className="block text-sm font-medium text-gray-700">Pending or Cleared</label>
+            <textarea name="pending_cleared" id="pending_cleared" value={formData.pending_cleared} onChange={handleChange} placeholder='Pending Or Cleared' className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
           </div>
           <div className="col-span-2">
             <label htmlFor="signature" className="block text-sm font-medium text-gray-700">Signature</label>
@@ -225,26 +221,26 @@ const NewInvoice = ({ customers, inventory }) => {
             <label htmlFor="warranty" className="block text-sm font-medium text-gray-700">Warranty</label>
             <textarea name="warranty" id="warranty" value={formData.warranty} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
           </div>
-          <div className="col-span-2">
+          {/* <div className="col-span-2">
             <label htmlFor="terms_and_conditions" className="block text-sm font-medium text-gray-700">Terms and Conditions</label>
             <textarea name="terms_and_conditions" id="terms_and_conditions" value={formData.terms_and_conditions} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
-          </div>
+          </div> */}
           <div className="col-span-2">
             <label htmlFor="agreement_details" className="block text-sm font-medium text-gray-700">Agreement Details</label>
             <textarea name="agreement_details" id="agreement_details" value={formData.agreement_details} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
           </div>
-          <div className="col-span-2">
+          {/* <div className="col-span-2">
             <label htmlFor="additional_accessories" className="block text-sm font-medium text-gray-700">Additional Accessories</label>
             <textarea name="additional_accessories" id="additional_accessories" value={formData.additional_accessories} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
-          </div>
-          <div className="col-span-2">
+          </div> */}
+          {/* <div className="col-span-2">
             <label htmlFor="notes_instructions" className="block text-sm font-medium text-gray-700">Notes/Instructions</label>
             <textarea name="notes_instructions" id="notes_instructions" value={formData.notes_instructions} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
-          </div>
-          <div className="col-span-2">
+          </div> */}
+          {/* <div className="col-span-2">
             <label htmlFor="payment_proof" className="block text-sm font-medium text-gray-700">Payment Proof</label>
             <textarea name="payment_proof" id="payment_proof" value={formData.payment_proof} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
-          </div>
+          </div> */}
         </div>
         <div className="mt-6">
           <button type="submit" disabled={loading} className="close px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50">

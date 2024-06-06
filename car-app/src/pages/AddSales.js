@@ -23,8 +23,8 @@ const AddSale = ({  token, customer }) => {
         commissionPercentage: 0,
     });
 
-    const navigateToCreate = (invoiceId,id, customer,sale_id) => {
-        navigate(`/create-invoice/${invoiceId}/${id}/${customer}/${sale_id}`);
+    const navigateToCreate = (invoiceId,id, customer,sale_id,date) => {
+        navigate(`/create-invoice/${invoiceId}/${id}/${customer}/${sale_id}/${date}`);
       };
     //   console.log(formData)
     useEffect(() => {
@@ -82,7 +82,7 @@ const AddSale = ({  token, customer }) => {
                        const customer =formData.customer_id
                         // console.log(id)
                         const saleId = data.sale_id; 
-                        navigateToCreate("new",id,customer,saleId)
+                        navigateToCreate("new",id,customer,saleId,formData.sale_date)
                         setFormData({
                             status: "",
                             history: "",
@@ -183,16 +183,16 @@ const AddSale = ({  token, customer }) => {
                         <label htmlFor="status" className="block">Status:</label>
                         <select id="status" value={selectedStatus} onChange={handleStatusChange} className="border p-2 rounded-md w-full">
                             <option value="">Select...</option>
-                            <option value="pending">Pending</option>
-                            <option value="approved">Approved</option>
-                            <option value="rejected">Rejected</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Refunded">Refunded</option>
                         </select>
                         {selectedStatus && <p>Selected Status: {selectedStatus}</p>}
                     </div>
                     <div>
                         <label htmlFor="customers" className="block">Customer:</label>
                         <select id="customers" value={selectedCustomer} onChange={handleCustomerChange} className="border p-2 rounded-md w-full">
-                            <option value="">Select...</option>
+                            <option value="">Add Customer</option>
                             {customers.map((x) => (
                                 <option key={x.id} value={x.id} required>{x.first_name} {x.last_name}</option>
                             ))}

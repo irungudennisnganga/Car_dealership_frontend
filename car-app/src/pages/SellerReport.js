@@ -29,7 +29,14 @@ const SellerReport = ({ users }) => {
   const getRefundedSales = () => {
     return userData.sales?.filter(sale => sale.status === 'Refunded');
   };
-
+  if(userData.length ===0){
+    return (
+        <div className="no-sales-message text-center mt-8">
+          <p className="text-xl text-red-500">You currently have no Invoices.</p>
+          <p className="text-lg">Create a sale to access the Invoice.</p>
+        </div>
+      );
+}
   return (
     <div className='mt-6 mb-auto object-center'>
       <h2 className='text-2xl mb-4 dashboard '>Reports</h2>
