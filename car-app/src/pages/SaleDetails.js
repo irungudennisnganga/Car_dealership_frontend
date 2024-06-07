@@ -35,7 +35,7 @@ const SaleDetails = () => {
     fetchData();
   
   }, [saleid]); // Only re-run the effect if saleid changes
-console.log(sale)
+// console.log(sale)
  
   return (
     <div className="bg-cyan-50 m-32 mt-10 relative w-[1300px] h-[450px] mr-[50px] overflow-y-auto">

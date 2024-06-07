@@ -87,13 +87,13 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard mb-4">
-      <h1 className="text-2xl mb-4 text-green-700">Dashboard</h1>
+      {/* <h1 className="text-2xl mb-4 text-green-700">Dashboard</h1> */}
       {sales.length > 0 ? (
         <>
-          <div className="flex justify-evenly">
+          <div className="w-90%">
             <div className="chart m-auto mt-3">
-              <h2 className="text-xl mb-2 mt-0">Sales</h2>
-              <BarChart width={1000} height={500} data={sales}>
+              <h2 className="text-xl mb-2 mt-0">Commision And Report</h2>
+              <BarChart width={1450} height={500} data={sales}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="id" />
                 <YAxis />
@@ -103,7 +103,7 @@ const Dashboard = () => {
                 <Bar dataKey="discount" fill="#82ca9d" />
               </BarChart>
             </div>
-            <div className="chart ml-4 mr-4 mt-3">
+            {/* <div className="chart ml-4 mr-4 mt-3">
               <h2 className="text-xl mb-2">Inventories</h2>
               <PieChart width={500} height={500}>
                 <Pie
@@ -122,7 +122,7 @@ const Dashboard = () => {
                 </Pie>
                 <Tooltip />
               </PieChart>
-            </div>
+            </div> */}
           </div>
           <div className="chart m-auto mt-3">
             <Report report={reports} />

@@ -70,7 +70,8 @@ const Invoice = ({ user }) => {
   const navigateToDetail = (invoice, role) => {
     if (role === 'admin' || role === 'super admin') {
       const firstName = invoice.seller_name.split(' ')[0]; // Extract first name
-      navigate(`/invoice/${firstName}`);
+      const id = invoice.seller_id;
+      navigate(`/invoice/${firstName}/${id}`);
     } else {
       navigate(`/invoices/${invoice.id}`);
     }
@@ -95,10 +96,11 @@ const Invoice = ({ user }) => {
           </tr>
         </thead>
         <tbody>
-          {invoices.map((invoice) => (
-            <tr 
-              key={invoice.id} 
-              onClick={() => navigateToDetail(invoice, user.role)} 
+          {invoices.map((invoice, index) => (
+           
+            <tr
+              key={invoice.id || index} // Use index as fallback key if invoice.id is not available
+              onClick={() => navigateToDetail(invoice, user.role)}
               className="cursor-pointer hover:bg-gray-100"
             >
               <td className="border-transparent text-left py-2">{user.role === 'seller' ? invoice.customer_name.name : invoice.seller_name}</td>

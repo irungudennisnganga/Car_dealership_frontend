@@ -162,7 +162,7 @@ function App() {
                 <Route path="/report" element={<SellerReport users={user} />} />
                 <Route path="/sellersaledashboard" element={<SellerSaleDashboard />} />
                 <Route path="/sale/:saleid" element={<SaleDetails />} />
-                <Route path="/invoice/:username" element={<Invoicebysellername />} />
+                <Route path="/invoice/:username/:id" element={<Invoicebysellername />} />
                 <Route path="/invoices/:invoiceid" element={<InvoicebyId />} />
                 <Route path="/create-invoice/:new/:id/:customer/:sale/:date" element={<NewInvoice />} />
                 <Route path="/" element={<Dashboard />} />

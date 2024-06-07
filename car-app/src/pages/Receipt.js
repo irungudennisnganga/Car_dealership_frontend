@@ -61,9 +61,9 @@ const Receipt = ({ user, customers }) => {
     }
 
     return (
-        <div className='m-32 mt-9 '>
+        <div className='m-52  mt-9   '>
             
-            <table className='bg-cyan300 p-4'>
+            <table className='bg-cyan300 p-4 '>
                 <thead className='p-8'>
                     <tr>
                         <th className="w-1/4 text-left py-2">Customer Name</th>

@@ -3,12 +3,12 @@ import { useParams,useNavigate } from 'react-router-dom';
 
 const Invoicebysellername = () => {
     const [invoice, setInvoice] = useState([]);
-  const { username } = useParams()
+  const { username,id } = useParams()
   const navigate = useNavigate()
    
   
     useEffect(() => {
-      fetch(`/userinvoice/${username}`, {
+      fetch(`/userinvoice/${username}/${id}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
         },
@@ -21,7 +21,7 @@ const Invoicebysellername = () => {
         .catch(error => {
           console.error("Failed to fetch sales data:", error);
         });
-    }, [username]);
+    }, [username,id]);
   
   function formatDate(dateString) {
   const date = new Date(dateString);

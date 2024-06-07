@@ -95,7 +95,7 @@ const Sales = ({ user, customers }) => {
                 <th className="w-1/4 text-left py-2">Status</th>
                 <th className="w-1/4 text-left py-2">Sale Date</th>
                 <th className="w-1/4 text-left py-2">Vehicle Name</th>
-                <th className="w-1/4 text-left py-2">Vehicle History</th>
+                
               </tr>
             </thead>
             <tbody>
@@ -111,7 +111,7 @@ const Sales = ({ user, customers }) => {
                   <td className="border-transparent text-left py-2">{sale.status}</td>
                   <td className="border-transparent text-left py-2">{new Date(sale.sale_date).toLocaleDateString()}</td>
                   <td className="border-transparent text-left py-2">{sale.inventory_id.name}</td>
-                  <td className="border-transparent text-left py-2">{sale.history}</td>
+                  
                 </tr>
               ))}
             </tbody>

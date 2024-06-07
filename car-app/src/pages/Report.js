@@ -7,7 +7,8 @@ const Report = ({report}) => {
 
     return (
         <div className='mt-6 mb-auto object-center'>
-            <h2 className='text-2xl mb-4 dashboard'>Reports</h2>
+            <h2 className="text-xl mb-2">Company-Profit and Expenses</h2>
+            
             {/* {error && <div style={{ color: 'red' }}>Error: {error.message}</div>} */}
             
             <ResponsiveContainer width="90%" height={400}>
