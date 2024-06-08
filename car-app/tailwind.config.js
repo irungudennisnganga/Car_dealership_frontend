@@ -14,7 +14,8 @@ module.exports = {
       "cardbackground":'#D9D9D9',
       'red-600':'#b91c1c',
       "slate200":'#e2e8f0',
-      "blue-800":'#1e40af'
+      "blue-800":'#1e40af',
+      "green-500":"#10B981"
     },
   },
   plugins: [],

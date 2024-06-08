@@ -39,7 +39,7 @@ const SellerReport = ({ users }) => {
 }
   return (
     <div className='mt-6 mb-auto object-center'>
-      <h2 className='text-2xl mb-4 dashboard '>Reports</h2>
+      {/* <h2 className='text-2xl mb-4 dashboard '>Reports</h2> */}
       {userData && userData.sales ? (
         <div className='bg-cyan-50 m-12 mt-10 relative w-[1500px] h-auto mr-[30px] overflow-y-auto'>
           <h3 className=''>Completed Sales</h3>
