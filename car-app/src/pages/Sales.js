@@ -19,9 +19,9 @@ const Sales = ({ user, customers }) => {
     let endpoint = '';
 
     if (user.role === 'seller') {
-      endpoint = '/sales';
+      endpoint = '/api/sales';
     } else if (user.role === 'admin' || user.role === 'super admin') {
-      endpoint = '/sellers';
+      endpoint = '/api/sellers';
     }
 
     fetch(endpoint, {
@@ -31,6 +31,9 @@ const Sales = ({ user, customers }) => {
     })
     .then(response => {
       if (!response.ok) {
+        if (response.status === 429) {
+          throw new Error('Too many requests. Please try again later.');
+        }
         throw new Error('Network response was not ok');
       }
       return response.json();

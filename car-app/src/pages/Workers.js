@@ -12,13 +12,21 @@ const Workers = ({ user }) => {
 
   useEffect(() => {
     if (user.role === 'admin' || user.role === 'super admin') {
-      fetch('/users', {
+      fetch('/api/users', {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
         },
       })
-        .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          if (response.status === 429) {
+            throw new Error('Too many requests. Please try again later.');
+          }
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
         .then(data => {
           setWorkers(data);
         })

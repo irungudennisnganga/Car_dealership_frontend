@@ -10,17 +10,20 @@ function OneReceipt() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch(`/receipts/${id}`, {
+        fetch(`/api/receipts/${id}`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
             },
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+              if (response.status === 429) {
+                throw new Error('Too many requests. Please try again later.');
+              }
+              throw new Error('Network response was not ok');
             }
             return response.json();
-        })
+          })
         .then(data => {
             setSale(data);
             setLoading(false);

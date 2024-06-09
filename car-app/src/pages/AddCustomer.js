@@ -55,14 +55,15 @@ const AddCustomer = ({ user }) => {
       formDataToSend.append(key, formData[key]);
     }
 
-    fetch('/customers', {
+    fetch('/api/customers', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('jwt')}`,
       },
       body: formDataToSend,
     })
-      .then((response) => {
+      
+      .then(response => {
         if (!response.ok) {
           Swal.fire({
             title: 'Error!',
@@ -70,9 +71,11 @@ const AddCustomer = ({ user }) => {
             icon: 'error',
             confirmButtonText: 'Cool',
           });
+          if (response.status === 429) {
+            throw new Error('Too many requests. Please try again later.');
+          }
           throw new Error('Network response was not ok');
         }
-
         return response.json();
       })
       .then((data) => {

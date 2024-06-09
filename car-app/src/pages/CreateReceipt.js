@@ -27,7 +27,7 @@ const CreateReceipt = () => {
 handleChange()
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch('/receipt', {
+    fetch('/api/receipt', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -30,7 +30,7 @@ const AddSale = ({  token, customer }) => {
     useEffect(() => {
         const fetchInventory = async () => {
             try {
-                const response = await fetch('/inventory', {
+                const response = await fetch('/api/inventory', {
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -56,7 +56,7 @@ const AddSale = ({  token, customer }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch('/sales', {
+        fetch('/api/sales', {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('jwt')}`,
@@ -66,10 +66,13 @@ const AddSale = ({  token, customer }) => {
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+              if (response.status === 429) {
+                throw new Error('Too many requests. Please try again later.');
+              }
+              throw new Error('Network response was not ok');
             }
             return response.json();
-        })
+          })
         .then(data => {
             if (data.message) {
                 toast.success(data.message, {

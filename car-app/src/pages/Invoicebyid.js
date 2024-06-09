@@ -8,12 +8,20 @@ const Invoicebyid = () => {
     const { invoiceid } = useParams();
 
     useEffect(() => {
-        fetch(`/invoice/${invoiceid}`, {
+        fetch(`/api/invoice/${invoiceid}`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
             },
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+              if (response.status === 429) {
+                throw new Error('Too many requests. Please try again later.');
+              }
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
         .then(data => {
             setInvoice(data);
         })

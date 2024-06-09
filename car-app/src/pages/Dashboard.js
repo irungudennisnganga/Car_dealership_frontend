@@ -13,7 +13,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/report', {
+    fetch('/api/report', {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`
@@ -21,6 +21,9 @@ const Dashboard = () => {
     })
     .then(response => {
       if (!response.ok) {
+        if (response.status === 429) {
+          throw new Error('Too many requests. Please try again later.');
+        }
         throw new Error('Network response was not ok');
       }
       return response.json();
@@ -38,21 +41,21 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const usersResponse = await axios.get('/users', {
+        const usersResponse = await axios.get('/api/users', {
           headers: {
             Authorization: `Bearer ${token}`
           }
         });
         setUsers(usersResponse.data);
 
-        const inventoriesResponse = await axios.get('/inventory', {
+        const inventoriesResponse = await axios.get('/api/inventory', {
           headers: {
             Authorization: `Bearer ${token}`
           }
         });
         setInventories(inventoriesResponse.data);
 
-        const salesResponse = await axios.get('/sales', {
+        const salesResponse = await axios.get('/api/sales', {
           headers: {
             Authorization: `Bearer ${token}`
           }

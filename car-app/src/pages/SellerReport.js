@@ -8,12 +8,20 @@ const SellerReport = ({ users }) => {
 
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
-    fetch(`/user/${users.user_id}`, {
+    fetch(`/api/user/${users.user_id}`, {
       headers: {
         Authorization: `Bearer ${jwt}`,
       },
     })
-      .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        if (response.status === 429) {
+          throw new Error('Too many requests. Please try again later.');
+        }
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
       .then(data => setUserData(data))
       .catch(error => console.error('Error fetching user data:', error));
   }, [users.user_id]);

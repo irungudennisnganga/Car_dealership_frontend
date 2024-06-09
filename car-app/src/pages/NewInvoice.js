@@ -92,7 +92,7 @@ const NewInvoice = ({ customers, inventory }) => {
     setError(null);
 
     try {
-      const response = await fetch('/invoice', {
+      const response = await fetch('/api/invoice', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -140,7 +140,7 @@ const NewInvoice = ({ customers, inventory }) => {
   useEffect(() => {
     const fetchSales = async () => {
       try {
-        const response = await axios.get('/saleinvoice', {
+        const response = await axios.get('/api/saleinvoice', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('jwt')}`
           }

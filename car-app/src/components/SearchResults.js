@@ -24,7 +24,7 @@ const SearchResults = ({ data }) => {
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
     if (jwt && !user) {
-      fetch(`/checksession`, {
+      fetch(`/api/checksession`, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${jwt}`

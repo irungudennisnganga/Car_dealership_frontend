@@ -24,7 +24,7 @@ const WorkerByDetail = lazy(() => import('./pages/WorkerByDetail'));
 const Receipt = lazy(() => import('./pages/Receipt'));
 const Sales = lazy(() => import('./pages/Sales'));
 const Invoice = lazy(() => import('./pages/invoice'));
-const Report = lazy(() => import('./pages/Report'));
+// const Report = lazy(() => import('./pages/Report'));
 const SellerSaleDashboard = lazy(() => import('./pages/SellerSaleDashboard'));
 const SaleDetails = lazy(() => import('./pages/SaleDetails'));
 const Invoicebysellername = lazy(() => import('./pages/Invoicebysellername'));
@@ -43,7 +43,7 @@ function App() {
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
     if (jwt && !user) {
-      fetch(`/checksession`, {
+      fetch(`/api/checksession`, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${jwt}`
@@ -65,7 +65,7 @@ function App() {
   }, [user, location.pathname, navigate]);
 
   useEffect(() => {
-    fetch('/inventory', {
+    fetch('/api/inventory', {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('jwt')}`
@@ -73,6 +73,9 @@ function App() {
     })
     .then(response => {
       if (!response.ok) {
+        if (response.status === 429) {
+          throw new Error('Too many requests. Please try again later.');
+        }
         throw new Error('Network response was not ok');
       }
       return response.json();
@@ -86,7 +89,7 @@ function App() {
   }, []); 
 
   useEffect(() => {
-    fetch('/customers', {
+    fetch('/api/customer', {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('jwt')}`
@@ -94,6 +97,9 @@ function App() {
     })
     .then(response => {
       if (!response.ok) {
+        if (response.status === 429) {
+          throw new Error('Too many requests. Please try again later.');
+        }
         throw new Error('Network response was not ok');
       }
       return response.json();
@@ -105,7 +111,7 @@ function App() {
       console.error('Error fetching customers:', error);
     });
   }, []); 
-
+// console.log(customer)
   
   useEffect(() => {
     // Save user to local storage on user change
@@ -121,7 +127,7 @@ function App() {
   };
 // console.log(customer)
   return (
-    <>
+    <div  >
       <ToastContainer />
       {user ? (
         <div className="flex">
@@ -151,7 +157,7 @@ function App() {
                 <Route path="/profile" element={<Profile user={user} />} />
                 <Route path="/Inventory" element={<Inventory inventory={inventory} user={user} />} />
                 <Route path="/workers" element={<Workers user={user} />} />
-                <Route path="/customers" element={<Customers user={user} />} />
+                <Route path="/customers" element={<Customers user={user} customers={customer} />} />
                 <Route path="/dashboard" element={<Dashboard  />} />
                 <Route path="/workers/:username/:userid" element={<WorkerByDetail />} />
                 <Route path="/receipt" element={<Receipt user={user} customer={customer}  />} />
@@ -182,7 +188,7 @@ function App() {
           }} />} />
         </Routes>
       )}
-    </>
+    </div>
   );
 }
 

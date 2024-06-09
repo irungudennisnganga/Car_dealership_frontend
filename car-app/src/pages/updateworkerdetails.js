@@ -53,7 +53,7 @@ const Updateworkerdetails = () => {
         
         
 
-        const url = `/user/${userid}`;
+        const url = `/api/user/${userid}`;
         const formDataToSend = new FormData();
         // add id statment to check the values that are present to append them to the formdata
         formDataToSend.append('first_name', formData.firstname);

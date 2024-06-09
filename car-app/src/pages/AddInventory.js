@@ -85,7 +85,7 @@ const AddInventory = () => {
         });
 
         try {
-            const response = await fetch('/inventory', {
+            const response = await fetch('/api/inventory', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
@@ -107,7 +107,7 @@ const AddInventory = () => {
     return(
         
        
-             <div className="flex flex-wrap bg-slate200 rounded-lg border shadow-md justify-center mt-8 m-auto relative w-[850px] h-[1010px]">
+             <div className="flex flex-wrap bg-slate200 rounded-lg border shadow-md justify-center mt-8 m-auto relative w-[850px] h-full">
            
                 <form className="flex flex-wrap w-full" onSubmit={handleSubmit(onSubmit)}> 
                     <div className="w-full md:w-1/3 px-2 mb-2 p-8 bg-white rounded-lg shadow-md grid-cols-10 gap-4">

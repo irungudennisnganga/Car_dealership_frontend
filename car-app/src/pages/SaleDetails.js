@@ -9,7 +9,7 @@ const SaleDetails = () => {
   useEffect(() => {
     // Fetch data from the server
     const fetchData = () => {
-      fetch(`/seller/${saleid}`, {
+      fetch(`/api/seller/${saleid}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -18,6 +18,9 @@ const SaleDetails = () => {
       })
       .then(response => {
         if (!response.ok) {
+          if (response.status === 429) {
+            throw new Error('Too many requests. Please try again later.');
+          }
           throw new Error('Network response was not ok');
         }
         return response.json();

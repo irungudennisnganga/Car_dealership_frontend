@@ -18,10 +18,10 @@ const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
 
   useEffect(() => {
     fetchNotifications();
-  }, [unreadCount]);
+  }, [unreadCount,location]);
 
   const fetchNotifications = () => {
-    fetch('/notification', {
+    fetch('/api/notification', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('jwt')}`,
       },
@@ -54,9 +54,9 @@ const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
         console.error('Error fetching notifications:', error);
       });
   };
-console.log(notifications)
+// console.log(notifications)
   const handleSearch = () => {
-    fetch(`/search?query=${searchQuery}&currentPath=${location.pathname}`, {
+    fetch(`/api/search?query=${searchQuery}&currentPath=${location.pathname}`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('jwt')}`,
@@ -77,7 +77,7 @@ console.log(notifications)
   };
 
   const markAsRead = (id) => {
-    fetch(`/notification/${id}/read`, {
+    fetch(`/api/notification/${id}/read`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('jwt')}`,

@@ -5,14 +5,15 @@ import { CirclesWithBar } from 'react-loader-spinner';
 const Invoice = ({ user }) => {
   const [invoices, setInvoices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null); // State to hold error messages
   const navigate = useNavigate();
 
   useEffect(() => {
     let endpoint = '';
     if (user.role === 'admin' || user.role === 'super admin') {
-      endpoint = '/general';
+      endpoint = '/api/general';
     } else if (user.role === 'seller') {
-      endpoint = '/invoices';
+      endpoint = '/api/invoices';
     }
 
     if (endpoint) {
@@ -23,6 +24,9 @@ const Invoice = ({ user }) => {
       })
         .then(response => {
           if (!response.ok) {
+            if (response.status === 429) {
+              throw new Error('Too many requests. Please try again later.');
+            }
             throw new Error('Network response was not ok');
           }
           return response.json();
@@ -34,6 +38,7 @@ const Invoice = ({ user }) => {
         })
         .catch(error => {
           console.error("Failed to fetch data:", error);
+          setError(error.message); // Set error message
           setLoading(false);
         });
     }
@@ -54,6 +59,14 @@ const Invoice = ({ user }) => {
           wrapperClass=""
           visible={true}
         />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="error-message text-center mt-8">
+        <p className="text-xl text-red-500">{error}</p>
       </div>
     );
   }
@@ -97,7 +110,6 @@ const Invoice = ({ user }) => {
         </thead>
         <tbody>
           {invoices.map((invoice, index) => (
-           
             <tr
               key={invoice.id || index} // Use index as fallback key if invoice.id is not available
               onClick={() => navigateToDetail(invoice, user.role)}
