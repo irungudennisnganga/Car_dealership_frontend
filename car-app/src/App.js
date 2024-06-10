@@ -86,7 +86,7 @@ function App() {
     .catch(error => {
       console.error('Error fetching inventory:', error);
     });
-  }, []); 
+  }, [user]); 
 
   useEffect(() => {
     fetch('/api/customer', {
@@ -110,7 +110,7 @@ function App() {
     .catch(error => {
       console.error('Error fetching customers:', error);
     });
-  }, []); 
+  }, [user]); 
 // console.log(customer)
   
   useEffect(() => {

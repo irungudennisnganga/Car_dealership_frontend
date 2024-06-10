@@ -75,7 +75,7 @@ const Receipt = ({ user, customers }) => {
                         <th className="w-1/4 text-left py-2">Date</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className='pl-4'>
                     {receipts.map((receipt) => (
                         <tr 
                         onClick={() => handeleClick(receipt)}
