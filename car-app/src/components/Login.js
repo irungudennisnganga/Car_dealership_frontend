@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useNavigate, Link } from 'react-router-dom';
 import logo from '../images/autocar.jpg';
 import Swal from 'sweetalert2';
-import { XlviLoader } from "react-awesome-loaders";
+// import { XlviLoader } from "react-awesome-loaders";
+import { CirclesWithBar } from 'react-loader-spinner'
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -15,7 +16,7 @@ const Login = () => {
         e.preventDefault();
         setLoading(true); // Set loading to true when request starts
         try {
-            const response = await fetch('/login', {
+            const response = await fetch('/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -51,14 +52,21 @@ const Login = () => {
     if (loading) { // Show loader when loading is true
         return (
             <div className="flex items-center justify-center h-screen">
-                <h3>Wait For The Verification To Be Completed......</h3>
-                <XlviLoader
-                    boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
-                    desktopSize={"128px"}
-                    mobileSize={"100px"}
-                    className={'object-center'}
-                />
-            </div>
+                {/* <h3 className="block mb-3">Wait For The Verification To Be Completed......</h3><br /> <br /> */}
+                (<CirclesWithBar
+                    height="100"
+                    width="100"
+                    color="#4fa94d"
+                    outerCircleColor="#4fa94d"
+                    innerCircleColor="#4fa94d"
+                    barColor="#4fa94d"
+                    ariaLabel="circles-with-bar-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    />)
+
+                </div>
         );
     }
 

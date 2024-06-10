@@ -12,14 +12,22 @@ const WorkerByDetail = () => {
   const { userid } = useParams();
 
   useEffect(() => {
-    fetch(`/user/${userid}`, {
+    fetch(`/api/user/${userid}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem("jwt")}`
       }
     })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        if (response.status === 429) {
+          throw new Error('Too many requests. Please try again later.');
+        }
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
     .then(data => {
       setWorker(data);
     })

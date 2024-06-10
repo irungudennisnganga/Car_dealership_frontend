@@ -9,7 +9,7 @@ const SaleDetails = () => {
   useEffect(() => {
     // Fetch data from the server
     const fetchData = () => {
-      fetch(`/seller/${saleid}`, {
+      fetch(`/api/seller/${saleid}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -18,6 +18,9 @@ const SaleDetails = () => {
       })
       .then(response => {
         if (!response.ok) {
+          if (response.status === 429) {
+            throw new Error('Too many requests. Please try again later.');
+          }
           throw new Error('Network response was not ok');
         }
         return response.json();
@@ -35,10 +38,10 @@ const SaleDetails = () => {
     fetchData();
   
   }, [saleid]); // Only re-run the effect if saleid changes
-console.log(sale)
+// console.log(sale)
  
   return (
-    <div className="bg-cyan-50 m-72 mt-10 relative w-[900px] h-[450px] mr-[150px] overflow-y-auto">
+    <div className="bg-cyan-50 m-32 mt-10 relative w-[1300px] h-[450px] mr-[50px] overflow-y-auto">
       {error && <p>{error}</p>}
       <div className="flex gap-6">
         <div style={{ position: 'absolute', top: '10px', left: '10px' }}>
@@ -50,7 +53,7 @@ console.log(sale)
           </div>          
         </div>
       </div>
-      <div style={{ position: 'absolute', top: '10px', right: '200px' }}>
+      <div style={{ position: 'relative', top: '10px', right: '-350px' }}>
         <h5 className='font-black'>more about the sale</h5>
         <div><span className='font-semibold'>seller name: </span>{sale?.seller.Names} <Link to={`/workers/${sale?.seller.Names}/${sale?.seller.id}`} className='text-blue-800'>more about seller</Link></div>
         <ul>

@@ -1,19 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import logo from '../images/autocar.jpg'; 
-import { XlviLoader } from "react-awesome-loaders";
+import { CirclesWithBar } from 'react-loader-spinner'
 
 const Invoicebyid = () => {
     const [invoice, setInvoice] = useState(null);
     const { invoiceid } = useParams();
 
     useEffect(() => {
-        fetch(`/invoice/${invoiceid}`, {
+        fetch(`/api/invoice/${invoiceid}`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
             },
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+              if (response.status === 429) {
+                throw new Error('Too many requests. Please try again later.');
+              }
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
         .then(data => {
             setInvoice(data);
         })
@@ -25,12 +33,18 @@ const Invoicebyid = () => {
     if (!invoice) {
         return<div className="flex items-center justify-center h-screen">
                 
-        <XlviLoader
-            boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
-            desktopSize={"128px"}
-            mobileSize={"100px"}
-            className={'object-center'}
-        />
+                (<CirclesWithBar
+                    height="100"
+                    width="100"
+                    color="#4fa94d"
+                    outerCircleColor="#4fa94d"
+                    innerCircleColor="#4fa94d"
+                    barColor="#4fa94d"
+                    ariaLabel="circles-with-bar-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    />)
     </div>// Display a loading message or spinner until the data is fetched
     }
 

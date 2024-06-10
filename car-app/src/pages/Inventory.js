@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import PopUp from './PopUp'; 
 import AccordionItem from '../components/AccordionItem';
 import AddInventory from './AddInventory';
-import { XlviLoader } from "react-awesome-loaders";
+import { CirclesWithBar } from 'react-loader-spinner'
 
 const Inventory = ({ inventory, user }) => {
   const [openPopup, setOpenPopup] = useState(false);
@@ -16,12 +16,18 @@ const Inventory = ({ inventory, user }) => {
   if (!user) {
     return <div className="flex items-center justify-center h-screen">
                 
-    <XlviLoader
-        boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
-        desktopSize={"128px"}
-        mobileSize={"100px"}
-        className={'object-center'}
-    />
+                (<CirclesWithBar
+                    height="100"
+                    width="100"
+                    color="#4fa94d"
+                    outerCircleColor="#4fa94d"
+                    innerCircleColor="#4fa94d"
+                    barColor="#4fa94d"
+                    ariaLabel="circles-with-bar-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    />)
 </div>
   }
 

@@ -1,12 +1,112 @@
-import React, { useState } from 'react';
-import { FaBars, FaSearch, FaBell, FaUserCircle, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
-// import PopUp from '../pages/PopUp';
+import React, { useState, useEffect } from 'react';
+import { FaBars, FaSearch, FaBell, FaUserCircle, FaArrowLeft, FaArrowRight, FaTimes } from 'react-icons/fa';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import SearchResults from './SearchResults';
 
 const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [notifications, setNotifications] = useState([]);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [showNotifications, setShowNotifications] = useState(false);
+
+  useEffect(() => {
+    setSearchResults([]);
+  }, [location]);
+
+  useEffect(() => {
+    fetchNotifications();
+  }, [unreadCount,location]);
+
+  const fetchNotifications = () => {
+    fetch('/api/notification', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch notifications');
+        }
+        return response.json();
+      })
+      .then(data => {
+        
+        const role = user.role;
+
+      const filteredNotifications = data.filter(notification => {
+        if (role === 'admin') {
+          return !notification.admin_read;
+        } else if (role === 'super admin') {
+          return !notification.super_admin_read;
+        } else if (role === 'seller') {
+          return !notification.seller_read;
+        }
+        return false;
+      });
+
+      setNotifications(filteredNotifications);
+      setUnreadCount(filteredNotifications.length);
+      })
+      .catch(error => {
+        console.error('Error fetching notifications:', error);
+      });
+  };
+// console.log(notifications)
+  const handleSearch = () => {
+    fetch(`/api/search?query=${searchQuery}&currentPath=${location.pathname}`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch search results');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setSearchResults(data);
+      })
+      .catch(error => {
+        console.error('Error fetching search results:', error);
+      });
+  };
+
+  const markAsRead = (id) => {
+    fetch(`/api/notification/${id}/read`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to mark notification as read');
+        }
+        return response.json();
+      })
+      .then(() => {
+        setNotifications(notifications.map(notification =>
+          notification.id === id ? { ...notification, read: 'True' } : notification
+        ));
+        setUnreadCount(unreadCount - 1);
+      })
+      .catch(error => {
+        console.error('Error marking notification as read:', error);
+      });
+  };
+
+  const toggleNotifications = () => {
+    setShowNotifications(!showNotifications);
+  };
+
+  const closeNotifications = () => {
+    setShowNotifications(false);
+  };
 
   const goBack = () => navigate(-1);
   const goForward = () => navigate(1);
@@ -14,31 +114,7 @@ const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
   const userName = user ? user.first_name : "Guest";
   const userRole = user ? user.role : "";
 
-  const handleSearch = () => {
-    fetch(`/inventory`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('jwt')}`
-      }
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to fetch search results');
-      }
-      return response.json();
-    })
-    .then(data => {
-      if (searchQuery) {
-        const filteredData = data.filter(item => {
-          return item.make.toLowerCase().includes(searchQuery.toLowerCase());
-        });
-        setSearchResults(filteredData);
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching search results:', error);
-    });
-  };
+  const isActive = (path) => location.pathname === path;
 
   return (
     <>
@@ -57,12 +133,34 @@ const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
             <input type='text' className='w-full px-4 py-1 pl-10 rounded shadow outline-none md:block hidden' value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)} onClick={handleSearch} placeholder="Search..." />
           </div>
-          <div className='text-white'>
-            <FaBell className='w-6 h-6' aria-label="Notifications" />
+          <div className='relative'>
+            <FaBell className='w-6 h-6 cursor-pointer' aria-label="Notifications" onClick={toggleNotifications} />
+            {unreadCount > 0 && (
+              <span className='absolute -top-2 -right-3 inline-block w-5 h-5 bg-green-500 rounded-full text-white text-xs flex items-center justify-center'>
+                {unreadCount}
+              </span>
+            )}
+            {showNotifications && (
+              <div className='absolute right-0 mt-2 w-96 max-h-80 bg-green-500 shadow-lg rounded-lg overflow-y-auto z-20'>
+                <div className='p-4'>
+                  <div className='flex justify-between items-center'>
+                    <h4 className='font-semibold'>Notifications</h4>
+                    <FaTimes className='cursor-pointer' onClick={closeNotifications} />
+                  </div>
+                  <ul>
+                    {notifications.map(notification => (
+                      <li key={notification.id} className={`p-2 cursor-pointer ${notification.read ? 'bg-gray-200' : 'bg-white'}`} onClick={() => markAsRead(notification.id)}>
+                        {notification.message} || {notification.time_stamp}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
           </div>
           <div className='relative'>
             <Link to="/profile" aria-label="User Profile">
-              <FaUserCircle className='w-6 h-6 text-white mt-1' />
+              <FaUserCircle className={`w-6 h-6 mt-1 ${isActive('/profile') ? 'text-blue-500' : 'text-white'}`} />
             </Link>
           </div>
           <div className='hidden sm:block'>
@@ -85,17 +183,7 @@ const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-5 px-4">
-        {searchResults.map(item => (
-          <div className='border-solid border-2 border-blue-500' key={item.id}>
-            <img
-              src={item.image}
-              alt={item.make}
-              className="cursor-pointer"
-            />
-            <h4>{item.make}</h4>
-            <h4>{item.model}</h4>
-          </div>
-        ))}
+        {searchResults.length > 0 && <SearchResults location={location} data={searchResults} />}
       </div>
     </>
   );

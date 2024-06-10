@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
-import { XlviLoader } from "react-awesome-loaders";
+import { CirclesWithBar } from 'react-loader-spinner'
 import { useNavigate } from 'react-router-dom';
 
 const AddSale = ({  token, customer }) => {
@@ -23,14 +23,14 @@ const AddSale = ({  token, customer }) => {
         commissionPercentage: 0,
     });
 
-    const navigateToCreate = (invoiceId,id, customer) => {
-        navigate(`/create-invoice/${invoiceId}/${id}/${customer}`);
+    const navigateToCreate = (invoiceId,id, customer,sale_id,date) => {
+        navigate(`/create-invoice/${invoiceId}/${id}/${customer}/${sale_id}/${date}`);
       };
-
+    //   console.log(formData)
     useEffect(() => {
         const fetchInventory = async () => {
             try {
-                const response = await fetch('/inventory', {
+                const response = await fetch('/api/inventory', {
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -56,7 +56,7 @@ const AddSale = ({  token, customer }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch('/sales', {
+        fetch('/api/sales', {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('jwt')}`,
@@ -66,10 +66,13 @@ const AddSale = ({  token, customer }) => {
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+              if (response.status === 429) {
+                throw new Error('Too many requests. Please try again later.');
+              }
+              throw new Error('Network response was not ok');
             }
             return response.json();
-        })
+          })
         .then(data => {
             if (data.message) {
                 toast.success(data.message, {
@@ -81,7 +84,8 @@ const AddSale = ({  token, customer }) => {
                        const id=formData.inventory_id
                        const customer =formData.customer_id
                         // console.log(id)
-                        navigateToCreate("new",id,customer)
+                        const saleId = data.sale_id; 
+                        navigateToCreate("new",id,customer,saleId,formData.sale_date)
                         setFormData({
                             status: "",
                             history: "",
@@ -125,7 +129,7 @@ const AddSale = ({  token, customer }) => {
     };
 
     const handleAmountChange = (event) => {
-        const price = event.target.value;
+        // const price = event.target.value;
         const discount = 200;
         
         setFormData({
@@ -158,12 +162,18 @@ const AddSale = ({  token, customer }) => {
     if (loading) {
         return (
             <div className="flex items-center justify-center h-screen">
-                <XlviLoader
-                    boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
-                    desktopSize={"128px"}
-                    mobileSize={"100px"}
-                    className={'object-center'}
-                />
+                (<CirclesWithBar
+                    height="100"
+                    width="100"
+                    color="#4fa94d"
+                    outerCircleColor="#4fa94d"
+                    innerCircleColor="#4fa94d"
+                    barColor="#4fa94d"
+                    ariaLabel="circles-with-bar-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    />)
             </div>
         );
     }
@@ -176,16 +186,16 @@ const AddSale = ({  token, customer }) => {
                         <label htmlFor="status" className="block">Status:</label>
                         <select id="status" value={selectedStatus} onChange={handleStatusChange} className="border p-2 rounded-md w-full">
                             <option value="">Select...</option>
-                            <option value="pending">Pending</option>
-                            <option value="approved">Approved</option>
-                            <option value="rejected">Rejected</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Refunded">Refunded</option>
                         </select>
                         {selectedStatus && <p>Selected Status: {selectedStatus}</p>}
                     </div>
                     <div>
                         <label htmlFor="customers" className="block">Customer:</label>
                         <select id="customers" value={selectedCustomer} onChange={handleCustomerChange} className="border p-2 rounded-md w-full">
-                            <option value="">Select...</option>
+                            <option value="">Add Customer</option>
                             {customers.map((x) => (
                                 <option key={x.id} value={x.id} required>{x.first_name} {x.last_name}</option>
                             ))}

@@ -3,17 +3,25 @@ import { useParams,useNavigate } from 'react-router-dom';
 
 const Invoicebysellername = () => {
     const [invoice, setInvoice] = useState([]);
-  const { username } = useParams()
+  const { username,id } = useParams()
   const navigate = useNavigate()
    
   
     useEffect(() => {
-      fetch(`/userinvoice/${username}`, {
+      fetch(`/api/userinvoice/${username}/${id}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
         },
       })
-        .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          if (response.status === 429) {
+            throw new Error('Too many requests. Please try again later.');
+          }
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
         .then(data => {
           const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
           setInvoice(sortedData);
@@ -21,7 +29,7 @@ const Invoicebysellername = () => {
         .catch(error => {
           console.error("Failed to fetch sales data:", error);
         });
-    }, [username]);
+    }, [username,id]);
   
   function formatDate(dateString) {
   const date = new Date(dateString);
@@ -38,7 +46,7 @@ const Invoicebysellername = () => {
     navigate(`/invoices/${invoiceid}`)
   }
   return (
-   <div className="bg-cyan-50 m-72 mt-10 relative w-[1000px] h-auto mr-[50px] overflow-y-auto">
+   <div className="bg-cyan-50 m-32 mt-10 relative w-[1300px] h-auto mr-[50px] overflow-y-auto">
      
       
       <table className=" w-full table-fixed border-collapse ml-4">

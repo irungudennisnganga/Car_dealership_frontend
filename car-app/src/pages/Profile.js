@@ -4,11 +4,11 @@ import React from "react"
 export default function Profile({user}) {
 
   return (
-    <div className=" bg-cyan-50 m-auto mt-10 relative w-[600px] h-[300px]">
+    <div className=" bg-cyan-50 m-auto mt-10 relative w-[500px] h-[400px]">
       <div className="flex gap-6">
         <div className="w-[300px]">
             <div className='pl-1'>
-              <img alt={user.first_name || ""}  src={user.image || ''} className='w-[100px] h-[150px] object-cover m-3 ' />
+              <img alt={user.first_name || ""}  src={user.image || ''} className='w-[200px] h-[150px] object-cover m-3 ' />
             </div>
           <div className="flex flex-col pl-2">
             <div className="grid gap-1.5 mt-4 text-sm text-gray-500 dark:text-gray-400 flex-1 p-1">

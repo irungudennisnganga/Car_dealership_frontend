@@ -85,12 +85,12 @@ const Sidebar = ({ sidebarToggle , user}) => {
             Sales
           </Link>
         </li>
-        <li className='bg-cyan300 py-2 p-4 rounded-md hover:shadow hover:bg-cyan400 my-2.5'>
+        {user.role ==='seller'  &&(<li className='bg-cyan300 py-2 p-4 rounded-md hover:shadow hover:bg-cyan400 my-2.5'>
           <FontAwesomeIcon icon={faChartBar} className='inline-block w-6 h-6 mr-2 -mt-2' />
           <Link to="/report" className='p-2'>
             Report
           </Link>
-        </li>
+        </li>)}
         <li className='bg-cyan300 py-2 p-4 rounded-md hover:shadow hover:bg-cyan400 my-2.5'>
           <FontAwesomeIcon icon={faReceipt} className='inline-block w-6 h-6 mr-2 -mt-2' />
           <Link to="/receipt" className='p-2'>

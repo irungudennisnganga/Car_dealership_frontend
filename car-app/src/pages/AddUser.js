@@ -6,7 +6,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2'
 import PropTypes from 'prop-types';
-import { XlviLoader } from "react-awesome-loaders";
+import { CirclesWithBar } from 'react-loader-spinner'
+
 const AddUser = ({ user }) => {
   const inputRef = useRef(null);
   const [formData, setFormData] = useState({
@@ -87,13 +88,14 @@ const AddUser = ({ user }) => {
       formDataToSend.append(key, formData[key]);
     }
 
-    fetch('/signup', {
+    fetch('/api/signup', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('jwt')}`
       },
       body: formDataToSend
     })
+     
       .then(response => {
         if (!response.ok) {
           Swal.fire({
@@ -102,14 +104,16 @@ const AddUser = ({ user }) => {
             icon: 'error',
             confirmButtonText: 'Cool'
           })
+          if (response.status === 429) {
+            throw new Error('Too many requests. Please try again later.');
+          }
           throw new Error('Network response was not ok');
         }
-       
         return response.json();
       })
       .then(data => {
         if (data.message) {
-          toast.success(data.message, {
+          toast.success("User Added Successfully", {
             position: "top-right",
             autoClose: 2000,
             onClose: () => {
@@ -227,12 +231,18 @@ const AddUser = ({ user }) => {
       </div>
             {loading ?<div className="flex items-center justify-center h-screen">
                 
-                <XlviLoader
-                    boxColors={["#EF4444", "#F59E0B", "#6366F1"]}
-                    desktopSize={"128px"}
-                    mobileSize={"100px"}
-                    className={'object-center'}
-                />
+            (<CirclesWithBar
+                    height="100"
+                    width="100"
+                    color="#4fa94d"
+                    outerCircleColor="#4fa94d"
+                    innerCircleColor="#4fa94d"
+                    barColor="#4fa94d"
+                    ariaLabel="circles-with-bar-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    />)
             </div>:null}
       <button className="bg-cyan300 rounded-md hover:shadow hover:bg-cyan400 text-white font-bold py-2 px-4 block mx-auto mt-4 my-2.5" onClick={handleSubmit}>Submit</button>
     </div>
