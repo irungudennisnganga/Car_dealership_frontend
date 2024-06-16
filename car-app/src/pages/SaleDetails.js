@@ -41,7 +41,7 @@ const SaleDetails = () => {
 // console.log(sale)
  
   return (
-    <div className="bg-cyan-50 m-32 mt-10 relative w-[1300px] h-[450px] mr-[50px] overflow-y-auto">
+    <div className="bg-cyan-50 m-32 mt-10 relative w-[1000px] h-[450px] mr-[50px] overflow-y-auto">
       {error && <p>{error}</p>}
       <div className="flex gap-6">
         <div style={{ position: 'absolute', top: '10px', left: '10px' }}>

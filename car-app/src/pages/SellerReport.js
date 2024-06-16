@@ -50,7 +50,7 @@ const SellerReport = ({ users }) => {
       {/* <h2 className='text-2xl mb-4 dashboard '>Reports</h2> */}
       {userData && userData.sales ? (
         <div className='bg-cyan-50 m-12 mt-10 relative w-[1500px] h-auto mr-[30px] overflow-y-auto'>
-          <h3 className=''>Completed Sales</h3>
+          <h3 className=' ml-auto mr-auto text-center font-bold'>Completed Sales</h3>
           <table className="table-auto w-full text-left">
             <thead>
               <tr>
@@ -74,7 +74,7 @@ const SellerReport = ({ users }) => {
             </tbody>
           </table>
 
-          <h3 className=' mt-8'>Pending Sales</h3>
+          <h3 className=' mt-8 text-center font-bold'>Pending Sales</h3>
           <table className="table-auto w-full text-left">
             <thead>
               <tr>
@@ -98,7 +98,7 @@ const SellerReport = ({ users }) => {
             </tbody>
           </table>
 
-          <h3 className=' mt-8' >Refunded Sales</h3>
+          <h3 className=' mt-8 text-center font-bold' >Refunded Sales</h3>
           <table className="table-auto w-full text-left ">
             <thead>
               <tr>

@@ -2,14 +2,18 @@ import React, { useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { useParams,useNavigate  } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const NewInvoice = ({ customers, inventory }) => {
-  const { id, customer,sale,date } = useParams();
+  const { id, customer, sale, date } = useParams();
   const navigate = useNavigate();
+  const [inventoryPrice, setInventoryPrice] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [sales, setSales] = useState([]);
 
   const [formData, setFormData] = useState({
-    date_of_purchase:date || "",
+    date_of_purchase: date || "",
     method: '',
     amount_paid: '',
     fee: '',
@@ -29,9 +33,14 @@ const NewInvoice = ({ customers, inventory }) => {
     sale_id: sale || ""
   });
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [sales, setSales] = useState([]);
+  
+
+  useEffect(() => {
+    const matchedInventory = inventory.find(item => item.id == id);
+    if (matchedInventory) {
+      setInventoryPrice(matchedInventory.price);
+    }
+  }, [id, inventory]);
 
   const formatDate = (date) => {
     const d = new Date(date);
@@ -82,7 +91,8 @@ const NewInvoice = ({ customers, inventory }) => {
 
     return ((totalNum - paidNum) + taxNum).toFixed(2);
   };
-  const navigateToCreate = (customer,invoice,amount) => {
+
+  const navigateToCreate = (customer, invoice, amount) => {
     navigate(`/receipt/${customer}/${invoice}/${amount}`);
   };
 
@@ -108,8 +118,8 @@ const NewInvoice = ({ customers, inventory }) => {
       }
 
       toast.success(`Invoice created successfully with ID: ${data.invoice_id}`);
-      const invoice_id =data.invoice_id
-      navigateToCreate(customer,invoice_id,formData.amount_paid)
+      const invoice_id = data.invoice_id;
+      navigateToCreate(customer, invoice_id, formData.amount_paid);
       setFormData({
         date_of_purchase: date || '',
         method: '',
@@ -162,10 +172,12 @@ const NewInvoice = ({ customers, inventory }) => {
     }));
   }, [id, customer]);
 
-
   return (
     <div className="bg-slate200 p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
       <Toaster />
+      <div className="mt-4 text-green-500 font-bold mb-3">
+          Inventory Price: {inventoryPrice}
+        </div>
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-4">
 
@@ -259,7 +271,7 @@ const NewInvoice = ({ customers, inventory }) => {
 };
 
 NewInvoice.propTypes = {
-  customers: PropTypes.array.isRequired,
+  // customers: PropTypes.array.isRequired,
   inventory: PropTypes.array.isRequired
 };
 
