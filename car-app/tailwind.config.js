@@ -15,7 +15,8 @@ module.exports = {
       'red-600':'#b91c1c',
       "slate200":'#e2e8f0',
       "blue-800":'#1e40af',
-      "green-500":"#10B981"
+      "green-500":"#10B981",
+      "blue-400":"#60A5FA"
     },
   },
   plugins: [],

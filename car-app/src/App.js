@@ -8,6 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { CirclesWithBar } from 'react-loader-spinner'
 import OneReceipt from './pages/OneReceipt';
 import SellerReport from './pages/SellerReport';
+import UpdateSale from './pages/UpdateSale';
+import UpdateInvoice from './pages/UpdateInvoice';
 
 
 
@@ -170,7 +172,9 @@ function App() {
                 <Route path="/sale/:saleid" element={<SaleDetails />} />
                 <Route path="/invoice/:username/:id" element={<Invoicebysellername />} />
                 <Route path="/invoices/:invoiceid" element={<InvoicebyId />} />
-                <Route path="/create-invoice/:new/:id/:customer/:sale/:date" element={<NewInvoice />} />
+                <Route path="/update_sale/:saleid" element={<UpdateSale />} />
+                <Route path="/update_invoice/:invoiceid/:status/:saleid" element={<UpdateInvoice />} />
+                <Route path="/create-invoice/:new/:id/:customer/:sale/:date" element={<NewInvoice inventory={inventory}/>} />
                 <Route path="/" element={<Dashboard />} />
               </Routes>
             </Suspense>

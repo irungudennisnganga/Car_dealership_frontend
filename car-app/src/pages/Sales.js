@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import AddSales from './AddSales'; // Assuming you have an AddSales component
 import { useNavigate } from 'react-router-dom';
 import AccordionItem from '../components/AccordionItem';
-import { CirclesWithBar } from 'react-loader-spinner'
+import { CirclesWithBar } from 'react-loader-spinner';
 
 const Sales = ({ user, customers }) => {
   const [sales, setSales] = useState([]);
@@ -57,21 +57,26 @@ const Sales = ({ user, customers }) => {
     setSales(updatedSales);
   };
 
+  const handleNavigate = (saleId, event) => {
+    event.stopPropagation(); // Prevent the row click event from firing
+    navigate(`/update_sale/${saleId}`);
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-       (<CirclesWithBar
-                    height="100"
-                    width="100"
-                    color="#4fa94d"
-                    outerCircleColor="#4fa94d"
-                    innerCircleColor="#4fa94d"
-                    barColor="#4fa94d"
-                    ariaLabel="circles-with-bar-loading"
-                    wrapperStyle={{}}
-                    wrapperClass=""
-                    visible={true}
-                    />)
+        <CirclesWithBar
+          height="100"
+          width="100"
+          color="#4fa94d"
+          outerCircleColor="#4fa94d"
+          innerCircleColor="#4fa94d"
+          barColor="#4fa94d"
+          ariaLabel="circles-with-bar-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+        />
       </div>
     );
   }
@@ -98,7 +103,7 @@ const Sales = ({ user, customers }) => {
                 <th className="w-1/4 text-left py-2">Status</th>
                 <th className="w-1/4 text-left py-2">Sale Date</th>
                 <th className="w-1/4 text-left py-2">Vehicle Name</th>
-                
+                {user.role === 'seller' && <th className="w-1/4 text-left py-2">Actions</th>}
               </tr>
             </thead>
             <tbody>
@@ -114,7 +119,16 @@ const Sales = ({ user, customers }) => {
                   <td className="border-transparent text-left py-2">{sale.status}</td>
                   <td className="border-transparent text-left py-2">{new Date(sale.sale_date).toLocaleDateString()}</td>
                   <td className="border-transparent text-left py-2">{sale.inventory_id.name}</td>
-                  
+                  {user.role === 'seller' && (
+                    <td className="border-transparent text-left py-2">
+                      <button 
+                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                        onClick={(event) => handleNavigate(sale.id, event)}
+                      >
+                        <img width="48" height="48" src="https://img.icons8.com/parakeet/48/installing-updates.png" alt="installing-updates"/> 
+                      </button>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
