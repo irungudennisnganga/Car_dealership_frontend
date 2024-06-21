@@ -43,7 +43,7 @@ const Login = () => {
             });
             navigate('/dashboard'); // Redirect to dashboard on successful login
         } catch (error) {
-            console.error('Login failed:', error);
+            // console.error('Login failed:', error);
             setError('Login failed. Please check your credentials.');
             setLoading(false); // Set loading to false in case of error
         }
@@ -51,29 +51,33 @@ const Login = () => {
 
     if (loading) { // Show loader when loading is true
         return (
-            <div className="flex items-center justify-center h-screen">
-                {/* <h3 className="block mb-3">Wait For The Verification To Be Completed......</h3><br /> <br /> */}
-                (<CirclesWithBar
-                    height="100"
-                    width="100"
-                    color="#4fa94d"
-                    outerCircleColor="#4fa94d"
-                    innerCircleColor="#4fa94d"
-                    barColor="#4fa94d"
+            <div className="flex flex-col items-center justify-center h-screen">
+            <h3 className="absolute top-0 mt-10 text-center font-bold text-indigo w-full">
+                Wait For The Verification To Be Completed......
+            </h3>
+            <div className="flex items-center justify-center flex-grow">
+                <CirclesWithBar
+                    height="400"
+                    width="400"
+                    color= "#4338CA"
+                    outerCircleColor="#4338CA"
+                    innerCircleColor="#4338CA"
+                    barColor="#4338CA"
                     ariaLabel="circles-with-bar-loading"
                     wrapperStyle={{}}
                     wrapperClass=""
                     visible={true}
-                    />)
-
-                </div>
+                />
+            </div>
+        </div>
+        
         );
     }
 
     return (
         <section className="h-screen flex flex-col px-2 py-2 m-auto w-full md:flex-row justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0 bg-blue-900">
             <div className="md:w-1/3 max-w-lg">
-                <img src={logo} alt="logo" />
+                <img src={logo} alt="logo" className="rounded-md" />
             </div>
             <div className="md:w-1/3 max-w-sm">
                 <div className="text-center md:text-left">
@@ -81,7 +85,7 @@ const Login = () => {
                 </div>
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <input
-                        className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded"
+                        className="text-sm w-full text-indigo px-4 py-2 border border-solid border-indigo rounded"
                         type="text"
                         placeholder="Email"
                         value={email}
@@ -89,7 +93,7 @@ const Login = () => {
                         required
                     />
                     <input
-                        className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
+                        className="text-sm w-full px-4 py-2 border text-indigo border-solid border-indigo rounded mt-4"
                         type="password"
                         placeholder="Password"
                         value={password}
@@ -105,12 +109,12 @@ const Login = () => {
                         <div className="text-red-500">{error}</div>
                     )}
                     <div>
-                        <button type="submit" className="group relative w-full flex justify-center py-2 px-4 border 
-                        border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 
-                        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 bold">
-                            Login in
+                        <button type="submit" class="login-button">
+                            Log in
                         </button>
                     </div>
+
+
                 </form>
             </div>
         </section>

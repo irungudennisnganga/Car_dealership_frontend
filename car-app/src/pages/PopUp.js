@@ -2,7 +2,7 @@ import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './Popup.css'
-const PopUp = ({ openPopup, closePopup, inventory }) => {
+const PopUp = ({ openPopup, closePopup, inventory,user }) => {
   const handleLosePopUp = (e) => {
     if (e.target.id === 'ModelContainer') {
       closePopup();
@@ -22,7 +22,7 @@ const PopUp = ({ openPopup, closePopup, inventory }) => {
           <Carousel showArrows={true} showThumbs={false} showStatus={false} infiniteLoop={true}>
             {inventory.gallery.map((image, index) => (
               <div key={index}>
-                <img className="h-96  object-cover " src={image} alt={`Gallery ${index + 1}`} />
+                <img className="h-full  object-cover " src={image} alt={`Gallery ${index + 1}`} />
               </div>
             ))}
           </Carousel>
@@ -55,7 +55,7 @@ const PopUp = ({ openPopup, closePopup, inventory }) => {
               <p className="text-gray-600 mb-2">Cylinder: {inventory.cylinder}</p>
               <p className="text-gray-600 mb-2">Doors: {inventory.doors}</p>
               <p className="text-gray-600 mb-2">Stock Number: {inventory.stock_number}</p>
-              <p className="text-gray-600 mb-2">Purchase Cost: {inventory.purchase_cost}</p>
+              {user.role ==="super admin" || user.role ==="admin" ? <p className="text-gray-600 mb-2">Purchase Cost: {inventory.purchase_cost}</p> :null}
               <p className="text-gray-600 mb-2">Features: {inventory.features}</p>
             </div>
           </div>

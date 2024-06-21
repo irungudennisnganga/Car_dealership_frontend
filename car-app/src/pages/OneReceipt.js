@@ -35,7 +35,7 @@ function OneReceipt() {
     }, [id]);
 
     if (loading) {
-        return <div className="flex items-center justify-center h-screen">
+        return <div className="flex items-center h-screen justify-center flex-grow">
         <CirclesWithBar
             height="100"
             width="100"

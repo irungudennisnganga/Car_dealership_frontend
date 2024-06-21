@@ -18,7 +18,7 @@ const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
 
   useEffect(() => {
     fetchNotifications();
-  }, [unreadCount,location]);
+  }, [unreadCount, location]);
 
   const fetchNotifications = () => {
     fetch('/api/notification', {
@@ -33,28 +33,26 @@ const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
         return response.json();
       })
       .then(data => {
-        
         const role = user.role;
+        const filteredNotifications = data.filter(notification => {
+          if (role === 'admin') {
+            return !notification.admin_read;
+          } else if (role === 'super admin') {
+            return !notification.super_admin_read;
+          } else if (role === 'seller') {
+            return !notification.seller_read;
+          }
+          return false;
+        });
 
-      const filteredNotifications = data.filter(notification => {
-        if (role === 'admin') {
-          return !notification.admin_read;
-        } else if (role === 'super admin') {
-          return !notification.super_admin_read;
-        } else if (role === 'seller') {
-          return !notification.seller_read;
-        }
-        return false;
-      });
-
-      setNotifications(filteredNotifications);
-      setUnreadCount(filteredNotifications.length);
+        setNotifications(filteredNotifications);
+        setUnreadCount(filteredNotifications.length);
       })
       .catch(error => {
         console.error('Error fetching notifications:', error);
       });
   };
-// console.log(notifications)
+
   const handleSearch = () => {
     fetch(`/api/search?query=${searchQuery}&currentPath=${location.pathname}`, {
       method: 'POST',
@@ -118,20 +116,26 @@ const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
 
   return (
     <>
-      <nav className="bg-cyan-50 px-4 py-3 flex justify-between items-center fixed top-0 w-[87%] mx-auto rounded shadow z-10">
-        <div className='flex items-center text-xl'>
-          <FaBars className='text-white mr-4 cursor-pointer' onClick={() => setSidebarToggle(!sidebarToggle)} aria-label="Toggle sidebar" />
+      <nav className={`bg-cyan-50 px-4 py-3  flex items-center fixed top-0 transition-all duration-300  ${sidebarToggle ? ' w-[100%]' : 'pl-0 w-[87%]'} rounded shadow z-10`}>
+        <div className='flex items-center'>
+          <FaBars className='text-black ml-2 mr-4 cursor-pointer' onClick={() => setSidebarToggle(!sidebarToggle)} aria-label="Toggle sidebar" />
           <span className='text-black font-semibold'>AutoCar</span>
         </div>
-        <div className='flex items-center gap-x-5'>
+        <div className='flex flex-grow justify-end items-center gap-x-5'>
           <div className='relative md:w-64'>
             <span className='absolute inset-y-0 left-0 flex items-center pl-2'>
-              <button className='p-1 focus:outline-none text-white md:text-black' aria-label="Search">
+              <button className='p-1 focus:outline-none text-black' aria-label="Search">
                 <FaSearch />
               </button>
             </span>
-            <input type='text' className='w-full px-4 py-1 pl-10 rounded shadow outline-none md:block hidden' value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)} onClick={handleSearch} placeholder="Search..." />
+            <input
+              type='text'
+              className='w-full px-4 py-1 pl-10 rounded shadow outline-none md:block hidden'
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onClick={handleSearch}
+              placeholder="Search..."
+            />
           </div>
           <div className='relative'>
             <FaBell className='w-6 h-6 cursor-pointer' aria-label="Notifications" onClick={toggleNotifications} />
@@ -141,7 +145,7 @@ const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
               </span>
             )}
             {showNotifications && (
-              <div className='absolute right-0 mt-2 w-96 max-h-80 bg-green-500 shadow-lg rounded-lg overflow-y-auto z-20'>
+              <div className='absolute right-0 mt-2 w-96 max-h-80 bg-white shadow-lg rounded-lg overflow-y-auto z-20 bg-green-500'>
                 <div className='p-4'>
                   <div className='flex justify-between items-center'>
                     <h4 className='font-semibold'>Notifications</h4>
@@ -160,7 +164,7 @@ const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
           </div>
           <div className='relative'>
             <Link to="/profile" aria-label="User Profile">
-              <FaUserCircle className={`w-6 h-6 mt-1 ${isActive('/profile') ? 'text-blue-500' : 'text-white'}`} />
+              <FaUserCircle className={`w-6 h-6 mt-1 ${isActive('/profile') ? 'text-blue-500' : 'text-black'}`} />
             </Link>
           </div>
           <div className='hidden sm:block'>
@@ -169,7 +173,7 @@ const Navbar = ({ sidebarToggle, setSidebarToggle, user, handleLogout }) => {
               <li className='font-bold text-blue-800'><h5>{userRole}</h5></li>
             </ul>
           </div>
-          <button className='font-bold text-red-600 hover:bg-cyan400 hover:text-blue-800 p-1 rounded-md' onClick={handleLogout}>log out</button>
+          <button className='font-bold text-red-600 hover:bg-cyan-400 hover:text-blue-800 p-1 rounded-md' onClick={handleLogout}>Log out</button>
         </div>
       </nav>
 

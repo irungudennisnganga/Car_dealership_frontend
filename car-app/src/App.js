@@ -27,7 +27,7 @@ const Receipt = lazy(() => import('./pages/Receipt'));
 const Sales = lazy(() => import('./pages/Sales'));
 const Invoice = lazy(() => import('./pages/invoice'));
 // const Report = lazy(() => import('./pages/Report'));
-const SellerSaleDashboard = lazy(() => import('./pages/SellerSaleDashboard'));
+// const SellerSaleDashboard = lazy(() => import('./pages/SellerSaleDashboard'));
 const SaleDetails = lazy(() => import('./pages/SaleDetails'));
 const Invoicebysellername = lazy(() => import('./pages/Invoicebysellername'));
 const InvoicebyId = lazy(() => import('./pages/Invoicebyid'));
@@ -168,7 +168,7 @@ function App() {
                 <Route path="/sales" element={<Sales user={user} customers={customer} />} />
                 <Route path="/invoice" element={<Invoice user={user} />} />
                 <Route path="/report" element={<SellerReport users={user} />} />
-                <Route path="/sellersaledashboard" element={<SellerSaleDashboard />} />
+                {/* <Route path="/sellersaledashboard" element={<SellerSaleDashboard />} /> */}
                 <Route path="/sale/:saleid" element={<SaleDetails />} />
                 <Route path="/invoice/:username/:id" element={<Invoicebysellername />} />
                 <Route path="/invoices/:invoiceid" element={<InvoicebyId />} />

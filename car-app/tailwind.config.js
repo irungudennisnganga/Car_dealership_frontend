@@ -16,7 +16,8 @@ module.exports = {
       "slate200":'#e2e8f0',
       "blue-800":'#1e40af',
       "green-500":"#10B981",
-      "blue-400":"#60A5FA"
+      "blue-400":"#60A5FA",
+      "indigo":"#4338CA"
     },
   },
   plugins: [],

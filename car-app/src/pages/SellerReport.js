@@ -123,6 +123,7 @@ const SellerReport = ({ users }) => {
           </table>
         </div>
       ) : (
+        <div className="flex items-center h-screen justify-center flex-grow">
         <CirclesWithBar
         height="100"
         width="100"
@@ -135,6 +136,7 @@ const SellerReport = ({ users }) => {
         wrapperClass=""
         visible={true}
       />
+      </div>
       )}
     </div>
   );

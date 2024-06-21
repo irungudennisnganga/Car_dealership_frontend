@@ -67,6 +67,7 @@ const Inventory = ({ inventory, user }) => {
           openPopup={openPopup}
           closePopup={handleClosePopup}
           inventory={inventory.find(item => item.image === selectedImage)} 
+          user={user}
         />
       )}
     </div>

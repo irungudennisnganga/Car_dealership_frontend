@@ -64,12 +64,12 @@ const Receipt = ({ user, customers }) => {
     }
 
     return (
-        <div className='m-52  mt-9    '>
+        <div className='m-52  mt-9     '>
             
             <table className='bg-cyan-50 p-4 w-11/12  '>
                 <thead className='p-8'>
                     <tr>
-                        <th className="w-1/4 text-left py-2">Customer Name</th>
+                        <th className="w-1/4 text-left py-2 pl-4">Customer Name</th>
                         <th className="w-1/4 text-left py-2">Amount Paid</th>
                         <th className="w-1/4 text-left py-2">Total Amount</th>
                         <th className="w-1/4 text-left py-2">Date</th>
@@ -82,7 +82,7 @@ const Receipt = ({ user, customers }) => {
                             key={receipt.id} 
                             className="cursor-pointer hover:bg-gray-100"
                         >
-                            <td className="border-transparent text-left py-2">{receipt.customer.Names}</td>
+                            <td className="border-transparent text-left py-2 pl-4">{receipt.customer.Names}</td>
                             <td className="border-transparent text-left py-2">{receipt.amount_paid}</td>
                             <td className="border-transparent text-left py-2">{receipt.invoice.total_amount}</td>
                             <td className="border-transparent text-left py-2">{receipt.created_at}</td>

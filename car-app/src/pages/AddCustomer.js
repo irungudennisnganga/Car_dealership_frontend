@@ -55,7 +55,7 @@ const AddCustomer = ({ user }) => {
       formDataToSend.append(key, formData[key]);
     }
 
-    fetch('/api/customers', {
+    fetch('/api/customer', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('jwt')}`,

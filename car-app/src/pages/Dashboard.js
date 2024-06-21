@@ -71,7 +71,7 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="loader">
+      <div className="flex items-center h-screen justify-center flex-grow">
         <CirclesWithBar
           height="100"
           width="100"
